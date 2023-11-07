@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import AppNavDrawer from "./lib/components/AppNavDrawer.svelte";
 
   onMount(() => {
     // get user token
@@ -14,5 +15,9 @@
 <main>
   <!-- header -->
   <!-- drawer -->
+  <AppNavDrawer selectedPath="/" />
   <!-- body -->
 </main>
+
+<style>
+</style>

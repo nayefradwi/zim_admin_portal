@@ -1,19 +1,20 @@
 :root {
-  --zim-text-selection-color: rgba(116, 139, 248, 0.25);
-  --zim-primary: #2060df;
-  --zim-primary-background: #2060df;
-  --zim-primary-underline: rgba(32, 96, 223, 0.5);
-  --zim-primary-hover: #184eb8;
-  --zim-primary-hover-background: #1d59d0;
-  --zim-primary-focus: rgba(116, 139, 248, 0.25);
-  --zim-primary-inverse: #fff;
+  --text-selection-color: rgba(116, 139, 248, 0.25);
+  --primary: #2060df;
+  --primary-background: #2060df;
+  --primary-underline: rgba(32, 96, 223, 0.5);
+  --primary-hover: #184eb8;
+  --primary-hover-background: #1d59d0;
+  --primary-focus: rgba(116, 139, 248, 0.25);
+  --primary-inverse: #fff;
+  --on-background: #213547;
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light;
-  color: #213547;
+  color: var(--on-background);
   background-color: #ffffff;
 
   font-synthesis: none;
@@ -26,11 +27,11 @@
 
 a {
   font-weight: 500;
-  color: var(--zim-primary);
+  color: var(--primary);
   text-decoration: inherit;
 }
 a:hover {
-  color: var(--zim-primary-hover);
+  color: var(--primary-hover);
 }
 
 body {
@@ -64,13 +65,13 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: var(--zim-primary);
-  color: var(--zim-primary-inverse);
+  background-color: var(--primary);
+  color: var(--primary-inverse);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 
 button:hover {
-  background-color: var(--zim-primary-hover);
+  background-color: var(--primary-hover);
 }
 
