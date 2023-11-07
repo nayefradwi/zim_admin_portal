@@ -1,13 +1,20 @@
 :root {
-  --text-selection-color: rgba(116, 139, 248, 0.25);
-  --primary: #2060df;
-  --primary-background: #2060df;
-  --primary-underline: rgba(32, 96, 223, 0.5);
-  --primary-hover: #184eb8;
-  --primary-hover-background: #1d59d0;
-  --primary-focus: rgba(116, 139, 248, 0.25);
-  --primary-inverse: #fff;
-  --on-background: #213547;
+  --primary-color: #076ad4;
+  --primary-hover: #0056b3;
+  --secondary-color: #6c757d;
+  --secondary-hover: #5a6268;
+  --success-color: #28a745;
+  --success-hover: #1e7e34;
+  --info-color: #17a2b8;
+  --info-hover: #117a8b;
+  --warning-color: #ffc107;
+  --warning-hover: #d39e00;
+  --danger-color: #dc3545;
+  --danger-hover: #bd2130;
+  --light-color: #f8f9fa;
+  --light-hover: #dae0e5;
+  --dark-color: #343a40;
+  --dark-hover: #1d2124;
 
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -27,9 +34,10 @@
 
 a {
   font-weight: 500;
-  color: var(--primary);
+  color: var(--primary-color);
   text-decoration: inherit;
 }
+
 a:hover {
   color: var(--primary-hover);
 }
@@ -65,13 +73,10 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: var(--primary);
-  color: var(--primary-inverse);
+  background-color: var(--primary-color);
+  color: var(--light-color);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 
-button:hover {
-  background-color: var(--primary-hover);
-}
 
