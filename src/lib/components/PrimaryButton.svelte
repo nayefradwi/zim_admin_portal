@@ -36,6 +36,12 @@
         background-color: var(--primary-hover);
     }
 
+    .primary:disabled {
+        background-color: var(--primary-color);
+        opacity: 0.8;
+        cursor: not-allowed;
+    }
+
     .m {
         border-radius: 0.25rem;
         font-size: 1rem;

@@ -3,7 +3,14 @@
 </script>
 
 <main>
-    <PrimaryButton label="login" disabled={true} loading={true} />
+    <PrimaryButton
+        label="login"
+        disabled={true}
+        loading={true}
+        onClick={() => {
+            console.log("clicked");
+        }}
+    />
 </main>
 
 <style>
