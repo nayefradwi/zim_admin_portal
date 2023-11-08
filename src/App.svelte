@@ -4,6 +4,7 @@
   import Home from "./lib/pages/home/Home.svelte";
   import WarehouseSelection from "./lib/pages/warehouse_selection/WarehouseSelection.svelte";
   import Login from "./lib/pages/login/Login.svelte";
+
   onMount(() => {
     // get user token
     // get user info
@@ -13,6 +14,7 @@
     // go to dashboard
     navigate("/");
   });
+
   export let url = "";
 </script>
 

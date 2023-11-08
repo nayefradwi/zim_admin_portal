@@ -5,51 +5,40 @@
     export let onClick: (item: AppNavItemModel, isSelected: boolean) => void;
 </script>
 
-<div class="nav-item nav-item-container">
+<li
+    class="pb-2
+    {navItem.isLocked ? 'locked disabled' : null}
+    "
+>
     <a
+        id={isSelected ? "selected" : null}
+        class="text-base-100
+        {isSelected ? 'active' : null}
+        {navItem.isLocked ? 'locked' : null}"
         on:click={(e) => {
             e.preventDefault();
+            if (navItem.isLocked) return;
             onClick(navItem, isSelected);
         }}
-        class="nav-item-content {navItem.isLocked ? 'locked' : ''} {isSelected
-            ? 'selected'
-            : ''}"
         href={navItem.path}
         >{navItem.name}
     </a>
-</div>
+</li>
 
 <style>
-    .nav-item-container {
-        display: flex;
-        align-items: center;
-        justify-content: start;
-        width: 100%;
-    }
-
-    .nav-item {
-        color: var(--primary-inverse);
-        margin: 8px 16px;
-    }
-
-    .nav-item-content {
-        text-decoration: none;
-        color: var(--primary-inverse);
-        padding: 8px;
-        width: 100%;
-        text-align: left;
-        font-weight: 500;
-    }
-
-    .nav-item:hover {
-        background-color: var(--primary-hover);
-    }
-
     .locked {
+        color: #a0aec0;
+    }
+    .locked:hover {
         cursor: not-allowed;
     }
 
-    .selected {
-        background-color: var(--primary);
+    #selected {
+        @apply bg-base-100;
+        @apply text-primary;
+        @apply font-semibold;
+    }
+    .menu > li :hover {
+        @apply text-base-100;
     }
 </style>

@@ -7,7 +7,7 @@ export interface AppNavItemModel {
 
 export const HOME_NAVIGATION: AppNavItemModel[] = [
     {
-        path: '/dashboard',
+        path: '/',
         name: 'Dashboard',
         icon: 'dashboard',
     },
