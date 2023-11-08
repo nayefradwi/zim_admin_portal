@@ -7,7 +7,7 @@
     import Dashboard from "../pages/home/dashboard/Dashboard.svelte";
     import Inventory from "../pages/home/inventory/Inventory.svelte";
     import Product from "../pages/home/product/Product.svelte";
-    let selectedPath: string = "/";
+    let selectedPath: string = window.location.pathname;
     const onClick = (item: AppNavItemModel, isSelected: boolean) => {
         if (!isSelected && !item.isLocked) {
             navigate(item.path, { replace: true });
