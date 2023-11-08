@@ -34,3 +34,9 @@
     </div>
   </Router>
 </main>
+
+<style>
+  main {
+    padding: 0;
+  }
+</style>
