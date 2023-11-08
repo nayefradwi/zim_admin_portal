@@ -1,7 +1,14 @@
+import {
+    GridIcon, PackageIcon, TruckIcon,
+    ShoppingBagIcon, UsersIcon,
+    SettingsIcon, PieChartIcon,
+    CheckSquareIcon,
+} from "svelte-feather-icons";
+
 export interface AppNavItemModel {
     path: string;
     name: string;
-    icon: string;
+    icon: any | undefined;
     isLocked?: boolean;
 }
 
@@ -9,46 +16,46 @@ export const HOME_NAVIGATION: AppNavItemModel[] = [
     {
         path: '/',
         name: 'Dashboard',
-        icon: 'dashboard',
+        icon: GridIcon,
     },
     {
         path: '/products',
         name: 'Products',
-        icon: 'shopping_cart',
+        icon: PackageIcon,
     },
     {
         path: '/inventory',
         name: 'Inventory',
-        icon: 'inventory',
+        icon: TruckIcon,
     },
     {
         path: '/orders',
         name: 'Orders',
-        icon: 'shopping_bag',
+        icon: ShoppingBagIcon,
         isLocked: true,
     },
     {
         path: '/customers',
         name: 'Customers',
-        icon: 'people',
         isLocked: true,
+        icon: UsersIcon,
     },
     {
         path: "/tasks",
         name: "Tasks",
-        icon: "task",
+        icon: CheckSquareIcon,
         isLocked: true,
     },
     {
         path: '/reports',
         name: 'Reports',
-        icon: 'bar_chart',
+        icon: PieChartIcon,
         isLocked: true,
     },
     {
         path: '/settings',
         name: 'Settings',
-        icon: 'settings',
+        icon: SettingsIcon,
         isLocked: true,
     },
 ]

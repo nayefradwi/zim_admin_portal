@@ -1,12 +1,14 @@
 <script lang="ts">
     import type { AppNavItemModel } from "../view_models/appNavItem.ts";
+    import type { SvelteComponent } from "svelte";
+
     export let navItem: AppNavItemModel;
     export let isSelected: boolean;
     export let onClick: (item: AppNavItemModel, isSelected: boolean) => void;
 </script>
 
 <li
-    class="pb-2
+    class="py-2
     {navItem.isLocked ? 'locked disabled' : null}
     "
 >
@@ -17,11 +19,14 @@
         {navItem.isLocked ? 'locked' : null}"
         on:click={(e) => {
             e.preventDefault();
-            if (navItem.isLocked) return;
             onClick(navItem, isSelected);
         }}
         href={navItem.path}
-        >{navItem.name}
+    >
+        {#if navItem.icon}
+            <svelte:component this={navItem.icon} />
+        {/if}
+        {navItem.name}
     </a>
 </li>
 
