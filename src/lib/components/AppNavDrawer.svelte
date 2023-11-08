@@ -1,11 +1,13 @@
 <script lang="ts">
     import { HOME_NAVIGATION } from "./../view_models/appNavItem";
     import type { AppNavItemModel } from "./../view_models/appNavItem";
+    import { navigate } from "svelte-routing";
+
     import AppNavDrawerItem from "./AppNavDrawerItem.svelte";
     export let selectedPath: string;
     const onClick = (item: AppNavItemModel, isSelected: boolean) => {
         if (!isSelected && !item.isLocked) {
-            // GO TO PATH
+            navigate(item.path, { replace: true });
             selectedPath = item.path;
         }
     };
