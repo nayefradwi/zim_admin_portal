@@ -6,7 +6,11 @@
   import Login from "./lib/pages/login/Login.svelte";
   import { getTokensFromSession, setAuthHeader } from "./data";
   import { userStore } from "./lib/stores/user";
-  import { LOGIN_ROUTE } from "./lib/routes";
+  import {
+    HOME_ROUTE,
+    LOGIN_ROUTE,
+    WAREHOUSE_SELECT_ROUTE,
+  } from "./lib/routes";
 
   const unsubscribe = userStore.subscribe((user) => {
     if (!user) return navigate("/login");
@@ -28,9 +32,9 @@
 <main>
   <Router {url}>
     <div>
-      <Route path="/" component={Home} />
-      <Route path="/login" component={Login} />
-      <Route path="/warehouse-select" component={WarehouseSelection} />
+      <Route path={HOME_ROUTE} component={Home} />
+      <Route path={LOGIN_ROUTE} component={Login} />
+      <Route path={WAREHOUSE_SELECT_ROUTE} component={WarehouseSelection} />
       <Route path="*" component={Home} />
     </div>
   </Router>

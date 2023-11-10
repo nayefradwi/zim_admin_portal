@@ -7,6 +7,11 @@
     import Dashboard from "../pages/home/dashboard/Dashboard.svelte";
     import Inventory from "../pages/home/inventory/Inventory.svelte";
     import Product from "../pages/home/product/Product.svelte";
+    import {
+        DASHBOARD_ROUTE,
+        INVENTORY_ROUTE,
+        PRODUCTS_ROUTE,
+    } from "../routes";
     let selectedPath: string = window.location.pathname;
     const onClick = (item: AppNavItemModel, isSelected: boolean) => {
         if (!isSelected && !item.isLocked) {
@@ -34,9 +39,9 @@
     </div>
     <div class="drawer-content">
         <Router url={selectedPath}>
-            <Route path="/" component={Dashboard} />
-            <Route path="/inventory" component={Inventory} />
-            <Route path="/products" component={Product} />
+            <Route path={DASHBOARD_ROUTE} component={Dashboard} />
+            <Route path={INVENTORY_ROUTE} component={Inventory} />
+            <Route path={PRODUCTS_ROUTE} component={Product} />
             <!--
                 Route path="/orders" component={Home} />
                 <Route path="/customers" component={Home} />
