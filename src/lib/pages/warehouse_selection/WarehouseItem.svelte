@@ -12,7 +12,7 @@
         setWarehouseSelected(warehouse.id);
         setWarehouseHeader(warehouse.id);
         $warehouseStore = warehouse;
-        navigate(DASHBOARD_ROUTE);
+        navigate(DASHBOARD_ROUTE, { replace: true });
     }
     function viewMap() {
         const goolgeMapsUrl = `https://www.google.com/maps/search/?api=1&query=${warehouse.lat},${warehouse.lng}`;
