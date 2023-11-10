@@ -18,7 +18,7 @@ function createUserStore() {
     return {
         subscribe,
         set,
-        getUser: GetUser(UserRepo),
+        getUser: () => GetUser(UserRepo),
         loginUser: (email: string, password: string) =>
             LoginUser(UserRepo, email, password),
     }

@@ -4,6 +4,7 @@ import {
     SettingsIcon, PieChartIcon,
     CheckSquareIcon,
 } from "svelte-feather-icons";
+import { CUSTOMERS_ROUTE, DASHBOARD_ROUTE, INVENTORY_ROUTE, ORDERS_ROUTE, PRODUCTS_ROUTE, REPORTS_ROUTE, SETTINGS_ROUTE, TASKS_ROUTE } from "../routes";
 
 export interface AppNavItemModel {
     path: string;
@@ -14,46 +15,46 @@ export interface AppNavItemModel {
 
 export const HOME_NAVIGATION: AppNavItemModel[] = [
     {
-        path: '/',
+        path: DASHBOARD_ROUTE,
         name: 'Dashboard',
         icon: GridIcon,
     },
     {
-        path: '/products',
+        path: PRODUCTS_ROUTE,
         name: 'Products',
         icon: PackageIcon,
     },
     {
-        path: '/inventory',
+        path: INVENTORY_ROUTE,
         name: 'Inventory',
         icon: TruckIcon,
     },
     {
-        path: '/orders',
+        path: ORDERS_ROUTE,
         name: 'Orders',
         icon: ShoppingBagIcon,
         isLocked: true,
     },
     {
-        path: '/customers',
+        path: CUSTOMERS_ROUTE,
         name: 'Customers',
         isLocked: true,
         icon: UsersIcon,
     },
     {
-        path: "/tasks",
+        path: TASKS_ROUTE,
         name: "Tasks",
         icon: CheckSquareIcon,
         isLocked: true,
     },
     {
-        path: '/reports',
+        path: REPORTS_ROUTE,
         name: 'Reports',
         icon: PieChartIcon,
         isLocked: true,
     },
     {
-        path: '/settings',
+        path: SETTINGS_ROUTE,
         name: 'Settings',
         icon: SettingsIcon,
         isLocked: true,
