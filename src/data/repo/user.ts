@@ -8,11 +8,11 @@ export interface IUserRepo {
 
 export const UserRepo: IUserRepo = {
     getUser: async (): Promise<User> => {
-        const response = await apiClient.get<User>("/user");
+        const response = await apiClient.get<User>("/users/me");
         return response.data as User;
     },
     login: async (email: string, password: string): Promise<Token> => {
-        const response = await apiClient.post<Token>("/user/login", {
+        const response = await apiClient.post<Token>("/users/login", {
             email: email,
             password: password,
         });
