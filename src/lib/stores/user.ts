@@ -25,7 +25,7 @@ export const userStore = createUserStore();
 
 function GetUser(userRepo: IUserRepo) {
     const details: ResponseHandlerData<User> = {
-        call: () => userRepo.getUser(),
+        call: userRepo.getUser,
         onSuccess: (data: User) => {
             // TODO remove
             console.log(data);
@@ -52,4 +52,5 @@ function LoginUser(userRepo: IUserRepo, email: string, password: string) {
             console.log("failed to login user")
         }
     }
+    return getResponse<Token>(details);
 }

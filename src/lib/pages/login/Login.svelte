@@ -1,11 +1,21 @@
 <script lang="ts">
+    import { navigate } from "svelte-routing";
     import PrimaryButton from "../../components/PrimaryButton.svelte";
     import PrimaryInput from "../../components/PrimaryInput.svelte";
     import { userStore } from "../../stores/user";
+    import { onDestroy } from "svelte";
+    import { HOME_NAVIGATION } from "../../view_models/appNavItem";
+
     let email: string = "";
     let password: string = "";
     let emailError: string | undefined;
     let passwordError: string | undefined;
+
+    const unsubscribe = userStore.subscribe((user) => {
+        if (!user) return;
+        navigate(HOME_NAVIGATION[0].path);
+    });
+
     function validateLogin(email: string, password: string): boolean {
         if (!email || email.length < 4) emailError = "Email is required";
         if (!password || password.length == 0)
@@ -17,8 +27,11 @@
         emailError = undefined;
         passwordError = undefined;
         if (!validateLogin(email, password)) return;
+        console.log("logging in");
         userStore.loginUser(email, password);
     }
+
+    onDestroy(unsubscribe);
 </script>
 
 <main>
