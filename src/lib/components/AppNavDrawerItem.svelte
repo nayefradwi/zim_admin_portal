@@ -1,6 +1,5 @@
 <script lang="ts">
     import type { AppNavItemModel } from "../view_models/appNavItem.ts";
-    import type { SvelteComponent } from "svelte";
 
     export let navItem: AppNavItemModel;
     export let isSelected: boolean;

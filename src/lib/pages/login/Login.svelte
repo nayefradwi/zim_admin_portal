@@ -4,17 +4,12 @@
     import PrimaryInput from "../../components/PrimaryInput.svelte";
     import { userStore } from "../../stores/user";
     import { onDestroy } from "svelte";
-    import { HOME_NAVIGATION } from "../../view_models/appNavItem";
+    import { WAREHOUSE_SELECT_ROUTE } from "../../routes";
 
     let email: string = "";
     let password: string = "";
     let emailError: string | undefined;
     let passwordError: string | undefined;
-
-    const unsubscribe = userStore.subscribe((user) => {
-        if (!user) return;
-        navigate(HOME_NAVIGATION[0].path);
-    });
 
     function validateLogin(email: string, password: string): boolean {
         if (!email || email.length < 4) emailError = "Email is required";
@@ -23,15 +18,15 @@
         return !emailError && !passwordError;
     }
 
-    function login() {
+    async function login() {
         emailError = undefined;
         passwordError = undefined;
         if (!validateLogin(email, password)) return;
         console.log("logging in");
-        userStore.loginUser(email, password);
+        await userStore.loginUser(email, password);
+        if (!$userStore) return;
+        navigate(WAREHOUSE_SELECT_ROUTE);
     }
-
-    onDestroy(unsubscribe);
 </script>
 
 <main>
@@ -62,7 +57,7 @@
             errorMessage={passwordError}
         />
         <div class="p-1" />
-        <PrimaryButton label="Login" onClick={login} />
+        <PrimaryButton label="Login" onClick={() => void login()} />
     </div>
 </main>
 

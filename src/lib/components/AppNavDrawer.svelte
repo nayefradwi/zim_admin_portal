@@ -7,17 +7,30 @@
     import Dashboard from "../pages/home/dashboard/Dashboard.svelte";
     import Inventory from "../pages/home/inventory/Inventory.svelte";
     import Product from "../pages/home/product/Product.svelte";
+    import { LogOutIcon } from "svelte-feather-icons";
     import {
         DASHBOARD_ROUTE,
         INVENTORY_ROUTE,
+        LOGIN_ROUTE,
         PRODUCTS_ROUTE,
     } from "../routes";
+    import { setAuthHeader } from "../../data";
     let selectedPath: string = window.location.pathname;
     const onClick = (item: AppNavItemModel, isSelected: boolean) => {
         if (!isSelected && !item.isLocked) {
             navigate(item.path, { replace: true });
             selectedPath = item.path;
         }
+    };
+    const logoutNavItem: AppNavItemModel = {
+        name: "Logout",
+        icon: LogOutIcon,
+        path: "/logout",
+    };
+
+    const logout = () => {
+        setAuthHeader(null);
+        navigate(LOGIN_ROUTE);
     };
 </script>
 
@@ -35,6 +48,11 @@
                     {onClick}
                 />
             {/each}
+            <AppNavDrawerItem
+                navItem={logoutNavItem}
+                isSelected={false}
+                onClick={logout}
+            />
         </ul>
     </div>
     <div class="drawer-content">
