@@ -2,6 +2,7 @@
     import { navigate } from "svelte-routing";
     import { DASHBOARD_ROUTE, WAREHOUSE_SELECT_ROUTE } from "../routes";
     import { setWarehouseHeader } from "../../data";
+    import { warehouseStore } from "../stores/warehouse";
     function changeWarehouse() {
         setWarehouseHeader(null);
         navigate(WAREHOUSE_SELECT_ROUTE);
@@ -18,9 +19,16 @@
             on:click={goToDashboard}>Zanobia Inventory Manager</button
         >
     </div>
-    <div class="flex-none">
-        <button class="btn btn-outline btn-error" on:click={changeWarehouse}>
-            Change Warehouse
-        </button>
-    </div>
+    {#if $warehouseStore}
+        <div class="flex-none">
+            <button
+                class="btn btn-outline btn-error"
+                on:click={changeWarehouse}
+            >
+                Change {$warehouseStore.name} Warehouse
+            </button>
+        </div>
+    {:else}
+        <span class="loading loading-spinner bg-error" />
+    {/if}
 </div>
