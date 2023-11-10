@@ -4,13 +4,18 @@
   import Home from "./lib/pages/home/Home.svelte";
   import WarehouseSelection from "./lib/pages/warehouse_selection/WarehouseSelection.svelte";
   import Login from "./lib/pages/login/Login.svelte";
-  import { getTokensFromSession, setAuthHeader } from "./data";
+  import {
+    getTokensFromSession,
+    setAuthHeader,
+    setWarehouseHeader,
+  } from "./data";
   import { userStore } from "./lib/stores/user";
   import {
     HOME_ROUTE,
     LOGIN_ROUTE,
     WAREHOUSE_SELECT_ROUTE,
   } from "./lib/routes";
+  import { getWarehouseSelected } from "./data/local_storage";
 
   const unsubscribe = userStore.subscribe((user) => {
     if (!user) return navigate("/login");
@@ -21,8 +26,9 @@
     if (!token) return navigate(LOGIN_ROUTE);
     setAuthHeader(token.accessToken);
     userStore.getUser();
-    // TODO: set warehouse header
-    // if no warehouse redirect to warehouse select
+    const warehouseId = getWarehouseSelected();
+    if (!warehouseId) navigate(WAREHOUSE_SELECT_ROUTE);
+    setWarehouseHeader(warehouseId);
   });
 
   onDestroy(unsubscribe);

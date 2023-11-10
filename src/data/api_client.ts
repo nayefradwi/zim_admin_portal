@@ -6,11 +6,19 @@ export const apiClient = axios.create({
     headers: {},
 })
 
-export function setAuthHeader(accessToken: string) {
+export function setAuthHeader(accessToken: string | null) {
     apiClient
         .defaults
         .headers
         .common['Authorization'] = `Bearer ${accessToken}`;
+}
+
+export function setWarehouseHeader(warehouseId: number | null) {
+    apiClient
+        .defaults
+        .headers
+        .common['X-Warehouse-Id'] = warehouseId != null ?
+            warehouseId.toString() : null;
 }
 apiClient.interceptors.response.use(
     (response) => response,
