@@ -24,6 +24,7 @@
     setAuthHeader(token.accessToken);
     await userStore.getUser();
     if (!$userStore) return navigate(LOGIN_ROUTE);
+    console.log("user", $userStore.firstName);
     const warehouseId = getWarehouseSelected();
     if (!warehouseId) navigate(WAREHOUSE_SELECT_ROUTE);
     setWarehouseHeader(warehouseId);

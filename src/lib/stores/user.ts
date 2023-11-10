@@ -13,7 +13,7 @@ import {
 
 
 function createUserStore() {
-    const store = writable<User>(undefined);
+    const store = writable<User | null>(null);
     const { subscribe, set } = store;
     return {
         subscribe,

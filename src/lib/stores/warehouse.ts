@@ -3,7 +3,7 @@ import { WarehouseRepo, type IWarehouseRepo, type Warehouse, type ResponseHandle
 
 
 function createWarehouseStore() {
-    const store = writable<Warehouse>(undefined);
+    const store = writable<Warehouse | null>(null);
     const { subscribe, set } = store;
     return {
         subscribe,
