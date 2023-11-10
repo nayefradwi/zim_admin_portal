@@ -6,7 +6,6 @@
 <main class="h-full">
     <!-- header -->
     <AppNavBar />
-    <div class="my-2" />
     <!-- drawer -->
     <AppNavDrawer />
     <!-- body -->

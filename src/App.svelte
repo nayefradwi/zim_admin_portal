@@ -16,22 +16,21 @@
     WAREHOUSE_SELECT_ROUTE,
   } from "./lib/routes";
   import { getWarehouseSelected } from "./data/local_storage";
+  import { warehouseStore } from "./lib/stores/warehouse";
 
-  const unsubscribe = userStore.subscribe((user) => {
-    if (!user) return navigate("/login");
-  });
-
-  onMount(() => {
+  onMount(async () => {
     const token = getTokensFromSession();
     if (!token) return navigate(LOGIN_ROUTE);
     setAuthHeader(token.accessToken);
-    userStore.getUser();
+    await userStore.getUser();
+    if (!$userStore) return navigate(LOGIN_ROUTE);
     const warehouseId = getWarehouseSelected();
     if (!warehouseId) navigate(WAREHOUSE_SELECT_ROUTE);
     setWarehouseHeader(warehouseId);
+    await warehouseStore.getCurrentWarehouse();
+    if (!$warehouseStore) navigate(WAREHOUSE_SELECT_ROUTE);
   });
 
-  onDestroy(unsubscribe);
   export let url = "";
 </script>
 
