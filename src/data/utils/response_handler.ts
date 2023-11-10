@@ -1,27 +1,30 @@
-import type { Axios, AxiosResponse } from "axios";
-import { ClientError } from "../../domain/models/error";
-
+import type { AxiosResponse } from "axios";
+import { ClientError } from "../models/error";
+export interface ResponseHandlerData<T> {
+    call: () => Promise<T>,
+    onSuccess: (data: T) => any | Promise<any>,
+    onError: (error: ClientError) => any | Promise<any>,
+}
 export async function getResponse<T>(
-    call: () => AxiosResponse<T>,
-    successfulCallback: (data: T) => any | Promise<any>,
-    errorCallback: (error: ClientError) => any | Promise<any>,
+    details: ResponseHandlerData<T>
 ) {
+    const { call, onSuccess, onError } = details;
     try {
         const response = await call();
         const data = handleResponse(response);
-        if (data instanceof ClientError) return errorCallback(data);
-        return successfulCallback(data);
+        if (data instanceof ClientError) return onError(data);
+        return onSuccess(data);
     } catch (error) {
         console.error(error);
-        if (error instanceof ClientError) return errorCallback(error);
-        return errorCallback(createUnknownErrorResponse());
+        if (error instanceof ClientError) return onError(error);
+        return onError(createUnknownErrorResponse());
     }
 }
 
-function handleResponse<T>(response: AxiosResponse<T>): T | ClientError {
-    if (response.data == undefined) return createUnknownErrorResponse();
-    if (response.data == null) return createUnknownErrorResponse();
-    return response.data;
+function handleResponse<T>(data: T): T | ClientError {
+    if (data == undefined) return createUnknownErrorResponse();
+    if (data == null) return createUnknownErrorResponse();
+    return data;
 }
 
 function createUnknownErrorResponse(): ClientError {

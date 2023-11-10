@@ -12,7 +12,7 @@
     // set warehouse header
     // if no warehouse redirect to warehouse select
     // go to dashboard
-    navigate("/");
+    navigate("/login");
   });
 
   export let url = "";

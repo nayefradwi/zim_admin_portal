@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ClientError } from '../domain/models/error';
+import { ClientError } from './models/error';
 
 export const apiClient = axios.create({
     baseURL: 'http://localhost:3000',
