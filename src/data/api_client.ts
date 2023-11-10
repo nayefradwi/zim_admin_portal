@@ -6,7 +6,12 @@ export const apiClient = axios.create({
     headers: {},
 })
 
-
+export function setAuthHeader(accessToken: string) {
+    apiClient
+        .defaults
+        .headers
+        .common['Authorization'] = `Bearer ${accessToken}`;
+}
 apiClient.interceptors.response.use(
     (response) => response,
     (error) => {
