@@ -14,7 +14,7 @@
         LOGIN_ROUTE,
         PRODUCTS_ROUTE,
     } from "../routes";
-    import { setAuthHeader } from "../../data";
+    import { setAuthHeader, storeTokensInSession } from "../../data";
     let selectedPath: string = window.location.pathname;
     const onClick = (item: AppNavItemModel, isSelected: boolean) => {
         if (!isSelected && !item.isLocked) {
@@ -29,7 +29,8 @@
     };
 
     const logout = () => {
-        setAuthHeader(null);
+        setAuthHeader("");
+        storeTokensInSession({ accessToken: "", refreshToken: "" });
         navigate(LOGIN_ROUTE);
     };
 </script>
