@@ -7,6 +7,7 @@
         type ResponseHandlerData,
         getResponse,
     } from "../../../../data";
+    import ProductTableRow from "./ProductTableRow.svelte";
 
     let pageSize = 10;
     let endCursor: string | undefined;
@@ -23,8 +24,10 @@
         },
         onSuccess(data) {
             isLoading = false;
-            endCursor = data.endCursor;
-            productsPage = data;
+            if (data.total == 0) return;
+            if (!productsPage) return (productsPage = data);
+            productsPage.items = [...productsPage.items, ...data.items];
+            productsPage.endCursor = data.endCursor;
         },
         onError(_) {
             isLoading = false;
@@ -32,6 +35,7 @@
     };
 
     function load() {
+        if (productsPage && !productsPage.hasNext) return;
         return getResponse(details);
     }
 
@@ -46,6 +50,8 @@
             class="loading loading-spinner loading-lg bg-primary
             self-center"
         />
+    {:else if !productsPage || productsPage.items.length === 0}
+        <span class="text-center text-gray-500">No products found</span>
     {:else}
         <table class="table">
             <!-- head -->
@@ -58,25 +64,8 @@
                 </tr>
             </thead>
             <tbody>
-                {#each { length: pageSize } as _, i}
-                    <tr>
-                        {#if productsPage && productsPage.items[i]}
-                            <th>{productsPage.items[i].id}</th>
-                            <!-- TODO fill in image -->
-                            <th>no-image</th>
-                            <th>{productsPage.items[i].name}</th>
-                            {#if productsPage.items[i].description}
-                                <th>{productsPage.items[i].description}</th>
-                            {:else}
-                                <th>no description</th>
-                            {/if}
-                        {:else}
-                            <th />
-                            <th />
-                            <th />
-                            <th />
-                        {/if}
-                    </tr>
+                {#each productsPage.items as item}
+                    <ProductTableRow productItem={item} />
                 {/each}
             </tbody>
         </table>
