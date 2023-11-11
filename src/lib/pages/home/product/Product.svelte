@@ -17,11 +17,7 @@
             Add
         </button>
         <label class="swap mx-2">
-            <input
-                type="checkbox"
-                bind:checked={isProducts}
-                on:change={() => console.log(isProducts)}
-            />
+            <input type="checkbox" bind:checked={isProducts} />
             <div
                 class="swap-on btn no-animation btn-primary btn-outline btn-sm"
             >

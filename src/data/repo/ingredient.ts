@@ -28,7 +28,7 @@ export const IngredientRepo: IIngredientRepo = {
         Promise<PaginatedModel<Inventory>> => {
         if (!query) query = { pageSize: 10 };
         const response = await apiClient.
-            get<PaginatedModel<Inventory>>('/products/ingredients/inventory/', {
+            get<PaginatedModel<Inventory>>('/products/ingredients/inventories/', {
                 params: query
             });
         return response.data;

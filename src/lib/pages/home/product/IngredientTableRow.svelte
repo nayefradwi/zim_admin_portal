@@ -16,7 +16,7 @@
         <th>{ingredientItem.price}QAR</th>
         <th>{ingredientItem.expiresInDays} Days</th>
         {#if ingredientItem.standardUnit}
-            <th>{ingredientItem.standardUnit.symbol}</th>
+            <th>{ingredientItem.standardUnit.name}</th>
         {:else}
             <th>No Unit</th>
         {/if}

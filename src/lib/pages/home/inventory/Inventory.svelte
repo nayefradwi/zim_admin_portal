@@ -1,7 +1,5 @@
 <script lang="ts">
-    import IngredientTable from "../product/IngredientTable.svelte";
-    import ProductTable from "../product/ProductTable.svelte";
-    import { PlusCircleIcon } from "svelte-feather-icons";
+    import InventoryTable from "./InventoryTable.svelte";
     let isBatches = true;
 </script>
 
@@ -13,11 +11,7 @@
             class="input input-bordered mx-2 input-sm w-full"
         />
         <label class="swap mx-2">
-            <input
-                type="checkbox"
-                bind:checked={isBatches}
-                on:change={() => console.log(isBatches)}
-            />
+            <input type="checkbox" bind:checked={isBatches} />
             <div
                 class="swap-on btn no-animation btn-primary btn-outline btn-sm"
             >
@@ -31,8 +25,8 @@
         </label>
     </div>
     {#if isBatches}
-        <ProductTable />
+        <InventoryTable />
     {:else}
-        <IngredientTable />
+        <InventoryTable />
     {/if}
 </div>
