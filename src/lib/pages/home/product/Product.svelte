@@ -3,8 +3,8 @@
     import { PlusCircleIcon } from "svelte-feather-icons";
 </script>
 
-<div class="overflow-x-auto m-4 shadow-md flex flex-col h-5/6">
-    <div class="m-4 flex flex-row justify-end">
+<div class="overflow-x-auto m-4 shadow-md flex flex-col">
+    <div class="m-2 flex flex-row justify-end">
         <input
             type="text"
             placeholder="Search"

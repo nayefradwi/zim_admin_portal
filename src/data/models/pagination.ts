@@ -1,7 +1,13 @@
 export interface PaginatedModel<T> {
     items: T[],
-    endCursor: String,
+    endCursor: string,
     hasNext: Boolean,
     total: Number,
     pageSize: Number,
+}
+
+
+export interface PaginationQuery {
+    endCursor?: string,
+    pageSize?: Number,
 }
