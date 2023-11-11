@@ -1,23 +1,23 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import {
-        ProductRepo,
+        IngredientRepo,
         type PaginatedModel,
-        type Product,
+        type Ingredient,
         type ResponseHandlerData,
         getResponse,
     } from "../../../../data";
-    import ProductTableRow from "./ProductTableRow.svelte";
+    import IngredientTableRow from "./IngredientTableRow.svelte";
 
     let pageSize = 10;
     let endCursor: string | undefined;
     let isLoading = true;
-    let productsPage: PaginatedModel<Product>;
+    let ingredientsPage: PaginatedModel<Ingredient>;
 
-    const details: ResponseHandlerData<PaginatedModel<Product>> = {
+    const details: ResponseHandlerData<PaginatedModel<Ingredient>> = {
         call: () => {
             isLoading = true;
-            return ProductRepo.getProducts({
+            return IngredientRepo.getIngredients({
                 pageSize,
                 endCursor,
             });
@@ -25,9 +25,9 @@
         onSuccess(data) {
             isLoading = false;
             if (data.total == 0) return;
-            if (!productsPage) return (productsPage = data);
-            productsPage.items = [...productsPage.items, ...data.items];
-            productsPage.endCursor = data.endCursor;
+            if (!ingredientsPage) return (ingredientsPage = data);
+            ingredientsPage.items = [...ingredientsPage.items, ...data.items];
+            ingredientsPage.endCursor = data.endCursor;
         },
         onError(_) {
             isLoading = false;
@@ -35,7 +35,7 @@
     };
 
     function load() {
-        if (productsPage && !productsPage.hasNext) return;
+        if (ingredientsPage && !ingredientsPage.hasNext) return;
         return getResponse(details);
     }
 
@@ -50,7 +50,7 @@
             class="loading loading-spinner loading-lg bg-primary
             self-center"
         />
-    {:else if !productsPage || productsPage.items.length === 0}
+    {:else if !ingredientsPage || ingredientsPage.items.length === 0}
         <span class="text-center text-gray-500">No products found</span>
     {:else}
         <table class="table table-xs">
@@ -58,12 +58,15 @@
                 <tr>
                     <th>Id</th>
                     <th>Name</th>
-                    <th>Description</th>
+                    <th>Brand</th>
+                    <th>Price</th>
+                    <th>Expires In</th>
+                    <th>Unit</th>
                 </tr>
             </thead>
             <tbody>
-                {#each productsPage.items as item}
-                    <ProductTableRow productItem={item} />
+                {#each ingredientsPage.items as item}
+                    <IngredientTableRow ingredientItem={item} />
                 {/each}
             </tbody>
         </table>
