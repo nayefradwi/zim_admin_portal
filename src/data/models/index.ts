@@ -5,4 +5,5 @@ export * from "./warehouse";
 export * from "./product";
 export * from "./pagination";
 export * from "./ingredient";
-export * from "./unit"
+export * from "./unit";
+export * from "./inventory";

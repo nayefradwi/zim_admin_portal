@@ -1,16 +1,36 @@
-import { apiClient, type Ingredient, type PaginatedModel, type PaginationQuery } from "..";
+import {
+    apiClient,
+    type Ingredient,
+    type Inventory,
+    type PaginatedModel,
+    type PaginationQuery
+} from "..";
 
 export interface IIngredientRepo {
-    getIngredients(query?: PaginationQuery): Promise<PaginatedModel<Ingredient>>;
+    getIngredients(query?: PaginationQuery):
+        Promise<PaginatedModel<Ingredient>>;
+    getInventory(query?: PaginationQuery):
+        Promise<PaginatedModel<Inventory>>;
 }
 
 
 export const IngredientRepo: IIngredientRepo = {
-    getIngredients: async (query?: PaginationQuery): Promise<PaginatedModel<Ingredient>> => {
+    getIngredients: async (query?: PaginationQuery):
+        Promise<PaginatedModel<Ingredient>> => {
         if (!query) query = { pageSize: 10 };
-        const response = await apiClient.get<PaginatedModel<Ingredient>>('/products/ingredients/', {
-            params: query
-        });
+        const response = await apiClient.
+            get<PaginatedModel<Ingredient>>('/products/ingredients/', {
+                params: query
+            });
+        return response.data;
+    },
+    getInventory: async (query?: PaginationQuery):
+        Promise<PaginatedModel<Inventory>> => {
+        if (!query) query = { pageSize: 10 };
+        const response = await apiClient.
+            get<PaginatedModel<Inventory>>('/products/ingredients/inventory/', {
+                params: query
+            });
         return response.data;
     }
 }
