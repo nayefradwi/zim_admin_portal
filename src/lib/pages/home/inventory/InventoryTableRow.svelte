@@ -1,7 +1,9 @@
 <script lang="ts">
     import { EyeIcon, MinusIcon, PlusIcon } from "svelte-feather-icons";
     import type { Inventory } from "../../../../data";
-
+    import ModifyInventoryModal from "../../../components/ModifyInventoryModal.svelte";
+    let showIncrementModal: boolean = false;
+    let showDecrementModal: boolean = false;
     export let inventoryItem: Inventory;
     const totalPrice = inventoryItem.ingredient.price * inventoryItem.quantity;
 </script>
@@ -22,8 +24,15 @@
             <th>{inventoryItem.quantity}</th>
         {/if}
         <td>
-            <button class="btn btn-ghost no-animation btn-xs p-0 m-0">
-                <!-- TODO increment ingredient -->
+            <button
+                class="btn btn-ghost no-animation btn-xs p-0 m-0"
+                on:click={() => (showIncrementModal = true)}
+            >
+                <ModifyInventoryModal
+                    inventory={inventoryItem}
+                    bind:showModal={showIncrementModal}
+                    isIncrement={true}
+                />
                 <PlusIcon />
             </button>
             <button class="btn btn-ghost no-animation btn-xs p-0 m-0">
@@ -31,8 +40,14 @@
                 <EyeIcon />
             </button>
 
-            <button class="btn btn-ghost no-animation btn-xs p-0 m-0">
-                <!-- TODO decrement ingredient -->
+            <button
+                class="btn btn-ghost no-animation btn-xs p-0 m-0"
+                on:click={() => (showDecrementModal = true)}
+            >
+                <ModifyInventoryModal
+                    inventory={inventoryItem}
+                    bind:showModal={showDecrementModal}
+                />
                 <MinusIcon />
             </button>
         </td>
