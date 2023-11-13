@@ -15,6 +15,8 @@
         PRODUCTS_ROUTE,
     } from "../routes";
     import { setAuthHeader, storeTokensInSession } from "../../data";
+    import { drawerToggle } from "../stores/drawer";
+    import AppNavBar from "./AppNavBar.svelte";
     let selectedPath: string = window.location.pathname;
     const onClick = (item: AppNavItemModel, isSelected: boolean) => {
         if (!isSelected && !item.isLocked) {
@@ -35,7 +37,7 @@
     };
 </script>
 
-<div class="drawer drawer-open">
+<div class="drawer {$drawerToggle ? 'drawer-open' : null}">
     <input id="my-drawer-2" type="checkbox" class="drawer-toggle invisible" />
     <div class="drawer-side p-0">
         <ul
@@ -57,6 +59,7 @@
         </ul>
     </div>
     <div class="drawer-content">
+        <AppNavBar />
         <Router url={selectedPath}>
             <Route path={DASHBOARD_ROUTE} component={Dashboard} />
             <Route path={INVENTORY_ROUTE} component={Inventory} />

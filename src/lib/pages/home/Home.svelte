@@ -5,8 +5,5 @@
 
 <main class="h-screen overflow-hidden">
     <!-- header -->
-    <AppNavBar />
-    <!-- drawer -->
     <AppNavDrawer />
-    <!-- body -->
 </main>
