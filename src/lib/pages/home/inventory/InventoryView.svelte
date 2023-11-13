@@ -13,8 +13,13 @@
         />
         {#if isBatches}
             <!-- TODO create batch -->
-            <button class="btn btn-outline btn-primary btn-sm"
+            <button class="btn btn-outline btn-primary btn-sm no-animation"
                 >Create Batch</button
+            >
+        {:else}
+            <!-- TODO create batch -->
+            <button class="btn btn-outline btn-primary btn-sm no-animation"
+                >Create Inventory</button
             >
         {/if}
         <label class="swap mx-2">

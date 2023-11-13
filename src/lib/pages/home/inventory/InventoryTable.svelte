@@ -61,6 +61,7 @@
                     <th>Brand</th>
                     <th>Total Price</th>
                     <th>Quantity</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
