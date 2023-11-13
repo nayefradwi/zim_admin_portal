@@ -5,20 +5,18 @@
     import { Router, Route } from "svelte-routing";
     import AppNavDrawerItem from "./AppNavDrawerItem.svelte";
     import Dashboard from "../pages/home/dashboard/Dashboard.svelte";
-    import Inventory from "../pages/home/inventory/Inventory.svelte";
-    import Product from "../pages/home/product/Product.svelte";
+    import InventoryView from "../pages/home/inventory/InventoryView.svelte";
+    import ProductView from "../pages/home/product/ProductView.svelte";
     import { LogOutIcon } from "svelte-feather-icons";
     import {
         DASHBOARD_ROUTE,
         INVENTORY_ROUTE,
         LOGIN_ROUTE,
         PRODUCTS_ROUTE,
-        PRODUCT_DETAILS_ROUTE,
     } from "../routes";
     import { setAuthHeader, storeTokensInSession } from "../../data";
     import { drawerToggle } from "../stores/drawer";
     import AppNavBar from "./AppNavBar.svelte";
-    import ProductDetails from "../pages/product_details/ProductDetails.svelte";
     let selectedPath: string = window.location.pathname;
     const onClick = (item: AppNavItemModel, isSelected: boolean) => {
         if (!isSelected && !item.isLocked) {
@@ -64,14 +62,8 @@
         <AppNavBar />
         <Router url={selectedPath}>
             <Route path={DASHBOARD_ROUTE} component={Dashboard} />
-            <Route path={INVENTORY_ROUTE} component={Inventory} />
-            <Route path={PRODUCTS_ROUTE} component={Product} />
-            <!--
-                Route path="/orders" component={Home} />
-                <Route path="/customers" component={Home} />
-                <Route path="/reports" component={Home} />
-                <Route path="/settings" component={Home} />
-            -->
+            <Route path={INVENTORY_ROUTE} component={InventoryView} />
+            <Route path={PRODUCTS_ROUTE} component={ProductView} />
         </Router>
     </div>
 </div>

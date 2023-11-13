@@ -3,6 +3,7 @@ import { apiClient, type PaginatedModel, type PaginationQuery, type Product } fr
 
 export interface IProductRepo {
     getProducts(query?: PaginationQuery): Promise<PaginatedModel<Product>>;
+    getProduct(id: string): Promise<Product>;
 }
 
 export const ProductRepo: IProductRepo = {
@@ -12,5 +13,9 @@ export const ProductRepo: IProductRepo = {
             params: query
         });
         return response.data;
-    }
+    },
+    getProduct: async (id: string): Promise<Product> => {
+        const response = await apiClient.get<Product>(`/products/${id}`);
+        return response.data;
+    },
 }
