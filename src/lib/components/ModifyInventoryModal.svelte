@@ -27,14 +27,13 @@
         isLoading = false;
         showModal = false;
         dialog.close();
-        void onSuccessfulModify();
+        onSuccessfulModify();
     }
     function increment(data: ModifyInventoryRequest) {
         if (newStock < 0) return modifiedQty.set(0);
-
         getResponse<void>({
             call: () => IngredientRepo.incrementInventory(data),
-            onSuccess(data) {
+            onSuccess(_) {
                 onSuccess();
             },
             onError(err) {
@@ -46,7 +45,7 @@
         if (newStock < 0) return modifiedQty.set(0);
         getResponse<void>({
             call: () => IngredientRepo.decrementInventory(data),
-            onSuccess(data) {
+            onSuccess(_) {
                 onSuccess();
             },
             onError(err) {

@@ -14,9 +14,8 @@
     let isLoading = true;
     let inventoryPage: PaginatedModel<Inventory> | undefined;
 
-    const details: ResponseHandlerData<PaginatedModel<Inventory>> = {
+    const loadDetails: ResponseHandlerData<PaginatedModel<Inventory>> = {
         call: () => {
-            isLoading = true;
             return IngredientRepo.getInventory({
                 pageSize,
                 endCursor,
@@ -34,14 +33,34 @@
         },
     };
 
+    const refreshDetails: ResponseHandlerData<PaginatedModel<Inventory>> = {
+        call: () => {
+            return IngredientRepo.getInventory({
+                pageSize,
+                endCursor,
+            });
+        },
+        onSuccess(data) {
+            isLoading = false;
+            if (data.total == 0) return;
+            if (!inventoryPage) return (inventoryPage = data);
+            inventoryPage.items = [...data.items];
+            inventoryPage.endCursor = data.endCursor;
+        },
+        onError(_) {
+            isLoading = false;
+        },
+    };
+
     function load() {
         if (inventoryPage && !inventoryPage.hasNext) return;
-        return getResponse(details);
+        isLoading = true;
+        return getResponse(loadDetails);
     }
 
     function refresh() {
         inventoryPage = undefined;
-        load();
+        return getResponse(refreshDetails);
     }
 
     onMount(() => {
@@ -73,13 +92,13 @@
                 {#each inventoryPage.items as item}
                     <InventoryTableRow
                         inventoryItem={item}
-                        onSuccessfulModify={load}
+                        onSuccessfulModify={refresh}
                     />
                 {/each}
             </tbody>
         </table>
         <dvi class="flex flex-row w-full justify-center">
-            <button class="btn btn-xs my-2 mx-1" on:click={refresh}
+            <button class="btn btn-xs my-2 mx-1" on:click={load}
                 >Load More</button
             >
         </dvi>
