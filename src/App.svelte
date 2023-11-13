@@ -35,7 +35,7 @@
   export let url = "";
 </script>
 
-<main>
+<main class="m-0 p-0 text-center h-screen">
   <Router {url}>
     <div>
       <Route path={HOME_ROUTE} component={Home} />

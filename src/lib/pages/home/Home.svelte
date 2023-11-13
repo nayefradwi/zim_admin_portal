@@ -3,7 +3,7 @@
     import AppNavDrawer from "../../components/AppNavDrawer.svelte";
 </script>
 
-<main class="h-full">
+<main class="h-screen overflow-hidden">
     <!-- header -->
     <AppNavBar />
     <!-- drawer -->

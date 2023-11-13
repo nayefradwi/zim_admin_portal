@@ -5,7 +5,7 @@
     let isProducts = true;
 </script>
 
-<div class="overflow-x-auto m-4 flex flex-col">
+<div class="overflow-x-auto overflow-y-auto m-4 flex flex-col">
     <div class="my-4 mx-2 flex flex-row justify-end">
         <input
             type="text"
