@@ -11,6 +11,12 @@
             placeholder="Search"
             class="input input-bordered mr-2 input-sm w-full"
         />
+        {#if isBatches}
+            <!-- TODO create batch -->
+            <button class="btn btn-outline btn-primary btn-sm"
+                >Create Batch</button
+            >
+        {/if}
         <label class="swap mx-2">
             <input type="checkbox" bind:checked={isBatches} />
             <div
