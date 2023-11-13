@@ -13,10 +13,12 @@
   import {
     HOME_ROUTE,
     LOGIN_ROUTE,
+    PRODUCT_DETAILS_ROUTE,
     WAREHOUSE_SELECT_ROUTE,
   } from "./lib/routes";
   import { getWarehouseSelected } from "./data/local_storage";
   import { warehouseStore } from "./lib/stores/warehouse";
+  import ProductDetails from "./lib/pages/product_details/ProductDetails.svelte";
 
   onMount(async () => {
     const token = getTokensFromSession();
@@ -41,6 +43,9 @@
       <Route path={HOME_ROUTE} component={Home} />
       <Route path={LOGIN_ROUTE} component={Login} />
       <Route path={WAREHOUSE_SELECT_ROUTE} component={WarehouseSelection} />
+      <Route path={PRODUCT_DETAILS_ROUTE} let:params>
+        <ProductDetails productId={params.id} />
+      </Route>
       <Route path="*" component={Home} />
     </div>
   </Router>

@@ -72,9 +72,6 @@
                 <Route path="/reports" component={Home} />
                 <Route path="/settings" component={Home} />
             -->
-            <Route path={PRODUCT_DETAILS_ROUTE} let:params>
-                <ProductDetails productId={params.id} />
-            </Route>
         </Router>
     </div>
 </div>
