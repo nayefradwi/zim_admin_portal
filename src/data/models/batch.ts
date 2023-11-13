@@ -7,4 +7,5 @@ export interface Batch {
     productVariant: ProductVariant;
     expiresAt: string;
     unit: Unit;
+    productName: string;
 }

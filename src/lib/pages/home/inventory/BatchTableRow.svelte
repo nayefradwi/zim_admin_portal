@@ -13,6 +13,7 @@
     {#if batchItem}
         <th>{batchItem.id}</th>
         <th>{batchItem.sku}</th>
+        <th>{batchItem.productName}</th>
         <th>{batchItem.productVariant.name}</th>
         <th>{totalWorth}QAR</th>
         {#if batchItem.unit}

@@ -58,6 +58,7 @@
                 <tr>
                     <th>Id</th>
                     <th>Sku</th>
+                    <th>Product</th>
                     <th>Name</th>
                     <th>Total Worth</th>
                     <th>Quantity</th>
