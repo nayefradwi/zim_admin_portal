@@ -1,6 +1,11 @@
 <script lang="ts">
     import { onDestroy } from "svelte";
-    import type { Inventory } from "../../data";
+    import {
+        getResponse,
+        IngredientRepo,
+        type Inventory,
+        type ModifyInventoryRequest,
+    } from "../../data";
     import { writable } from "svelte/store";
     export let showModal: boolean;
 
@@ -9,6 +14,7 @@
     $: if (dialog && showModal) dialog.showModal();
     export let isIncrement: boolean = false;
     export let inventory: Inventory;
+    export let onSuccessfulModify: () => void;
     const modifiedQty = writable(0);
     let newStock: number = inventory.quantity;
     let isLoading: boolean = false;
@@ -17,21 +23,49 @@
         if (isIncrement) return (newStock = inventory.quantity + val);
         newStock = inventory.quantity - val;
     });
-
-    function increment() {
-        if (newStock < 0) return modifiedQty.set(0);
-        // TOOO: increment inventory
+    function onSuccess() {
+        isLoading = false;
+        showModal = false;
+        dialog.close();
+        void onSuccessfulModify();
     }
-    function decrement() {
+    function increment(data: ModifyInventoryRequest) {
         if (newStock < 0) return modifiedQty.set(0);
-        // TODO: decrement inventory
+
+        getResponse<void>({
+            call: () => IngredientRepo.incrementInventory(data),
+            onSuccess(data) {
+                onSuccess();
+            },
+            onError(err) {
+                isLoading = false;
+            },
+        });
+    }
+    function decrement(data: ModifyInventoryRequest) {
+        if (newStock < 0) return modifiedQty.set(0);
+        getResponse<void>({
+            call: () => IngredientRepo.decrementInventory(data),
+            onSuccess(data) {
+                onSuccess();
+            },
+            onError(err) {
+                isLoading = false;
+            },
+        });
     }
 
     function modify() {
         if (isLoading) return;
         isLoading = true;
-        if (isIncrement) return increment();
-        return decrement();
+        let data: ModifyInventoryRequest = {
+            ingredientId: inventory.ingredient.id,
+            quantity: $modifiedQty,
+            // TODO: make unit user selected and get use conversions
+            unitId: inventory.unit?.id,
+        };
+        if (isIncrement) return increment(data);
+        return decrement(data);
     }
 
     onDestroy(() => {

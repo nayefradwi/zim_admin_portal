@@ -6,6 +6,8 @@
     let showDecrementModal: boolean = false;
     export let inventoryItem: Inventory;
     const totalPrice = inventoryItem.ingredient.price * inventoryItem.quantity;
+
+    export let onSuccessfulModify: () => void;
 </script>
 
 <tr>
@@ -32,6 +34,7 @@
                     inventory={inventoryItem}
                     bind:showModal={showIncrementModal}
                     isIncrement={true}
+                    {onSuccessfulModify}
                 />
                 <PlusIcon />
             </button>
@@ -47,6 +50,7 @@
                 <ModifyInventoryModal
                     inventory={inventoryItem}
                     bind:showModal={showDecrementModal}
+                    {onSuccessfulModify}
                 />
                 <MinusIcon />
             </button>

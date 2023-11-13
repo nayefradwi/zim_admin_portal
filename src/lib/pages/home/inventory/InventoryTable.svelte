@@ -12,7 +12,7 @@
     let pageSize = 10;
     let endCursor: string | undefined;
     let isLoading = true;
-    let inventoryPage: PaginatedModel<Inventory>;
+    let inventoryPage: PaginatedModel<Inventory> | undefined;
 
     const details: ResponseHandlerData<PaginatedModel<Inventory>> = {
         call: () => {
@@ -37,6 +37,11 @@
     function load() {
         if (inventoryPage && !inventoryPage.hasNext) return;
         return getResponse(details);
+    }
+
+    function refresh() {
+        inventoryPage = undefined;
+        load();
     }
 
     onMount(() => {
@@ -66,12 +71,15 @@
             </thead>
             <tbody>
                 {#each inventoryPage.items as item}
-                    <InventoryTableRow inventoryItem={item} />
+                    <InventoryTableRow
+                        inventoryItem={item}
+                        onSuccessfulModify={load}
+                    />
                 {/each}
             </tbody>
         </table>
         <dvi class="flex flex-row w-full justify-center">
-            <button class="btn btn-xs my-2 mx-1" on:click={load}
+            <button class="btn btn-xs my-2 mx-1" on:click={refresh}
                 >Load More</button
             >
         </dvi>
