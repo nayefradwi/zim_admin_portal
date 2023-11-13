@@ -1,7 +1,11 @@
 <script lang="ts">
     import type { Product } from "../../../../data";
-
+    import { navigate } from "svelte-routing";
     export let productItem: Product;
+
+    function goToProduct() {
+        navigate(`/products/${productItem.id}`);
+    }
 </script>
 
 <tr>
@@ -14,7 +18,10 @@
             <th>no description</th>
         {/if}
         <th>
-            <button class="btn no-animation btn-ghost btn-xs">View</button>
+            <button
+                on:click={goToProduct}
+                class="btn no-animation btn-ghost btn-xs">View</button
+            >
         </th>
     {/if}
 </tr>

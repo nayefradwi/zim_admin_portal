@@ -13,10 +13,12 @@
         INVENTORY_ROUTE,
         LOGIN_ROUTE,
         PRODUCTS_ROUTE,
+        PRODUCT_DETAILS_ROUTE,
     } from "../routes";
     import { setAuthHeader, storeTokensInSession } from "../../data";
     import { drawerToggle } from "../stores/drawer";
     import AppNavBar from "./AppNavBar.svelte";
+    import ProductDetails from "../pages/product_details/ProductDetails.svelte";
     let selectedPath: string = window.location.pathname;
     const onClick = (item: AppNavItemModel, isSelected: boolean) => {
         if (!isSelected && !item.isLocked) {
@@ -70,6 +72,9 @@
                 <Route path="/reports" component={Home} />
                 <Route path="/settings" component={Home} />
             -->
+            <Route path={PRODUCT_DETAILS_ROUTE} let:params>
+                <ProductDetails productId={params.id} />
+            </Route>
         </Router>
     </div>
 </div>

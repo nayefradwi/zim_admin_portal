@@ -9,5 +9,6 @@ export const CUSTOMERS_ROUTE = '/customers';
 export const TASKS_ROUTE = '/tasks';
 export const REPORTS_ROUTE = '/reports';
 export const SETTINGS_ROUTE = '/settings';
+export const PRODUCT_DETAILS_ROUTE = '/products/:id';
 
 
