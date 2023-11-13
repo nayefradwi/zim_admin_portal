@@ -7,3 +7,4 @@ export * from "./pagination";
 export * from "./ingredient";
 export * from "./unit";
 export * from "./inventory";
+export * from "./batch";

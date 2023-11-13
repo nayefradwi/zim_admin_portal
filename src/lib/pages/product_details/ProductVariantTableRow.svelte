@@ -26,12 +26,15 @@
     </td>
     <td>
         <button class="btn btn-xs btn-ghost">
+            <!-- TODO view variant -->
             <EyeIcon />
         </button>
         <button class="btn btn-xs btn-ghost">
+            <!-- TODO edit variant -->
             <EditIcon />
         </button>
         <button class="btn btn-xs btn-ghost text-error">
+            <!-- TODO archive variant -->
             <Trash2Icon />
         </button>
     </td>

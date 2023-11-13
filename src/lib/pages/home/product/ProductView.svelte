@@ -6,11 +6,11 @@
 </script>
 
 <div class="overflow-x-auto overflow-y-auto m-4 flex flex-col">
-    <div class="my-4 mx-2 flex flex-row justify-end">
+    <div class="my-4 mx-1 flex flex-row justify-end">
         <input
             type="text"
             placeholder="Search"
-            class="input input-bordered mx-2 input-sm w-full"
+            class="input input-bordered mr-2 input-sm w-full"
         />
         <button class="btn btn-primary btn-sm btn-outline">
             <PlusCircleIcon />
