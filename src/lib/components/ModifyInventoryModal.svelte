@@ -23,12 +23,14 @@
         if (isIncrement) return (newStock = inventory.quantity + val);
         newStock = inventory.quantity - val;
     });
+
     function onSuccess() {
         isLoading = false;
         showModal = false;
         dialog.close();
         onSuccessfulModify();
     }
+
     function increment(data: ModifyInventoryRequest) {
         if (newStock < 0) return modifiedQty.set(0);
         getResponse<void>({
