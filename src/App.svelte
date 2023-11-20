@@ -5,9 +5,11 @@
   import WarehouseSelection from "./lib/pages/warehouse_selection/WarehouseSelection.svelte";
   import Login from "./lib/pages/login/Login.svelte";
   import {
+    ProductRepo,
     getTokensFromSession,
     setAuthHeader,
     setWarehouseHeader,
+    type Batch,
   } from "./data";
   import { userStore } from "./lib/stores/user";
   import {
@@ -19,6 +21,7 @@
   import { getWarehouseSelected } from "./data/local_storage";
   import { warehouseStore } from "./lib/stores/warehouse";
   import ProductDetails from "./lib/pages/product_details/ProductDetails.svelte";
+  import { batchStore, type PaginationState } from "./lib/stores/pagination";
 
   onMount(async () => {
     const token = getTokensFromSession();
@@ -32,6 +35,12 @@
     setWarehouseHeader(warehouseId);
     await warehouseStore.getCurrentWarehouse();
     if (!$warehouseStore) navigate(WAREHOUSE_SELECT_ROUTE);
+    let emptyState: PaginationState<Batch> = {
+      pageNumber: 1,
+      isLoading: false,
+      page: null,
+    };
+    batchStore.refresh(emptyState, ProductRepo.getBatches);
   });
 
   export let url = "";

@@ -2,6 +2,7 @@ import { DateTime } from "luxon";
 import {
   getResponse,
   type PaginatedModel,
+  type PaginationQuery,
   type ResponseHandlerData,
 } from "../../data";
 
@@ -13,36 +14,27 @@ export function getDifferenceInDays(date: DateTime): number {
   return date.diffNow("days").days;
 }
 
-export function getNext<T>(
-  pageSize: number | 10,
-  last: PaginatedModel<T> | null,
-  getCall: (
-    pageSize: number,
-    sort: number,
-    endCursor: string | undefined,
-    previousCursor: string | undefined
-  ) => ResponseHandlerData<PaginatedModel<T>>
-) {
-  if (last) {
-    const { endCursor, previousCursor } = last;
-    return getResponse(getCall(pageSize, 1, endCursor, previousCursor));
-  }
-  return getResponse(getCall(pageSize, 1, undefined, undefined));
-}
-
-export function getPrevious<T>(
-  pageSize: number | 10,
-  first: PaginatedModel<T> | null,
-  getCall: (
-    pageSize: number,
-    sort: number,
-    endCursor: string | undefined,
-    previousCursor: string | undefined
-  ) => ResponseHandlerData<PaginatedModel<T>>
-) {
-  if (first) {
-    const { endCursor, previousCursor } = first;
-    return getResponse(getCall(pageSize, -1, endCursor, previousCursor));
-  }
-  return getResponse(getCall(pageSize, -1, undefined, undefined));
+export function getPage<T>(
+  pageSize: number,
+  endCursor: string | undefined,
+  previousCursor: string | undefined,
+  sort: number,
+  call: (query: PaginationQuery | undefined) => Promise<PaginatedModel<T>>
+): Promise<PaginatedModel<T>> {
+  const details: ResponseHandlerData<PaginatedModel<T>> = {
+    call: () =>
+      call({
+        pageSize,
+        endCursor,
+        previousCursor,
+        sort,
+      }),
+    onSuccess: (data: PaginatedModel<T>) => {
+      return data;
+    },
+    onError: (error: Error) => {
+      console.log(error);
+    },
+  };
+  return getResponse<PaginatedModel<T>>(details);
 }
