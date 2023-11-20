@@ -14,7 +14,9 @@ export interface PaginationState<T> {
 }
 
 const defaultPageSize = 10;
-function createBatchStore<T>() {
+function createBatchStore<T>(
+  apiCall: (query?: PaginationQuery | undefined) => Promise<PaginatedModel<T>>
+) {
   const store = writable<PaginationState<T>>({
     isLoading: false,
     page: null,
@@ -28,8 +30,7 @@ function createBatchStore<T>() {
     previousCursor: string | undefined,
     sort: number,
     state: PaginationState<T>,
-    newPageNumber: number,
-    apiCall: (query?: PaginationQuery | undefined) => Promise<PaginatedModel<T>>
+    newPageNumber: number
   ) {
     state.isLoading = true;
     set(state);
@@ -41,65 +42,46 @@ function createBatchStore<T>() {
       apiCall
     );
     state.isLoading = false;
-    if (page) {
-      console.log("page", page);
+    if (page && page.items.length > 0) {
       state.page = page;
       state.pageNumber = newPageNumber;
-      return set({ ...state });
+      return set(state);
     }
-    return set({ ...state });
+    return set(state);
   }
 
   return {
     subscribe,
     set,
-    refresh: async (
-      state: PaginationState<T>,
-      apiCall: (
-        query?: PaginationQuery | undefined
-      ) => Promise<PaginatedModel<T>>
-    ) => {
+    refresh: async (state: PaginationState<T>) => {
       load(
         state.page?.previousCursor || undefined,
         undefined,
         1,
         state,
-        state.pageNumber,
-        apiCall
+        state.pageNumber
       );
     },
-    getNext: (
-      state: PaginationState<T>,
-      apiCall: (
-        query?: PaginationQuery | undefined
-      ) => Promise<PaginatedModel<T>>
-    ) => {
+    getNext: (state: PaginationState<T>) => {
       load(
         state.page?.endCursor || undefined,
         undefined,
         1,
         state,
-        state.pageNumber + 1,
-        apiCall
+        state.pageNumber + 1
       );
     },
-    getPrevious: (
-      state: PaginationState<T>,
-      apiCall: (
-        query?: PaginationQuery | undefined
-      ) => Promise<PaginatedModel<T>>
-    ) => {
+    getPrevious: (state: PaginationState<T>) => {
       load(
         undefined,
         state.page?.previousCursor || undefined,
         1,
         state,
-        state.pageNumber - 1,
-        apiCall
+        state.pageNumber - 1
       );
     },
     pageSize,
   };
 }
 
-export const batchStore = createBatchStore<Batch>();
+export const batchStore = createBatchStore<Batch>(ProductRepo.getBatches);

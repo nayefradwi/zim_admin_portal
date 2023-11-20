@@ -1,19 +1,18 @@
 <script lang="ts">
-  import { ProductRepo, type Batch } from "../../../../data";
-  import { batchStore, type PaginationState } from "../../../stores/pagination";
+  import { batchStore } from "../../../stores/pagination";
   import BatchTableRow from "./BatchTableRow.svelte";
   import { ArrowLeftIcon, ArrowRightIcon } from "svelte-feather-icons";
 
   function next() {
-    batchStore.getNext($batchStore, ProductRepo.getBatches);
+    batchStore.getNext($batchStore);
   }
 
   function prev() {
-    batchStore.getPrevious($batchStore, ProductRepo.getBatches);
+    batchStore.getPrevious($batchStore);
   }
 
   function refresh() {
-    batchStore.refresh($batchStore, ProductRepo.getBatches);
+    batchStore.refresh($batchStore);
   }
 </script>
 

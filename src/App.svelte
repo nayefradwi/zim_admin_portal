@@ -40,7 +40,7 @@
       isLoading: false,
       page: null,
     };
-    batchStore.refresh(emptyState, ProductRepo.getBatches);
+    batchStore.refresh(emptyState);
   });
 
   export let url = "";
