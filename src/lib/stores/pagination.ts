@@ -13,7 +13,7 @@ export interface PaginationState<T> {
   pageNumber: number;
 }
 
-const defaultPageSize = 10;
+const defaultPageSize = 1;
 function createBatchStore<T>(
   apiCall: (query?: PaginationQuery | undefined) => Promise<PaginatedModel<T>>
 ) {
@@ -56,7 +56,7 @@ function createBatchStore<T>(
     refresh: async (state: PaginationState<T>) => {
       load(
         state.page?.previousCursor || undefined,
-        undefined,
+        state.page?.endCursor || undefined,
         1,
         state,
         state.pageNumber
@@ -65,7 +65,7 @@ function createBatchStore<T>(
     getNext: (state: PaginationState<T>) => {
       load(
         state.page?.endCursor || undefined,
-        undefined,
+        state.page?.previousCursor || undefined,
         1,
         state,
         state.pageNumber + 1
@@ -73,9 +73,9 @@ function createBatchStore<T>(
     },
     getPrevious: (state: PaginationState<T>) => {
       load(
-        undefined,
+        state.page?.endCursor || undefined,
         state.page?.previousCursor || undefined,
-        1,
+        -1,
         state,
         state.pageNumber - 1
       );
