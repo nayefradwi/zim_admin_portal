@@ -1,3 +1,3 @@
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
-export const drawerToggle = writable(false);
+export const drawerToggle = writable(true);

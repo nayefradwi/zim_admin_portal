@@ -3,31 +3,31 @@
   import type { Batch } from "../../../../data";
   import { parseDate, getDifferenceInDays } from "../../../utils/functions";
   import { EyeIcon, MinusIcon, PlusIcon } from "svelte-feather-icons";
-  export let batches: Batch[];
+  export let items: Batch[];
   export let index: number;
-  let batchItem: Batch | undefined;
+  let item: Batch | undefined;
   let expiresAt: DateTime;
   let diffInDays: number;
   let totalWorth: number;
-  if (batches && index < batches.length) {
-    batchItem = batches[index];
-    totalWorth = batchItem.productVariant.price * batchItem.quantity;
-    expiresAt = parseDate(batchItem.expiresAt);
+  if (items && index < items.length) {
+    item = items[index];
+    totalWorth = item.productVariant.price * item.quantity;
+    expiresAt = parseDate(item.expiresAt);
     diffInDays = getDifferenceInDays(expiresAt);
   }
 </script>
 
 <tr>
-  {#if batchItem}
-    <th>{batchItem.id}</th>
-    <th>{batchItem.sku}</th>
-    <th>{batchItem.productName}</th>
-    <th>{batchItem.productVariant.name}</th>
+  {#if item}
+    <th>{item.id}</th>
+    <th>{item.sku}</th>
+    <th>{item.productName}</th>
+    <th>{item.productVariant.name}</th>
     <th>{totalWorth}QAR</th>
-    {#if batchItem.unit}
-      <th>{batchItem.quantity} {batchItem.unit.symbol}</th>
+    {#if item.unit}
+      <th>{item.quantity} {item.unit.symbol}</th>
     {:else}
-      <th>{batchItem.quantity}</th>
+      <th>{item.quantity}</th>
     {/if}
     <th class={diffInDays < 15 ? "text-error" : null}
       >{expiresAt.toLocaleString()}</th

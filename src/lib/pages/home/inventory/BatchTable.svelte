@@ -10,10 +10,6 @@
   function prev() {
     batchStore.getPrevious($batchStore);
   }
-
-  function refresh() {
-    batchStore.refresh($batchStore);
-  }
 </script>
 
 <div class="flex flex-col justify-center w-full my-2">
@@ -40,7 +36,7 @@
       </thead>
       <tbody>
         {#each { length: batchStore.pageSize } as _, i}
-          <BatchTableRow batches={$batchStore.page.items} index={i} />
+          <BatchTableRow items={$batchStore.page.items} index={i} />
         {/each}
       </tbody>
     </table>

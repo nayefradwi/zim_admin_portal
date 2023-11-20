@@ -10,6 +10,9 @@
     setAuthHeader,
     setWarehouseHeader,
     type Batch,
+    type Product,
+    type Ingredient,
+    type Inventory,
   } from "./data";
   import { userStore } from "./lib/stores/user";
   import {
@@ -21,7 +24,13 @@
   import { getWarehouseSelected } from "./data/local_storage";
   import { warehouseStore } from "./lib/stores/warehouse";
   import ProductDetails from "./lib/pages/product_details/ProductDetails.svelte";
-  import { batchStore, type PaginationState } from "./lib/stores/pagination";
+  import {
+    batchStore,
+    productStore,
+    type PaginationState,
+    ingredientStore,
+    inventoryStore,
+  } from "./lib/stores/pagination";
 
   onMount(async () => {
     const token = getTokensFromSession();
@@ -35,13 +44,35 @@
     setWarehouseHeader(warehouseId);
     await warehouseStore.getCurrentWarehouse();
     if (!$warehouseStore) navigate(WAREHOUSE_SELECT_ROUTE);
-    let emptyState: PaginationState<Batch> = {
+    loadData();
+  });
+
+  function loadData() {
+    let emptyBatchState: PaginationState<Batch> = {
       pageNumber: 1,
       isLoading: false,
       page: null,
     };
-    batchStore.refresh(emptyState);
-  });
+    batchStore.refresh(emptyBatchState);
+    let emptyProductState: PaginationState<Product> = {
+      pageNumber: 1,
+      isLoading: false,
+      page: null,
+    };
+    productStore.refresh(emptyProductState);
+    let emptyIngredientState: PaginationState<Ingredient> = {
+      pageNumber: 1,
+      isLoading: false,
+      page: null,
+    };
+    ingredientStore.refresh(emptyIngredientState);
+    let emptyInventoryState: PaginationState<Inventory> = {
+      pageNumber: 1,
+      isLoading: false,
+      page: null,
+    };
+    inventoryStore.refresh(emptyInventoryState);
+  }
 
   export let url = "";
 </script>

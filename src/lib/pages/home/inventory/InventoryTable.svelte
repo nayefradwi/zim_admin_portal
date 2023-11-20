@@ -1,106 +1,52 @@
 <script lang="ts">
-    import { onMount } from "svelte";
-    import {
-        IngredientRepo,
-        type PaginatedModel,
-        type Inventory,
-        type ResponseHandlerData,
-        getResponse,
-    } from "../../../../data";
-    import InventoryTableRow from "./InventoryTableRow.svelte";
+  import InventoryTableRow from "./InventoryTableRow.svelte";
+  import { inventoryStore } from "../../../stores/pagination";
+  import { ArrowLeftIcon, ArrowRightIcon } from "svelte-feather-icons";
 
-    let pageSize = 10;
-    let endCursor: string | undefined;
-    let isLoading = true;
-    let inventoryPage: PaginatedModel<Inventory> | undefined;
+  function next() {
+    inventoryStore.getNext($inventoryStore);
+  }
 
-    const loadDetails: ResponseHandlerData<PaginatedModel<Inventory>> = {
-        call: () => {
-            return IngredientRepo.getInventory({
-                pageSize,
-                endCursor,
-            });
-        },
-        onSuccess(data) {
-            isLoading = false;
-            if (data.total == 0) return;
-            if (!inventoryPage) return (inventoryPage = data);
-            inventoryPage.items = [...inventoryPage.items, ...data.items];
-            inventoryPage.endCursor = data.endCursor;
-        },
-        onError(_) {
-            isLoading = false;
-        },
-    };
-
-    const refreshDetails: ResponseHandlerData<PaginatedModel<Inventory>> = {
-        call: () => {
-            return IngredientRepo.getInventory({
-                pageSize,
-                endCursor,
-            });
-        },
-        onSuccess(data) {
-            isLoading = false;
-            if (data.total == 0) return;
-            if (!inventoryPage) return (inventoryPage = data);
-            inventoryPage.items = [...data.items];
-            inventoryPage.endCursor = data.endCursor;
-        },
-        onError(_) {
-            isLoading = false;
-        },
-    };
-
-    function load() {
-        if (inventoryPage && !inventoryPage.hasNext) return;
-        isLoading = true;
-        return getResponse(loadDetails);
-    }
-
-    function refresh() {
-        inventoryPage = undefined;
-        return getResponse(refreshDetails);
-    }
-
-    onMount(() => {
-        load();
-    });
+  function prev() {
+    inventoryStore.getPrevious($inventoryStore);
+  }
 </script>
 
 <div class="flex flex-col justify-center w-full my-2">
-    {#if isLoading}
-        <span
-            class="loading loading-spinner loading-lg bg-primary
+  {#if $inventoryStore.isLoading}
+    <span
+      class="loading loading-spinner loading-lg bg-primary
             self-center"
-        />
-    {:else if !inventoryPage || inventoryPage.items.length === 0}
-        <span class="text-center text-gray-500">No Inventory</span>
-    {:else}
-        <table class="table table-xs">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Brand</th>
-                    <th>Total Price</th>
-                    <th>Quantity</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {#each inventoryPage.items as item}
-                    <InventoryTableRow
-                        inventoryItem={item}
-                        onSuccessfulModify={refresh}
-                    />
-                {/each}
-            </tbody>
-        </table>
-        <dvi class="flex flex-row w-full justify-center">
-            <button class="btn btn-xs my-2 mx-1" on:click={load}
-                >Load More</button
-            >
-        </dvi>
-    {/if}
+    />
+  {:else if !$inventoryStore.page || $inventoryStore.page.items.length === 0}
+    <span class="text-center text-gray-500">No Inventory</span>
+  {:else}
+    <table class="table table-xs">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Brand</th>
+          <th>Total Price</th>
+          <th>Quantity</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {#each { length: inventoryStore.pageSize } as _, i}
+          <InventoryTableRow items={$inventoryStore.page.items} index={i} />
+        {/each}
+      </tbody>
+    </table>
+    <dvi class="flex flex-row w-full justify-center items-center">
+      <button class="btn btn-xs my-2 mx-1" on:click={prev}>
+        <ArrowLeftIcon size="10" />
+      </button>
+      <span class="text-center text-gray-500">{$inventoryStore.pageNumber}</span
+      >
+      <button class="btn btn-xs my-2 mx-1" on:click={next}>
+        <ArrowRightIcon size="10" />
+      </button>
+    </dvi>
+  {/if}
 </div>
