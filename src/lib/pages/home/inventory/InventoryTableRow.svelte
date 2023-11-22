@@ -16,7 +16,7 @@
   }
 
   function refresh() {
-    inventoryStore.refresh($inventoryStore);
+    inventoryStore.getFirstPage($inventoryStore);
   }
 </script>
 

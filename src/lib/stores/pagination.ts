@@ -46,7 +46,7 @@ function createBatchStore<T>(
       direction,
       apiCall
     );
-    console.log(page);
+    // console.log(page);
     state.isLoading = false;
     if (page && page.items.length > 0) {
       state.page = page;
@@ -59,6 +59,9 @@ function createBatchStore<T>(
   return {
     subscribe,
     set,
+    getFirstPage: async (state: PaginationState<T>) => {
+      load(undefined, FORWARD_DIRECTION, state, 1);
+    },
     refresh: async (state: PaginationState<T>) => {
       load(
         state.page?.previousCursor || undefined,
