@@ -10,6 +10,9 @@ import {
   type Inventory,
 } from "../../data";
 import { getPage } from "../utils/functions";
+const FORWARD_DIRECTION = 1;
+const REFRESH_DIRECTION = 0;
+const BACKWARD_DIRECTION = -1;
 
 export interface PaginationState<T> {
   isLoading: boolean;
@@ -30,9 +33,8 @@ function createBatchStore<T>(
   const pageSize = defaultPageSize;
 
   async function load(
-    endCursor: string | undefined,
-    previousCursor: string | undefined,
-    sort: number,
+    cursor: string | undefined,
+    direction: number,
     state: PaginationState<T>,
     newPageNumber: number
   ) {
@@ -40,9 +42,8 @@ function createBatchStore<T>(
     set(state);
     const page: PaginatedModel<T> = await getPage<T>(
       defaultPageSize,
-      endCursor,
-      previousCursor,
-      sort,
+      cursor,
+      direction,
       apiCall
     );
     console.log(page);
@@ -60,9 +61,8 @@ function createBatchStore<T>(
     set,
     refresh: async (state: PaginationState<T>) => {
       load(
-        state.page?.endCursor || undefined,
         state.page?.previousCursor || undefined,
-        0,
+        REFRESH_DIRECTION,
         state,
         state.pageNumber
       );
@@ -70,17 +70,15 @@ function createBatchStore<T>(
     getNext: (state: PaginationState<T>) => {
       load(
         state.page?.endCursor || undefined,
-        state.page?.previousCursor || undefined,
-        1,
+        FORWARD_DIRECTION,
         state,
         state.pageNumber + 1
       );
     },
     getPrevious: (state: PaginationState<T>) => {
       load(
-        state.page?.endCursor || undefined,
         state.page?.previousCursor || undefined,
-        -1,
+        BACKWARD_DIRECTION,
         state,
         state.pageNumber - 1
       );

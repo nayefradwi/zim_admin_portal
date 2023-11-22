@@ -9,8 +9,7 @@ export interface PaginatedModel<T> {
 }
 
 export interface PaginationQuery {
-  endCursor?: string;
-  previousCursor?: string;
+  cursor?: string;
   pageSize?: Number;
-  sort?: number;
+  direction?: number;
 }
