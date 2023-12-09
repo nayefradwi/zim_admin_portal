@@ -8,6 +8,7 @@ import {
 
 export interface IProductRepo {
   getProducts(query?: PaginationQuery): Promise<PaginatedModel<Product>>;
+  getIngredients(query?: PaginationQuery): Promise<PaginatedModel<Product>>;
   getBatches(query?: PaginationQuery): Promise<PaginatedModel<Batch>>;
   getProduct(id: string): Promise<Product>;
 }
@@ -18,7 +19,22 @@ export const ProductRepo: IProductRepo = {
   ): Promise<PaginatedModel<Product>> => {
     if (!query) query = { pageSize: 10 };
     const response = await apiClient.get<PaginatedModel<Product>>("/products", {
-      params: query,
+      params: {
+        ...query,
+        isIngredient: false,
+      },
+    });
+    return response.data;
+  },
+  getIngredients: async (
+    query?: PaginationQuery
+  ): Promise<PaginatedModel<Product>> => {
+    if (!query) query = { pageSize: 10 };
+    const response = await apiClient.get<PaginatedModel<Product>>("/products", {
+      params: {
+        ...query,
+        isIngredient: true,
+      },
     });
     return response.data;
   },

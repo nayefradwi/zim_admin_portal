@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy, onMount } from "svelte";
+  import { onMount } from "svelte";
   import { Router, Route, navigate } from "svelte-routing";
   import Home from "./lib/pages/home/Home.svelte";
   import WarehouseSelection from "./lib/pages/warehouse_selection/WarehouseSelection.svelte";
@@ -11,8 +11,6 @@
     setWarehouseHeader,
     type Batch,
     type Product,
-    type Ingredient,
-    type Inventory,
   } from "./data";
   import { userStore } from "./lib/stores/user";
   import {
@@ -29,7 +27,6 @@
     productStore,
     type PaginationState,
     ingredientStore,
-    inventoryStore,
   } from "./lib/stores/pagination";
 
   onMount(async () => {
@@ -60,18 +57,12 @@
       page: null,
     };
     productStore.refresh(emptyProductState);
-    let emptyIngredientState: PaginationState<Ingredient> = {
+    let emptyIngredientState: PaginationState<Product> = {
       pageNumber: 1,
       isLoading: false,
       page: null,
     };
     ingredientStore.refresh(emptyIngredientState);
-    let emptyInventoryState: PaginationState<Inventory> = {
-      pageNumber: 1,
-      isLoading: false,
-      page: null,
-    };
-    inventoryStore.refresh(emptyInventoryState);
   }
 
   export let url = "";

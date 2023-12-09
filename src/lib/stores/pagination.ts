@@ -5,9 +5,6 @@ import {
   type PaginatedModel,
   type PaginationQuery,
   type Product,
-  type Ingredient,
-  IngredientRepo,
-  type Inventory,
 } from "../../data";
 import { getPage } from "../utils/functions";
 const FORWARD_DIRECTION = 1;
@@ -21,7 +18,7 @@ export interface PaginationState<T> {
 }
 
 const defaultPageSize = 10;
-function createBatchStore<T>(
+function createPaginationStore<T>(
   apiCall: (query?: PaginationQuery | undefined) => Promise<PaginatedModel<T>>
 ) {
   const store = writable<PaginationState<T>>({
@@ -90,14 +87,12 @@ function createBatchStore<T>(
   };
 }
 
-export const batchStore = createBatchStore<Batch>(ProductRepo.getBatches);
+export const batchStore = createPaginationStore<Batch>(ProductRepo.getBatches);
 
-export const productStore = createBatchStore<Product>(ProductRepo.getProducts);
-
-export const ingredientStore = createBatchStore<Ingredient>(
-  IngredientRepo.getIngredients
+export const productStore = createPaginationStore<Product>(
+  ProductRepo.getProducts
 );
 
-export const inventoryStore = createBatchStore<Inventory>(
-  IngredientRepo.getInventory
+export const ingredientStore = createPaginationStore<Product>(
+  ProductRepo.getProducts
 );
