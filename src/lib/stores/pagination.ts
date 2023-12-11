@@ -43,7 +43,6 @@ function createPaginationStore<T>(
       direction,
       apiCall
     );
-    // console.log(page);
     state.isLoading = false;
     if (page && page.items.length > 0) {
       state.page = page;
@@ -94,5 +93,5 @@ export const productStore = createPaginationStore<Product>(
 );
 
 export const ingredientStore = createPaginationStore<Product>(
-  ProductRepo.getProducts
+  ProductRepo.getIngredients
 );
