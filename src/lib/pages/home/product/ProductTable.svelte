@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { type PaginatedModel, type Product } from "../../../../data";
   import TablePaginationButtons from "../../../components/TablePaginationButtons.svelte";
   import { productStore } from "../../../stores/pagination";
   import ProductTableRow from "./ProductTableRow.svelte";
@@ -32,8 +31,8 @@
         </tr>
       </thead>
       <tbody>
-        {#each $productStore.page.items as item}
-          <ProductTableRow productItem={item} />
+        {#each { length: productStore.pageSize } as _, index}
+          <ProductTableRow products={$productStore.page.items} {index} />
         {/each}
       </tbody>
     </table>

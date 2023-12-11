@@ -67,6 +67,9 @@ function createPaginationStore<T>(
       );
     },
     getNext: (state: PaginationState<T>) => {
+      if (!state.page?.endCursor) return;
+      if (state.page?.endCursor === state.page?.previousCursor) return;
+      if (state.page?.endCursor == "") return;
       load(
         state.page?.endCursor || undefined,
         FORWARD_DIRECTION,
