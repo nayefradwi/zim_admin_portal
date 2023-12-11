@@ -25,5 +25,5 @@
       </div>
     </label>
   </div>
-  <ProductTable />
+  <ProductTable bind:isProducts />
 </div>
