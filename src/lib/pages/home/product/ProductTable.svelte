@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Product } from "../../../../data";
   import TablePaginationButtons from "../../../components/TablePaginationButtons.svelte";
   import { productStore } from "../../../stores/pagination";
   import ProductTableRow from "./ProductTableRow.svelte";
@@ -9,6 +10,12 @@
 
   function prev() {
     productStore.getPrevious($productStore);
+  }
+
+  function getProduct(index: number): Product | undefined {
+    if (!$productStore.page) return;
+    if (index >= $productStore.page.items.length) return;
+    return $productStore.page.items[index];
   }
 </script>
 
@@ -32,7 +39,7 @@
       </thead>
       <tbody>
         {#each { length: productStore.pageSize } as _, index}
-          <ProductTableRow products={$productStore.page.items} {index} />
+          <ProductTableRow product={getProduct(index)} />
         {/each}
       </tbody>
     </table>

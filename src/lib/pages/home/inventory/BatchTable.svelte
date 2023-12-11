@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Batch } from "../../../../data";
   import TablePaginationButtons from "../../../components/TablePaginationButtons.svelte";
   import { batchStore } from "../../../stores/pagination";
   import BatchTableRow from "./BatchTableRow.svelte";
@@ -9,6 +10,12 @@
 
   function prev() {
     batchStore.getPrevious($batchStore);
+  }
+
+  function getBatch(index: number): Batch | undefined {
+    if (!$batchStore.page) return;
+    if (index >= $batchStore.page.items.length) return;
+    return $batchStore.page.items[index];
   }
 </script>
 
@@ -36,7 +43,7 @@
       </thead>
       <tbody>
         {#each { length: batchStore.pageSize } as _, i}
-          <BatchTableRow items={$batchStore.page.items} index={i} />
+          <BatchTableRow item={getBatch(i)} />
         {/each}
       </tbody>
     </table>

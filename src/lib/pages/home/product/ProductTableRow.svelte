@@ -1,13 +1,8 @@
 <script lang="ts">
   import type { Product } from "../../../../data";
   import { navigate } from "svelte-routing";
-  export let products: Product[];
-  export let index: number;
-  let product: Product | undefined;
-  if (!product && index < products.length) {
-    product = products[index];
-    console.log(product);
-  }
+  export let product: Product | undefined;
+
   function goToProduct() {
     if (!product) return;
     navigate(`/products/${product.id}`);

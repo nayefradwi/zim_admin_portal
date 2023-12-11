@@ -3,14 +3,11 @@
   import type { Batch } from "../../../../data";
   import { parseDate, getDifferenceInDays } from "../../../utils/functions";
   import { EyeIcon, MinusIcon, PlusIcon } from "svelte-feather-icons";
-  export let items: Batch[];
-  export let index: number;
-  let item: Batch | undefined;
+  export let item: Batch | undefined;
   let expiresAt: DateTime;
   let diffInDays: number;
   let totalWorth: number;
-  if (items && index < items.length) {
-    item = items[index];
+  if (item) {
     totalWorth = item.productVariant.price * item.quantity;
     expiresAt = parseDate(item.expiresAt);
     diffInDays = getDifferenceInDays(expiresAt);
