@@ -37,7 +37,7 @@
       name: "Decrement Batch",
       icon: MinusIcon,
       onClick: () => {
-        showIncrementModal = true;
+        showDecrementModal = true;
       },
     },
   ];
@@ -65,6 +65,14 @@
       batch={item}
       bind:showModal={showIncrementModal}
       isIncrement={true}
+      onSuccessfulModify={() => {
+        batchStore.refresh($batchStore);
+      }}
+    />
+    <ModifyBatchModel
+      batch={item}
+      bind:showModal={showDecrementModal}
+      isIncrement={false}
       onSuccessfulModify={() => {
         batchStore.refresh($batchStore);
       }}
