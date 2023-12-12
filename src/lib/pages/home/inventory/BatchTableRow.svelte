@@ -3,6 +3,8 @@
   import type { Batch } from "../../../../data";
   import { parseDate, getDifferenceInDays } from "../../../utils/functions";
   import { EyeIcon, MinusIcon, PlusIcon } from "svelte-feather-icons";
+  import type { MenuOptionItem } from "../../../view_models/menuOptionItem";
+  import VerticalViewMore from "../../../components/VerticalViewMore.svelte";
   export let item: Batch | undefined;
   let expiresAt: DateTime;
   let diffInDays: number;
@@ -12,6 +14,24 @@
     expiresAt = parseDate(item.expiresAt);
     diffInDays = getDifferenceInDays(expiresAt);
   }
+
+  const batchOptions: MenuOptionItem[] = [
+    {
+      name: "View Details",
+      icon: EyeIcon,
+      onClick: () => {},
+    },
+    {
+      name: "Increment Batch",
+      icon: PlusIcon,
+      onClick: () => {},
+    },
+    {
+      name: "Decrement Batch",
+      icon: MinusIcon,
+      onClick: () => {},
+    },
+  ];
 </script>
 
 <tr>
@@ -30,19 +50,7 @@
       >{expiresAt.toLocaleString()}</th
     >
     <td>
-      <button class="btn btn-ghost no-animation btn-xs p-0 m-0">
-        <!-- TODO increment batch -->
-        <PlusIcon />
-      </button>
-      <button class="btn btn-ghost no-animation btn-xs p-0 m-0">
-        <!-- TODO view variant -->
-        <EyeIcon />
-      </button>
-
-      <button class="btn btn-ghost no-animation btn-xs p-0 m-0">
-        <!-- TODO decrement batch -->
-        <MinusIcon />
-      </button>
+      <VerticalViewMore position="dropdown-left" items={batchOptions} />
     </td>
   {:else}
     <th>-</th>

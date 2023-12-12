@@ -2,9 +2,14 @@
   import { MoreVerticalIcon } from "svelte-feather-icons";
   import type { MenuOptionItem } from "../view_models/menuOptionItem";
   export let items: MenuOptionItem[];
+  export let position:
+    | "dropdown-top"
+    | "dropdown-bottom"
+    | "dropdown-left"
+    | "dropdown-right" = "dropdown-bottom";
 </script>
 
-<div class="dropdown dropdown-hover">
+<div class="dropdown dropdown-hover {position}">
   <div class="btn-s" role="button">
     <MoreVerticalIcon class="btn-s" />
   </div>
