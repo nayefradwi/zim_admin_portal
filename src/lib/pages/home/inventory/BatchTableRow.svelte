@@ -5,10 +5,15 @@
   import { EyeIcon, MinusIcon, PlusIcon } from "svelte-feather-icons";
   import type { MenuOptionItem } from "../../../view_models/menuOptionItem";
   import VerticalViewMore from "../../../components/VerticalViewMore.svelte";
+  import ModifyBatchModel from "./ModifyBatchModel.svelte";
+  import { batchStore } from "../../../stores/pagination";
   export let item: Batch | undefined;
   let expiresAt: DateTime;
   let diffInDays: number;
   let totalWorth: number;
+  let showIncrementModal: boolean = false;
+  let showDecrementModal: boolean = false;
+
   if (item) {
     totalWorth = item.productVariant.price * item.quantity;
     expiresAt = parseDate(item.expiresAt);
@@ -24,12 +29,16 @@
     {
       name: "Increment Batch",
       icon: PlusIcon,
-      onClick: () => {},
+      onClick: () => {
+        showIncrementModal = true;
+      },
     },
     {
       name: "Decrement Batch",
       icon: MinusIcon,
-      onClick: () => {},
+      onClick: () => {
+        showIncrementModal = true;
+      },
     },
   ];
 </script>
@@ -52,6 +61,14 @@
     <td>
       <VerticalViewMore position="dropdown-left" items={batchOptions} />
     </td>
+    <ModifyBatchModel
+      batch={item}
+      bind:showModal={showIncrementModal}
+      isIncrement={true}
+      onSuccessfulModify={() => {
+        batchStore.refresh($batchStore);
+      }}
+    />
   {:else}
     <th>-</th>
     <th />

@@ -11,6 +11,17 @@ export interface IProductRepo {
   getIngredients(query?: PaginationQuery): Promise<PaginatedModel<Product>>;
   getBatches(query?: PaginationQuery): Promise<PaginatedModel<Batch>>;
   getProduct(id: string): Promise<Product>;
+  incrementBatch(request: ModifyBatchRequest): Promise<void>;
+  decrementBatch(request: ModifyBatchRequest): Promise<void>;
+}
+
+export interface ModifyBatchRequest {
+  id?: number;
+  sku: string;
+  unitId: number;
+  quantity: number;
+  reason: string;
+  comment?: string;
 }
 
 export const ProductRepo: IProductRepo = {
@@ -49,6 +60,23 @@ export const ProductRepo: IProductRepo = {
       "/products/product-variants/batches/",
       {
         params: query,
+      }
+    );
+    return response.data;
+  },
+  incrementBatch: async (request: ModifyBatchRequest): Promise<void> => {
+    const response = await apiClient.post<void>(
+      "/products/product-variants/batches/batch/stock",
+      request
+    );
+    return response.data;
+  },
+
+  decrementBatch: async (request: ModifyBatchRequest): Promise<void> => {
+    const response = await apiClient.delete<void>(
+      "/products/product-variants/batches/batch/stock",
+      {
+        data: request,
       }
     );
     return response.data;
