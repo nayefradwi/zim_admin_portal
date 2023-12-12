@@ -28,6 +28,7 @@
     type PaginationState,
     ingredientStore,
   } from "./lib/stores/pagination";
+  import { transactionReasonsStore } from "./lib/stores/transaction";
 
   onMount(async () => {
     const token = getTokensFromSession();
@@ -63,6 +64,7 @@
       page: null,
     };
     ingredientStore.refresh(emptyIngredientState);
+    transactionReasonsStore.getReasons();
   }
 
   export let url = "";
