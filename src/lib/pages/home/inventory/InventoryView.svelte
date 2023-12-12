@@ -9,10 +9,6 @@
       placeholder="Search"
       class="input input-bordered mr-2 input-sm w-full"
     />
-    <!-- TODO create batch -->
-    <button class="btn btn-outline btn-primary btn-sm no-animation"
-      >Create Batch</button
-    >
   </div>
   <BatchTable />
 </div>

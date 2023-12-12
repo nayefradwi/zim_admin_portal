@@ -3,13 +3,18 @@
   import { navigate } from "svelte-routing";
   import type { MenuOptionItem } from "../../../view_models/menuOptionItem";
   import VerticalViewMore from "../../../components/VerticalViewMore.svelte";
-  import { EyeIcon } from "svelte-feather-icons";
+  import { EyeIcon, PlusCircleIcon, PlusIcon } from "svelte-feather-icons";
   export let product: Product | undefined;
   const productOptions: MenuOptionItem[] = [
     {
       name: "View Details",
       onClick: goToProduct,
       icon: EyeIcon,
+    },
+    {
+      name: "Create Batch",
+      onClick: () => {},
+      icon: PlusIcon,
     },
   ];
   function goToProduct(e: any) {

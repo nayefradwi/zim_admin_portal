@@ -10,8 +10,8 @@
 </script>
 
 <div class="dropdown dropdown-hover {position}">
-  <div class="btn-s" role="button">
-    <MoreVerticalIcon class="btn-s" />
+  <div class="btn-sm" role="button">
+    <MoreVerticalIcon />
   </div>
   <ul
     tabindex="0"
@@ -22,7 +22,7 @@
       <li>
         <a href="/" class="disabled" on:click={item.onClick} role="menuitem">
           {#if item.icon}
-            <svelte:component this={item.icon} />
+            <svelte:component this={item.icon} class="text-sm" />
           {/if}
           {item.name}
         </a>
