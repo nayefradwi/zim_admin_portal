@@ -7,6 +7,11 @@
     | "dropdown-bottom"
     | "dropdown-left"
     | "dropdown-right" = "dropdown-bottom";
+
+  const onClick = (e: any, item: MenuOptionItem): void => {
+    e.preventDefault();
+    return item.onClick(e);
+  };
 </script>
 
 <div class="dropdown dropdown-hover {position}">
@@ -20,7 +25,12 @@
   >
     {#each items as item}
       <li>
-        <a href="/" class="disabled" on:click={item.onClick} role="menuitem">
+        <a
+          href="/"
+          class="disabled"
+          on:click={(e) => onClick(e, item)}
+          role="menuitem"
+        >
           {#if item.icon}
             <svelte:component this={item.icon} class="text-sm" />
           {/if}
