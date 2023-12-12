@@ -36,7 +36,7 @@
     {:else if !$productStore.page || $productStore.page.items.length === 0}
       <span class="text-center text-gray-500">No products found</span>
     {:else}
-      <table class="table table-xs">
+      <table class="table table-xs overflow-auto">
         <thead>
           <tr>
             <th>Id</th>
@@ -79,7 +79,7 @@
         </thead>
         <tbody>
           {#each { length: ingredientStore.pageSize } as _, index}
-            <ProductTableRow product={getIngredientProduct(index)} />
+            <ProductTableRow product={getIngredientProduct(0)} />
           {/each}
         </tbody>
       </table>
