@@ -34,7 +34,7 @@
   ];
 </script>
 
-<tr>
+<tr class="hover">
   {#if item}
     <th>{item.id}</th>
     <th>{item.sku}</th>
