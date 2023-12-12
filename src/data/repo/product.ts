@@ -13,6 +13,7 @@ export interface IProductRepo {
   getProduct(id: string): Promise<Product>;
   incrementBatch(request: ModifyBatchRequest): Promise<void>;
   decrementBatch(request: ModifyBatchRequest): Promise<void>;
+  getBatchesBySku(sku: string): Promise<PaginatedModel<Batch>>;
 }
 
 export interface ModifyBatchRequest {
@@ -77,6 +78,18 @@ export const ProductRepo: IProductRepo = {
       "/products/product-variants/batches/batch/stock",
       {
         data: request,
+      }
+    );
+    return response.data;
+  },
+
+  getBatchesBySku: async (sku: string): Promise<PaginatedModel<Batch>> => {
+    const response = await apiClient.get<PaginatedModel<Batch>>(
+      "/products/product-variants/batches/search",
+      {
+        params: {
+          sku,
+        },
       }
     );
     return response.data;
