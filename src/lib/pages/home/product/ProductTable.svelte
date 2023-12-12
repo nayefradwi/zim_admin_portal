@@ -79,7 +79,7 @@
         </thead>
         <tbody>
           {#each { length: ingredientStore.pageSize } as _, index}
-            <ProductTableRow product={getIngredientProduct(0)} />
+            <ProductTableRow product={getIngredientProduct(index)} />
           {/each}
         </tbody>
       </table>
