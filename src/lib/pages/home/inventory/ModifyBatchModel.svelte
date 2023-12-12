@@ -5,8 +5,11 @@
     ProductRepo,
     type Batch,
     type ModifyBatchRequest,
+    type TransactionReason,
   } from "../../../../data/index";
   import { writable } from "svelte/store";
+  import ModifyBatchTitle from "./ModifyBatchTitle.svelte";
+  import { transactionReasonsStore } from "../../../stores/transaction";
   export let showModal: boolean;
   export let isIncrement: boolean = false;
   export let batch: Batch;
@@ -18,6 +21,10 @@
   let newStock: number = batch.quantity;
   let isLoading: boolean = false;
   let dialog: HTMLDialogElement;
+  let comment: string = "";
+  let reasons: TransactionReason[] = $transactionReasonsStore.filter(
+    (r) => r.isPositive == isIncrement
+  );
   const unsubscribe = modifiedQty.subscribe((val) => {
     if (val < 0) return modifiedQty.set(0);
     if (isIncrement) return (newStock = batch.quantity + val);
@@ -87,15 +94,12 @@
   class="modal modal-bottom sm:modal-middle"
 >
   <div class="modal-box">
-    <div class="flex flex-col items-start justify-center">
-      <h3 class="font-bold text-lg">
-        {isIncrement ? "Increment Batch:" : "Decrement Batch:"}
-        {batch.productName} / {batch.productVariant.name}
-      </h3>
-      <p class="py-4">
-        Current stock: {newStock}{batch.unit ? batch.unit.symbol : ""}
-      </p>
-    </div>
+    <ModifyBatchTitle {batch} {isIncrement} bind:newStock></ModifyBatchTitle>
+    <select class="select select-bordered mx-2 my-2" tabindex="0">
+      {#each reasons as reason}
+        <option>{reason.name}</option>
+      {/each}
+    </select>
     <div class="flex flex-row justify-between items-center">
       <input
         type="number"
@@ -107,6 +111,12 @@
         <div>{batch.unit.symbol}</div>
       {/if}
     </div>
+    <textarea
+      class="textarea textarea-bordered mx-2 my-2 fix resize-none textarea-lg"
+      placeholder="Comment"
+      maxlength={255}
+      bind:value={comment}
+    />
     <div class="modal-action">
       <button on:click={modify} class="btn btn-outline btn-primary">
         {#if isLoading}
@@ -120,3 +130,10 @@
     </div>
   </div>
 </dialog>
+
+<style>
+  textarea,
+  select {
+    width: 95%;
+  }
+</style>

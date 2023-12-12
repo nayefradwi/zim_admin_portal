@@ -4,6 +4,7 @@ import {
   type ResponseHandlerData,
   TransactionRepo,
   ClientError,
+  getResponse,
 } from "../../data";
 
 function createTransactionReasonsStore() {
@@ -27,4 +28,5 @@ function GetReasons() {
       console.log("failed to get reasons");
     },
   };
+  return getResponse<TransactionReason[]>(details);
 }
