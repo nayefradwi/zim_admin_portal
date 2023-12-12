@@ -25,6 +25,7 @@
   let reasons: TransactionReason[] = $transactionReasonsStore.filter(
     (r) => r.isPositive == isIncrement
   );
+  let selectedReason: TransactionReason = reasons[0];
   const unsubscribe = modifiedQty.subscribe((val) => {
     if (val < 0) return modifiedQty.set(0);
     if (isIncrement) return (newStock = batch.quantity + val);
@@ -72,7 +73,8 @@
       quantity: $modifiedQty,
       unitId: batch.unit.id,
       sku: batch.sku,
-      reason: "sold",
+      reason: selectedReason.name,
+      comment: comment,
     };
     if (isIncrement) return increment(data);
     return decrement(data);
@@ -95,9 +97,13 @@
 >
   <div class="modal-box">
     <ModifyBatchTitle {batch} {isIncrement} bind:newStock></ModifyBatchTitle>
-    <select class="select select-bordered mx-2 my-2" tabindex="0">
+    <select
+      class="select select-bordered mx-2 my-2"
+      tabindex="0"
+      bind:value={selectedReason}
+    >
       {#each reasons as reason}
-        <option>{reason.name}</option>
+        <option value={reason}>{reason.name}</option>
       {/each}
     </select>
     <div class="flex flex-row justify-between items-center">
