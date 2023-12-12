@@ -15,9 +15,12 @@
   >
     {#each items as item}
       <li>
-        <a href="/" class="disabled" on:click={item.onClick} role="menuitem"
-          >{item.name}</a
-        >
+        <a href="/" class="disabled" on:click={item.onClick} role="menuitem">
+          {#if item.icon}
+            <svelte:component this={item.icon} />
+          {/if}
+          {item.name}
+        </a>
       </li>
     {/each}
   </ul>

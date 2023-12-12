@@ -3,11 +3,13 @@
   import { navigate } from "svelte-routing";
   import type { MenuOptionItem } from "../../../view_models/menuOptionItem";
   import VerticalViewMore from "../../../components/VerticalViewMore.svelte";
+  import { EyeIcon } from "svelte-feather-icons";
   export let product: Product | undefined;
   const productOptions: MenuOptionItem[] = [
     {
       name: "View Details",
       onClick: goToProduct,
+      icon: EyeIcon,
     },
   ];
   function goToProduct(e: any) {
@@ -26,7 +28,7 @@
     {:else}
       <th>no description</th>
     {/if}
-    <td><VerticalViewMore items={productOptions} /></td>
+    <td><VerticalViewMore items={productOptions}></VerticalViewMore></td>
   {:else}
     <th>-</th>
     <th />
