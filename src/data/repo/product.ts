@@ -13,6 +13,7 @@ export interface IProductRepo {
   getProduct(id: string): Promise<Product>;
   incrementBatch(request: ModifyBatchRequest): Promise<void>;
   decrementBatch(request: ModifyBatchRequest): Promise<void>;
+  incrementBatchWithRecipe(request: ModifyBatchRequest): Promise<void>;
   getBatchesBySku(sku: string): Promise<PaginatedModel<Batch>>;
 }
 
@@ -91,6 +92,15 @@ export const ProductRepo: IProductRepo = {
           sku,
         },
       }
+    );
+    return response.data;
+  },
+  incrementBatchWithRecipe: async (
+    request: ModifyBatchRequest
+  ): Promise<void> => {
+    const response = await apiClient.post<void>(
+      "/products/product-variants/batches/batch/stock/with-recipe",
+      request
     );
     return response.data;
   },

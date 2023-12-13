@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onDestroy } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import {
     getResponse,
     ProductRepo,
@@ -16,16 +16,22 @@
   export let onSuccessfulModify: () => void;
 
   $: if (dialog && showModal) dialog.showModal();
+  let reasons: TransactionReason[];
+  let selectedReason: TransactionReason | undefined;
 
+  onMount(() => {
+    reasons = $transactionReasonsStore.filter(
+      (r) => r.isPositive == isIncrement
+    );
+    selectedReason = reasons[0];
+  });
   const modifiedQty = writable(0);
   let newStock: number = batch.quantity;
   let isLoading: boolean = false;
   let dialog: HTMLDialogElement;
   let comment: string = "";
-  let reasons: TransactionReason[] = $transactionReasonsStore.filter(
-    (r) => r.isPositive == isIncrement
-  );
-  let selectedReason: TransactionReason = reasons[0];
+  let affectRecipe: boolean = true;
+
   const unsubscribe = modifiedQty.subscribe((val) => {
     if (val < 0) return modifiedQty.set(0);
     if (isIncrement) return (newStock = batch.quantity + val);
@@ -42,7 +48,10 @@
   function increment(data: ModifyBatchRequest) {
     if (newStock < 0) return modifiedQty.set(0);
     getResponse<void>({
-      call: () => ProductRepo.incrementBatch(data),
+      call: () => {
+        if (!affectRecipe) return ProductRepo.incrementBatch(data);
+        return ProductRepo.incrementBatchWithRecipe(data);
+      },
       onSuccess(_) {
         onSuccess();
       },
@@ -67,6 +76,7 @@
 
   function modify() {
     if (isLoading) return;
+    if (!selectedReason) return;
     isLoading = true;
     let data: ModifyBatchRequest = {
       id: batch.id,
@@ -97,15 +107,17 @@
 >
   <div class="modal-box">
     <ModifyBatchTitle {batch} {isIncrement} bind:newStock></ModifyBatchTitle>
-    <select
-      class="select select-bordered mx-2 my-2"
-      tabindex="0"
-      bind:value={selectedReason}
-    >
-      {#each reasons as reason}
-        <option value={reason}>{reason.name}</option>
-      {/each}
-    </select>
+    {#if selectedReason}
+      <select
+        class="select select-bordered mx-2 my-2"
+        tabindex="0"
+        bind:value={selectedReason}
+      >
+        {#each reasons as reason}
+          <option value={reason}>{reason.name}</option>
+        {/each}
+      </select>
+    {/if}
     <div class="flex flex-row justify-between items-center">
       <input
         type="number"
@@ -123,6 +135,17 @@
       maxlength={255}
       bind:value={comment}
     />
+    {#if isIncrement}
+      <label class="label cursor-pointer mx-2">
+        <span class="label-text">Affect Recipe?</span>
+        <input
+          type="checkbox"
+          checked={affectRecipe}
+          class="checkbox checkbox-primary"
+        />
+      </label>
+    {/if}
+
     <div class="modal-action">
       <button on:click={modify} class="btn btn-primary">
         {#if isLoading}

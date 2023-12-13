@@ -66,6 +66,6 @@
     </button>
   </td>
   <td>
-    <VerticalViewMore items={variantOptions} position="dropdown-bottom" />
+    <VerticalViewMore items={variantOptions} position="dropdown-left" />
   </td>
 </tr>

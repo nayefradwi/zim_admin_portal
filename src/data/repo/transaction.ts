@@ -9,6 +9,7 @@ export const TransactionRepo: ITransactionRepo = {
     const response = await apiClient.get<TransactionReason[]>(
       "/transactions/reasons"
     );
+    console.log(response.data);
     return response.data;
   },
 };
