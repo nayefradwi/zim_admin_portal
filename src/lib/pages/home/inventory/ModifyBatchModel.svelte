@@ -124,7 +124,7 @@
       bind:value={comment}
     />
     <div class="modal-action">
-      <button on:click={modify} class="btn btn-outline btn-primary">
+      <button on:click={modify} class="btn btn-primary">
         {#if isLoading}
           <span class="loading loading-spinner" />
         {/if}
