@@ -5,7 +5,7 @@
   export let productVariants: ProductVariant[];
 </script>
 
-<div>
+<div class="h-full">
   <div class="divider flex flex-row my-1">
     <!-- TODO add varaint -->
     <button class="btn btn-xs mx-1">Add Variant</button>
@@ -14,7 +14,7 @@
     <!-- TODO add option value -->
     <button class="btn btn-xs mx-1">Add Option Value</button>
   </div>
-  <div class="overflow-y-hidden flex flex-col my-4">
+  <div class="flex flex-col my-4 h-full">
     <ProductVariantsTable {productVariants} />
   </div>
 </div>

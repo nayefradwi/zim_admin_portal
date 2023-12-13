@@ -27,7 +27,7 @@
 </script>
 
 <main
-  class="flex flex-col justify-start p-4 items-start h-screen overflow-auto
+  class="flex flex-col justify-start p-4 items-start h-screen overflow-y-auto
     bg-base-100"
 >
   <div class="card w-full shadow rounded p-2 h-full bg-base-100">
