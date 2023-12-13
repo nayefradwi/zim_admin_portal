@@ -1,16 +1,14 @@
 <script lang="ts">
-  import ProductTable from "./ProductTable.svelte";
+  import ProductList from "./ProductList.svelte";
   import { PlusCircleIcon } from "svelte-feather-icons";
   let isProducts = true;
 </script>
 
 <div class="overflow-x-auto overflow-y-auto m-4 flex flex-col">
   <div class="my-4 mx-1 flex flex-row justify-end">
-    <input
-      type="text"
-      placeholder="Search"
-      class="input input-bordered mr-2 input-sm w-full"
-    />
+    <div class="flex flex-row justify-start w-full">
+      <h1 class="text-2xl font-semibold">Products</h1>
+    </div>
     <button class="btn btn-primary btn-sm btn-outline">
       <PlusCircleIcon />
       Add
@@ -25,5 +23,5 @@
       </div>
     </label>
   </div>
-  <ProductTable bind:isProducts />
+  <ProductList bind:isProducts />
 </div>
