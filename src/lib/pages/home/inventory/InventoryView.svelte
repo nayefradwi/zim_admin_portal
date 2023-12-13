@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { SearchIcon, TrashIcon, XIcon } from "svelte-feather-icons";
   import {
     ProductRepo,
     type Batch,
@@ -16,10 +17,17 @@
   };
 
   const searchBySku = () => {
-    if (search.length === 0) return clearSearch();
+    let searchVal = search.trim();
+    if (searchVal === "") return clearSearch();
+    $batchStore = {
+      page: currentBatchState.page,
+      pageNumber: 1,
+      isLoading: true,
+    };
     const details: ResponseHandlerData<PaginatedModel<Batch>> = {
-      call: () => ProductRepo.getBatchesBySku(search),
+      call: () => ProductRepo.getBatchesBySku(searchVal),
       onSuccess: (data) => {
+        console.log(search, data);
         let newState: PaginationState<Batch> = {
           page: data,
           pageNumber: 1,
@@ -36,7 +44,7 @@
 </script>
 
 <div class="overflow-x-auto m-4 flex flex-col">
-  <div class="my-4 mx-1 flex flex-row justify-end">
+  <div class="my-4 mx-1 flex flex-row justify-end items-center">
     <input
       type="text"
       placeholder="Search"
@@ -46,6 +54,13 @@
       }}
       class="input input-bordered mr-2 input-sm w-full"
     />
+    <button on:click={searchBySku}>
+      <SearchIcon />
+    </button>
+    <span class="mx-1"></span>
+    <button on:click={clearSearch}>
+      <XIcon class="text-error" />
+    </button>
   </div>
   <BatchTable />
 </div>
