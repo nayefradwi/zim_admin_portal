@@ -2,6 +2,7 @@
   import { MoreVerticalIcon } from "svelte-feather-icons";
   import type { MenuOptionItem } from "../view_models/menuOptionItem";
   export let items: MenuOptionItem[];
+  export let size: "xs" | "sm" | "md" | "lg" = "xs";
   export let position:
     | "dropdown-top"
     | "dropdown-bottom"
@@ -15,7 +16,7 @@
 </script>
 
 <div class="dropdown dropdown-hover {position}">
-  <div class="btn-sm" role="button">
+  <div class="btn-{size}" role="button">
     <MoreVerticalIcon />
   </div>
   <ul
@@ -29,10 +30,10 @@
           href="/"
           class="disabled"
           on:click={(e) => onClick(e, item)}
-          role="menuitem"
+          role="menuitem text-{size}"
         >
           {#if item.icon}
-            <svelte:component this={item.icon} class="text-sm" />
+            <svelte:component this={item.icon} class="text-{size}" />
           {/if}
           {item.name}
         </a>

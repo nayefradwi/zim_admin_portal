@@ -6,6 +6,7 @@
     Trash2Icon,
     ArchiveIcon,
     PlusIcon,
+    HashIcon,
   } from "svelte-feather-icons";
   import type { MenuOptionItem } from "../../view_models/menuOptionItem";
   import VerticalViewMore from "../../components/VerticalViewMore.svelte";
@@ -24,6 +25,11 @@
     {
       name: "Edit Details",
       icon: EditIcon,
+      onClick: () => {},
+    },
+    {
+      name: "Update Sku",
+      icon: HashIcon,
       onClick: () => {},
     },
     {
