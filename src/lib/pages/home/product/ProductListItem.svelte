@@ -1,12 +1,16 @@
 <script lang="ts">
+  import { navigate } from "svelte-routing";
   import { type Product } from "../../../../data";
 
   export let product: Product;
+  const goToProductDetails = () => {
+    navigate(`/products/${product.id}`);
+  };
 </script>
 
 <button
   class="card bg-base-100 shadow-md mx-1 my-4 cursor-pointer transition duration-300 hover:shadow-lg"
-  on:click={() => {}}
+  on:click={goToProductDetails}
 >
   <div class="card-body">
     <h2 class="card-title">{product.name}</h2>
@@ -18,7 +22,7 @@
       {/if}
     </p>
     <div class="card-actions justify-end">
-      <button class="btn btn-primary btn-outline" on:click={() => {}}>
+      <button class="btn btn-primary btn-outline" on:click={goToProductDetails}>
         View Details
       </button>
     </div>

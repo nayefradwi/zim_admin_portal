@@ -30,8 +30,7 @@
   let isLoading: boolean = false;
   let dialog: HTMLDialogElement;
   let comment: string = "";
-  let affectRecipe: boolean = true;
-
+  let affectRecipe: boolean = !batch.isIngredient;
   const unsubscribe = modifiedQty.subscribe((val) => {
     if (val < 0) return modifiedQty.set(0);
     if (isIncrement) return (newStock = batch.quantity + val);
@@ -135,12 +134,12 @@
       maxlength={255}
       bind:value={comment}
     />
-    {#if isIncrement}
+    {#if isIncrement && !batch.isIngredient}
       <label class="label cursor-pointer mx-2">
         <span class="label-text">Affect Recipe?</span>
         <input
           type="checkbox"
-          checked={affectRecipe}
+          bind:checked={affectRecipe}
           class="checkbox checkbox-primary"
         />
       </label>
