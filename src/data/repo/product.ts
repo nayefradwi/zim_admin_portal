@@ -15,6 +15,7 @@ export interface IProductRepo {
   decrementBatch(request: ModifyBatchRequest): Promise<void>;
   incrementBatchWithRecipe(request: ModifyBatchRequest): Promise<void>;
   getBatchesBySku(sku: string): Promise<PaginatedModel<Batch>>;
+  getBatchById(id: string): Promise<Batch>;
 }
 
 export interface ModifyBatchRequest {
@@ -101,6 +102,13 @@ export const ProductRepo: IProductRepo = {
     const response = await apiClient.post<void>(
       "/products/product-variants/batches/batch/stock/with-recipe",
       request
+    );
+    return response.data;
+  },
+
+  getBatchById: async (id: string): Promise<Batch> => {
+    const response = await apiClient.get<Batch>(
+      `/products/product-variants/batches/${id}`
     );
     return response.data;
   },

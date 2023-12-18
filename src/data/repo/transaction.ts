@@ -18,7 +18,6 @@ export const TransactionRepo: ITransactionRepo = {
     const response = await apiClient.get<Transaction[]>(
       `/transactions/batch/${batchId}`
     );
-    console.log(response.data);
     return response.data;
   },
 };
