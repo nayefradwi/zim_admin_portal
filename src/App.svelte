@@ -14,6 +14,7 @@
   } from "./data";
   import { userStore } from "./lib/stores/user";
   import {
+    BATCH_DETAILS_ROUTE,
     HOME_ROUTE,
     LOGIN_ROUTE,
     PRODUCT_DETAILS_ROUTE,
@@ -29,6 +30,7 @@
     ingredientStore,
   } from "./lib/stores/pagination";
   import { transactionReasonsStore } from "./lib/stores/transaction";
+  import BatchDetails from "./lib/pages/batch_details/BatchDetails.svelte";
 
   onMount(async () => {
     const token = getTokensFromSession();
@@ -78,6 +80,9 @@
       <Route path={WAREHOUSE_SELECT_ROUTE} component={WarehouseSelection} />
       <Route path={PRODUCT_DETAILS_ROUTE} let:params>
         <ProductDetails productId={params.id} />
+      </Route>
+      <Route path={BATCH_DETAILS_ROUTE} let:params>
+        <BatchDetails batchId={params.id} />
       </Route>
       <Route path="*" component={Home} />
     </div>

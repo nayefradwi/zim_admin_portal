@@ -7,6 +7,7 @@
   import VerticalViewMore from "../../../components/VerticalViewMore.svelte";
   import ModifyBatchModel from "./ModifyBatchModel.svelte";
   import { batchStore } from "../../../stores/pagination";
+  import { navigate } from "svelte-routing";
   export let item: Batch | undefined;
   let expiresAt: DateTime;
   let diffInDays: number;
@@ -24,7 +25,10 @@
     {
       name: "View Details",
       icon: EyeIcon,
-      onClick: () => {},
+      onClick: () => {
+        if (!item) return;
+        navigate(`/batches/${item.id}`);
+      },
     },
     {
       name: "Increment Batch",
