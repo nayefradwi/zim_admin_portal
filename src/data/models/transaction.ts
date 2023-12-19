@@ -20,3 +20,5 @@ export interface Transaction {
   createdAt: string;
   sku: string;
 }
+
+export interface TransactionStats {}
