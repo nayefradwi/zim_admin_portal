@@ -1,5 +1,6 @@
 <script lang="ts">
   import { type Transaction } from "../../data";
+  import { parseDate } from "../utils/functions";
 
   export let transactions: Transaction[];
 </script>
@@ -27,7 +28,7 @@
         <td>{transaction.quantity}</td>
         <td>{transaction.unit.name}</td>
         <td>{transaction.amount} QR</td>
-        <td>{transaction.createdAt}</td>
+        <td>{parseDate(transaction.createdAt).toLocaleString()}</td>
       </tr>
     {/each}
   </tbody>
