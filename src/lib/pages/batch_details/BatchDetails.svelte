@@ -7,13 +7,17 @@
     TransactionRepo,
     ProductRepo,
     type Batch,
+    type TransactionStats,
+    getTransactionStats as getTransactionStatsFromTransactions,
   } from "../../../data";
   import { ArrowLeftIcon } from "svelte-feather-icons";
   import { navigate } from "svelte-routing";
   import { HOME_ROUTE } from "../../routes";
+  import BatchStats from "./BatchStats.svelte";
   export let batchId: string;
   let transactions: Transaction[] = [];
   let batch: Batch | undefined;
+  let transactionStats: TransactionStats | undefined;
   onMount(loadData);
 
   function loadData(): void {
@@ -26,6 +30,7 @@
       call: () => TransactionRepo.getTransactionsOfBatch(batchId),
       onSuccess(data) {
         transactions = data;
+        transactionStats = getTransactionStatsFromTransactions(transactions);
       },
       onError(error) {
         console.log(error);
@@ -53,7 +58,7 @@
 </script>
 
 <div class="flex flex-col h-screen overflow-y-auto items-start p-4">
-  {#if batch}
+  {#if batch && transactionStats}
     <div class="flex flex-row items-end">
       <button on:click={goToHome}>
         <ArrowLeftIcon></ArrowLeftIcon>
@@ -63,8 +68,7 @@
         {batch.productName} / {batch.productVariant.name} / {batch.sku}
       </h1>
     </div>
-    <div class="self-center">
-      <h2 class="text-xl font-semibold">{batch.id}</h2>
-    </div>
+    <div class="my-2" />
+    <BatchStats {batch} {transactionStats} />
   {/if}
 </div>

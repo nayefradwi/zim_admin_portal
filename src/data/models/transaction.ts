@@ -21,4 +21,39 @@ export interface Transaction {
   sku: string;
 }
 
-export interface TransactionStats {}
+export interface TransactionStats {
+  ReasonStatsLookup: Record<string, number>;
+  TotalPositiveSum: number;
+  TotalNegativeSum: number;
+  NumberOfTransactions: number;
+  NumberOfPositiveTransactions: number;
+  NumberOfNegativeTransactions: number;
+}
+
+export function getTransactionStats(
+  transactions: Transaction[]
+): TransactionStats {
+  const stats: TransactionStats = {
+    ReasonStatsLookup: {},
+    TotalPositiveSum: 0,
+    TotalNegativeSum: 0,
+    NumberOfTransactions: 0,
+    NumberOfPositiveTransactions: 0,
+    NumberOfNegativeTransactions: 0,
+  };
+  transactions.forEach((transaction) => {
+    const { reason, amount } = transaction;
+    const { name, isPositive } = reason;
+    const currentValue = stats.ReasonStatsLookup[name] || 0;
+    stats.ReasonStatsLookup[name] = currentValue + amount;
+    stats.NumberOfTransactions += 1;
+    if (isPositive) {
+      stats.TotalPositiveSum += amount;
+      stats.NumberOfPositiveTransactions += 1;
+    } else {
+      stats.TotalNegativeSum += amount;
+      stats.NumberOfNegativeTransactions += 1;
+    }
+  });
+  return stats;
+}
