@@ -10,10 +10,9 @@
     type TransactionStats,
     getTransactionStats as getTransactionStatsFromTransactions,
   } from "../../../data";
-  import { ArrowLeftIcon } from "svelte-feather-icons";
-  import { navigate } from "svelte-routing";
-  import { HOME_ROUTE } from "../../routes";
   import BatchStats from "./BatchStats.svelte";
+  import BatchTitle from "./BatchTitle.svelte";
+  import TransactionsTable from "../../components/TransactionsTable.svelte";
   export let batchId: string;
   let transactions: Transaction[] = [];
   let batch: Batch | undefined;
@@ -51,24 +50,14 @@
     };
     getResponse<Batch>(details);
   }
-
-  function goToHome() {
-    navigate(HOME_ROUTE);
-  }
 </script>
 
 <div class="flex flex-col h-screen overflow-y-auto items-start p-4">
   {#if batch && transactionStats}
-    <div class="flex flex-row items-end">
-      <button on:click={goToHome}>
-        <ArrowLeftIcon></ArrowLeftIcon>
-      </button>
-      <span class="mx-1" />
-      <h1 class="text-2xl font-semibold underline">
-        {batch.productName} / {batch.productVariant.name} / {batch.sku}
-      </h1>
-    </div>
+    <BatchTitle {batch}></BatchTitle>
     <div class="my-2" />
     <BatchStats {batch} {transactionStats} />
   {/if}
+  <div class="text-xl font-semibold my-2">Transaction History</div>
+  <TransactionsTable {transactions} />
 </div>
