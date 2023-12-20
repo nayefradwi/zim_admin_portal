@@ -10,6 +10,7 @@
   import { writable } from "svelte/store";
   import ModifyBatchTitle from "./ModifyBatchTitle.svelte";
   import { transactionReasonsStore } from "../../../stores/transaction";
+  import toast from "svelte-french-toast";
   export let showModal: boolean;
   export let isIncrement: boolean = false;
   export let batch: Batch;
@@ -41,6 +42,7 @@
     isLoading = false;
     showModal = false;
     dialog.close();
+    toast.success("Batch modified");
     onSuccessfulModify();
   }
 
