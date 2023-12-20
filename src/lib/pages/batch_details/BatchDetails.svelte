@@ -15,6 +15,10 @@
   import TransactionsTable from "../../components/TransactionsTable.svelte";
   import { MinusIcon, PlusIcon } from "svelte-feather-icons";
   import ModifyBatchModel from "../home/inventory/ModifyBatchModel.svelte";
+  import {
+    addErrorNotification,
+    addNotification,
+  } from "../../stores/notification";
   export let batchId: string;
   let transactions: Transaction[] = [];
   let batch: Batch | undefined;
@@ -34,9 +38,10 @@
       onSuccess(data) {
         transactions = data;
         transactionStats = getTransactionStatsFromTransactions(transactions);
+        addNotification("Loaded transactions");
       },
       onError(error) {
-        console.log(error);
+        addErrorNotification(error.message);
       },
     };
     getResponse<Transaction[]>(details);

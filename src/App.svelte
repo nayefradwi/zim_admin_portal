@@ -5,7 +5,6 @@
   import WarehouseSelection from "./lib/pages/warehouse_selection/WarehouseSelection.svelte";
   import Login from "./lib/pages/login/Login.svelte";
   import {
-    ProductRepo,
     getTokensFromSession,
     setAuthHeader,
     setWarehouseHeader,
@@ -31,6 +30,7 @@
   } from "./lib/stores/pagination";
   import { transactionReasonsStore } from "./lib/stores/transaction";
   import BatchDetails from "./lib/pages/batch_details/BatchDetails.svelte";
+  import NotificationWrapper from "./lib/components/NotificationWrapper.svelte";
 
   onMount(async () => {
     const token = getTokensFromSession();
@@ -72,22 +72,24 @@
   export let url = "";
 </script>
 
-<main class="m-0 p-0 text-center h-screen">
-  <Router {url}>
-    <div>
-      <Route path={HOME_ROUTE} component={Home} />
-      <Route path={LOGIN_ROUTE} component={Login} />
-      <Route path={WAREHOUSE_SELECT_ROUTE} component={WarehouseSelection} />
-      <Route path={PRODUCT_DETAILS_ROUTE} let:params>
-        <ProductDetails productId={params.id} />
-      </Route>
-      <Route path={BATCH_DETAILS_ROUTE} let:params>
-        <BatchDetails batchId={params.id} />
-      </Route>
-      <Route path="*" component={Home} />
-    </div>
-  </Router>
-</main>
+<NotificationWrapper>
+  <main class="m-0 p-0 text-center h-screen">
+    <Router {url}>
+      <div>
+        <Route path={HOME_ROUTE} component={Home} />
+        <Route path={LOGIN_ROUTE} component={Login} />
+        <Route path={WAREHOUSE_SELECT_ROUTE} component={WarehouseSelection} />
+        <Route path={PRODUCT_DETAILS_ROUTE} let:params>
+          <ProductDetails productId={params.id} />
+        </Route>
+        <Route path={BATCH_DETAILS_ROUTE} let:params>
+          <BatchDetails batchId={params.id} />
+        </Route>
+        <Route path="*" component={Home} />
+      </div>
+    </Router>
+  </main>
+</NotificationWrapper>
 
 <style>
   main {
