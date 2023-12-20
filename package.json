@@ -31,6 +31,7 @@
     "feather-icons": "^4.29.1",
     "luxon": "^3.4.4",
     "svelte-feather-icons": "^4.0.1",
+    "svelte-french-toast": "^1.2.0",
     "svelte-lazy": "^1.2.2"
   }
 }
