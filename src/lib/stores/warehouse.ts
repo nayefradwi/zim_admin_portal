@@ -4,7 +4,6 @@ import {
   type IWarehouseRepo,
   type Warehouse,
   type ResponseHandlerData,
-  ClientError,
   getResponse,
 } from "../../data";
 
