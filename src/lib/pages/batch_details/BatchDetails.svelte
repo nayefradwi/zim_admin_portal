@@ -38,9 +38,6 @@
         transactionStats = getTransactionStatsFromTransactions(transactions);
         toast.success("Transactions loaded");
       },
-      onError(error) {
-        toast.error(error.message);
-      },
     };
     getResponse<Transaction[]>(details);
   }
@@ -50,9 +47,6 @@
       call: () => ProductRepo.getBatchById(batchId),
       onSuccess(data) {
         batch = data;
-      },
-      onError(error) {
-        console.log(error);
       },
     };
     getResponse<Batch>(details);

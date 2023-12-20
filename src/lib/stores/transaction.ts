@@ -24,9 +24,6 @@ function GetReasons() {
     onSuccess: (data: TransactionReason[]) => {
       transactionReasonsStore.set(data);
     },
-    onError: (error: ClientError) => {
-      console.log("failed to get reasons");
-    },
   };
   return getResponse<TransactionReason[]>(details);
 }

@@ -17,9 +17,6 @@
     onSuccess(data) {
       product = data;
     },
-    onError(error) {
-      console.log(error);
-    },
   };
   onMount(() => {
     getResponse<Product>(details);

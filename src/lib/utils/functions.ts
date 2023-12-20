@@ -30,9 +30,6 @@ export function getPage<T>(
     onSuccess: (data: PaginatedModel<T>) => {
       return data;
     },
-    onError: (error: Error) => {
-      console.log(error);
-    },
   };
   return getResponse<PaginatedModel<T>>(details);
 }

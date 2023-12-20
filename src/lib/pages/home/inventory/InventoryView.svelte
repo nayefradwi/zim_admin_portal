@@ -35,9 +35,6 @@
         };
         $batchStore = newState;
       },
-      onError: (error) => {
-        console.log(error);
-      },
     };
     return getResponse<PaginatedModel<Batch>>(details);
   };
