@@ -36,7 +36,6 @@
       onSuccess(data) {
         transactions = data;
         transactionStats = getTransactionStatsFromTransactions(transactions);
-        toast.success("Transactions loaded");
       },
     };
     getResponse<Transaction[]>(details);
