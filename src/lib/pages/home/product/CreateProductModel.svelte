@@ -2,6 +2,7 @@
   import toast from "svelte-french-toast";
   import { unitStore } from "../../../stores/unit";
   import { writable } from "svelte/store";
+  import CreateProductOptionList from "./CreateProductOptionList.svelte";
   export let showModal: boolean;
 
   export let onSuccessfulCreation: () => void;
@@ -23,7 +24,7 @@
     isLoading = false;
     showModal = false;
     dialog.close();
-    toast.success("Batch modified");
+    toast.success("Product added!");
     onSuccessfulCreation();
   }
 
@@ -32,9 +33,8 @@
     input.value = input.value ? String(Math.floor(Number(input.value))) : "";
   }
 
-  function onOptionAdded(e: Event): void {
+  function onOptionAdded(e: KeyboardEvent): void {
     if (!option) return;
-    if (!(e instanceof KeyboardEvent)) return;
     if (e.key !== "Enter") return;
     const optionValue = option.trim();
     if (!optionValue) return;
@@ -44,6 +44,35 @@
       return newOptions;
     });
     option = "";
+  }
+
+  function onOptionValueAdded(e: KeyboardEvent, option: string): void {
+    if (e.key !== "Enter") return;
+    const target = e.target as HTMLInputElement;
+    const inputValue = target.value;
+    if (!inputValue) return;
+    optionsStore.update((options) => {
+      const newOptions = { ...options };
+      newOptions[option].push(inputValue);
+      return newOptions;
+    });
+    target.value = "";
+  }
+
+  function onOptionRemoved(option: string): void {
+    optionsStore.update((options) => {
+      const newOptions = { ...options };
+      delete newOptions[option];
+      return newOptions;
+    });
+  }
+
+  function onOptionValueRemoved(option: string, value: string): void {
+    optionsStore.update((options) => {
+      const newOptions = { ...options };
+      newOptions[option] = newOptions[option].filter((v) => v !== value);
+      return newOptions;
+    });
   }
 
   function onClose(): void {
@@ -103,14 +132,12 @@
         placeholder="Options"
         class="input input-bordered input-sm w-full"
       />
-
-      {#each optionEntries as [optionKey, optionValues]}
-        <div class="flex flex-row my-2 w-full">
-          <span class="text-gray-700 mr-2">{optionKey}:</span>
-          <input type="text" class="input input-bordered input-sm w-full" />
-        </div>
-      {/each}
-
+      <CreateProductOptionList
+        {optionEntries}
+        {onOptionValueAdded}
+        {onOptionRemoved}
+        {onOptionValueRemoved}
+      />
       <label class="flex items-center space-x-3">
         <input
           bind:checked={isIngredient}
@@ -139,5 +166,6 @@
   }
   input[type="number"] {
     -moz-appearance: textfield; /* For Firefox */
+    appearance: textfield; /* For compatibility */
   }
 </style>
