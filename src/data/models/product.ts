@@ -6,7 +6,7 @@ export interface Product {
   description: string;
   image?: string;
   isArchived?: boolean;
-  options: Record<string, ProductOption>;
+  options?: Record<string, ProductOption>;
   productVariants: ProductVariant[];
 }
 
