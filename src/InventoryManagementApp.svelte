@@ -30,7 +30,7 @@
   } from "./lib/stores/pagination";
   import { transactionReasonsStore } from "./lib/stores/transaction";
   import BatchDetails from "./lib/pages/batch_details/BatchDetails.svelte";
-  import toast, { Toaster } from "svelte-french-toast";
+  import { Toaster } from "svelte-french-toast";
 
   onMount(async () => {
     const token = getTokensFromSession();
