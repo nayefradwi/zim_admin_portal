@@ -9,18 +9,10 @@
   function showProductCreation() {
     showProductCreationModal = true;
   }
-
-  function onSuccessfulCreation() {
-    showProductCreationModal = false;
-    productStore.refresh($productStore);
-  }
 </script>
 
 <div class="overflow-x-auto overflow-y-auto m-4 flex flex-col">
-  <CreateProductModel
-    bind:showModal={showProductCreationModal}
-    {onSuccessfulCreation}
-  />
+  <CreateProductModel bind:showModal={showProductCreationModal} />
   <ProductSearchRow bind:isProducts onClick={showProductCreation} />
   <ProductList bind:isProducts />
 </div>

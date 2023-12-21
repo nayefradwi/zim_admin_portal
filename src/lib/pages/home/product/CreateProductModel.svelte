@@ -10,9 +10,8 @@
     type ProductOption,
     getResponse,
   } from "../../../../data";
+  import { ingredientStore, productStore } from "../../../stores/pagination";
   export let showModal: boolean;
-
-  export let onSuccessfulCreation: () => void;
 
   $: if (dialog && showModal) dialog.showModal();
   let isLoading: boolean = false;
@@ -33,7 +32,8 @@
     showModal = false;
     dialog.close();
     toast.success("Product added!");
-    onSuccessfulCreation();
+    if (isIngredient) productStore.refresh($productStore);
+    else ingredientStore.refresh($ingredientStore);
   }
 
   function enforceInteger(event: Event): void {
