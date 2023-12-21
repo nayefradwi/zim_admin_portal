@@ -1,8 +1,8 @@
 <script lang="ts">
   import ProductList from "./ProductList.svelte";
-  import { PlusCircleIcon } from "svelte-feather-icons";
   import ProductSearchRow from "./ProductSearchRow.svelte";
   import CreateProductModel from "./CreateProductModel.svelte";
+  import { productStore } from "../../../stores/pagination";
   let isProducts = true;
   let showProductCreationModal = false;
 
@@ -12,6 +12,7 @@
 
   function onSuccessfulCreation() {
     showProductCreationModal = false;
+    productStore.refresh($productStore);
   }
 </script>
 

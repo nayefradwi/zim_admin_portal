@@ -4,6 +4,7 @@ import {
   type PaginatedModel,
   type PaginationQuery,
   type Product,
+  type ProductInput,
 } from "..";
 
 export interface IProductRepo {
@@ -16,6 +17,7 @@ export interface IProductRepo {
   incrementBatchWithRecipe(request: ModifyBatchRequest): Promise<void>;
   getBatchesBySku(sku: string): Promise<PaginatedModel<Batch>>;
   getBatchById(id: string): Promise<Batch>;
+  createProduct(input: ProductInput): Promise<void>;
 }
 
 export interface ModifyBatchRequest {
@@ -110,6 +112,11 @@ export const ProductRepo: IProductRepo = {
     const response = await apiClient.get<Batch>(
       `/products/product-variants/batches/${id}`
     );
+    return response.data;
+  },
+
+  createProduct: async (input: ProductInput): Promise<void> => {
+    const response = await apiClient.post<void>("/products", input);
     return response.data;
   },
 };

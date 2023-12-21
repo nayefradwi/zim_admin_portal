@@ -3,24 +3,32 @@
   import { unitStore } from "../../../stores/unit";
   import { writable } from "svelte/store";
   import CreateProductOptionList from "./CreateProductOptionList.svelte";
+  import {
+    ProductRepo,
+    type ProductInput,
+    type ResponseHandlerData,
+    type ProductOption,
+    getResponse,
+  } from "../../../../data";
   export let showModal: boolean;
 
   export let onSuccessfulCreation: () => void;
 
   $: if (dialog && showModal) dialog.showModal();
-
   let isLoading: boolean = false;
   let dialog: HTMLDialogElement;
   let name: string | undefined;
+  let description: string | undefined;
   let price: number | undefined;
   let expiresInDays: number | undefined;
   let unitId: number | undefined;
+  $: unitId = unitId == undefined ? $unitStore[0]?.id : unitId;
   let isIngredient: boolean = false;
   let option: string | undefined;
   const optionsStore = writable<Record<string, string[]>>({});
   $: optionEntries = Object.entries($optionsStore);
 
-  function onSuccess() {
+  function onProductCreated() {
     isLoading = false;
     showModal = false;
     dialog.close();
@@ -84,6 +92,52 @@
     price = undefined;
     expiresInDays = undefined;
     option = undefined;
+    description = undefined;
+  }
+
+  function createProduct(): void {
+    if (isLoading) return;
+    isLoading = true;
+    if (!isValid()) return;
+    let options: ProductOption[] = createProductOptions();
+    const productInput: ProductInput = {
+      price: price!,
+      name: name!,
+      expiresInDays: expiresInDays!,
+      standardUnitId: unitId!,
+      description: description,
+      options: options,
+      isIngredient: isIngredient,
+    };
+    const details: ResponseHandlerData<void> = {
+      call: () => ProductRepo.createProduct(productInput),
+      onSuccess() {
+        onProductCreated();
+      },
+      onError(_) {
+        isLoading = false;
+      },
+    };
+    getResponse<void>(details);
+  }
+
+  function isValid(): boolean {
+    if (!name) return false;
+    if (!price) return false;
+    if (!expiresInDays) return false;
+    if (!unitId) return false;
+    return true;
+  }
+
+  function createProductOptions(): ProductOption[] {
+    let options: ProductOption[] = [];
+    for (const [option, values] of Object.entries($optionsStore)) {
+      options.push({
+        name: option,
+        values: values.map((value) => ({ value: value })),
+      });
+    }
+    return options;
   }
 </script>
 
@@ -101,7 +155,11 @@
         class="input input-bordered input-sm w-full"
         bind:value={name}
       />
-
+      <input
+        placeholder="Description"
+        class="input input-bordered input-sm w-full"
+        bind:value={description}
+      />
       <input
         type="number"
         placeholder="Price"
@@ -149,7 +207,9 @@
     </div>
 
     <div class="modal-action mt-6">
-      <button class="btn btn-primary">Create product</button>
+      <button class="btn btn-primary" on:click={createProduct}
+        >Create product</button
+      >
       <form method="dialog">
         <button class="btn">Cancel</button>
       </form>
