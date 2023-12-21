@@ -2,10 +2,8 @@
   import ProductList from "./ProductList.svelte";
   import ProductSearchRow from "./ProductSearchRow.svelte";
   import CreateProductModel from "./CreateProductModel.svelte";
-  import { productStore } from "../../../stores/pagination";
-  let isProducts = true;
+  import { productToggleStore } from "../../../stores/product_ingredient_toggle";
   let showProductCreationModal = false;
-
   function showProductCreation() {
     showProductCreationModal = true;
   }
@@ -13,6 +11,9 @@
 
 <div class="overflow-x-auto overflow-y-auto m-4 flex flex-col">
   <CreateProductModel bind:showModal={showProductCreationModal} />
-  <ProductSearchRow bind:isProducts onClick={showProductCreation} />
-  <ProductList bind:isProducts />
+  <ProductSearchRow
+    bind:isProducts={$productToggleStore}
+    onClick={showProductCreation}
+  />
+  <ProductList bind:isProducts={$productToggleStore} />
 </div>
