@@ -104,8 +104,11 @@
         class="input input-bordered input-sm w-full"
       />
 
-      {#each optionEntries as optionKey, optionValues}
-        <p>{optionKey}</p>
+      {#each optionEntries as [optionKey, optionValues]}
+        <div class="flex flex-row my-2 w-full">
+          <span class="text-gray-700 mr-2">{optionKey}:</span>
+          <input type="text" class="input input-bordered input-sm w-full" />
+        </div>
       {/each}
 
       <label class="flex items-center space-x-3">
