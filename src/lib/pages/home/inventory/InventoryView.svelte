@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SearchIcon, TrashIcon, XIcon } from "svelte-feather-icons";
+  import { SearchIcon, XIcon } from "svelte-feather-icons";
   import {
     ProductRepo,
     type Batch,
@@ -8,7 +8,7 @@
     getResponse,
   } from "../../../../data";
   import { batchStore, type PaginationState } from "../../../stores/pagination";
-  import BatchTable from "./BatchTable.svelte";
+  import BatchTable from "../../../components/BatchTable.svelte";
   let search: string = "";
   let currentBatchState: PaginationState<Batch> = $batchStore;
   const clearSearch = () => {
@@ -38,6 +38,14 @@
     };
     return getResponse<PaginatedModel<Batch>>(details);
   };
+
+  function next() {
+    batchStore.getNext($batchStore);
+  }
+
+  function prev() {
+    batchStore.getPrevious($batchStore);
+  }
 </script>
 
 <div class="overflow-x-auto m-4 flex flex-col">
@@ -59,5 +67,11 @@
       <XIcon class="text-error" />
     </button>
   </div>
-  <BatchTable />
+  <BatchTable
+    {next}
+    {prev}
+    batchPage={$batchStore.page}
+    isLoading={$batchStore.isLoading}
+    pageNumber={$batchStore.pageNumber}
+  />
 </div>

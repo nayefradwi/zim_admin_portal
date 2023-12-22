@@ -1,15 +1,15 @@
 export interface PaginatedModel<T> {
-  pageSize: Number;
+  pageSize: number;
   endCursor: string;
   previousCursor: string;
   hasNext: Boolean;
   hasPrevious: Boolean;
-  itemsLength: Number;
+  itemsLength: number;
   items: T[];
 }
 
 export interface PaginationQuery {
   cursor?: string;
-  pageSize?: Number;
+  pageSize?: number;
   direction?: number;
 }

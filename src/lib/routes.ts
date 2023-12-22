@@ -9,3 +9,4 @@ export const REPORTS_ROUTE = "/reports";
 export const SETTINGS_ROUTE = "/settings";
 export const PRODUCT_DETAILS_ROUTE = "/products/:id";
 export const BATCH_DETAILS_ROUTE = "/batches/:id";
+export const PRODUCT_VARIANT_DETAILS_ROUTE = "/products/variants/:id";

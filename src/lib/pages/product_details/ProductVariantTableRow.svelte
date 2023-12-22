@@ -10,6 +10,7 @@
   } from "svelte-feather-icons";
   import type { MenuOptionItem } from "../../view_models/menuOptionItem";
   import VerticalViewMore from "../../components/VerticalViewMore.svelte";
+  import { navigate } from "svelte-routing";
   export let variant: ProductVariant;
   export let onUpdateSkuClicked: (sku: string) => void;
   export let onUpdateVariantClicked: (variant: ProductVariant) => void;
@@ -17,7 +18,9 @@
     {
       name: "View Details",
       icon: EyeIcon,
-      onClick: () => {},
+      onClick: () => {
+        navigate(`/products/variants/${variant.id}`);
+      },
     },
     {
       name: "Produce Today's Batch",

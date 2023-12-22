@@ -17,6 +17,7 @@
     HOME_ROUTE,
     LOGIN_ROUTE,
     PRODUCT_DETAILS_ROUTE,
+    PRODUCT_VARIANT_DETAILS_ROUTE,
     WAREHOUSE_SELECT_ROUTE,
   } from "./lib/routes";
   import { getWarehouseSelected } from "./data/local_storage";
@@ -32,6 +33,7 @@
   import BatchDetails from "./lib/pages/batch_details/BatchDetails.svelte";
   import { Toaster } from "svelte-french-toast";
   import { unitStore } from "./lib/stores/unit";
+  import ProductVariantDetails from "./lib/pages/product_variant_details/ProductVariantDetails.svelte";
 
   onMount(async () => {
     const token = getTokensFromSession();
@@ -85,6 +87,9 @@
       </Route>
       <Route path={BATCH_DETAILS_ROUTE} let:params>
         <BatchDetails batchId={params.id} />
+      </Route>
+      <Route path={PRODUCT_VARIANT_DETAILS_ROUTE} let:params>
+        <ProductVariantDetails productVariantId={params.id} />
       </Route>
       <Route path="*" component={Home} />
     </div>
