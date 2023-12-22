@@ -11,6 +11,7 @@
   import type { MenuOptionItem } from "../../view_models/menuOptionItem";
   import VerticalViewMore from "../../components/VerticalViewMore.svelte";
   export let variant: ProductVariant;
+  export let onUpdateSku: (sku: string) => void;
   const variantOptions: MenuOptionItem[] = [
     {
       name: "View Details",
@@ -30,7 +31,9 @@
     {
       name: "Update Sku",
       icon: HashIcon,
-      onClick: () => {},
+      onClick: () => {
+        onUpdateSku(variant.sku);
+      },
     },
     {
       name: "Archive",

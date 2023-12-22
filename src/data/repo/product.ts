@@ -18,6 +18,7 @@ export interface IProductRepo {
   getBatchesBySku(sku: string): Promise<PaginatedModel<Batch>>;
   getBatchById(id: string): Promise<Batch>;
   createProduct(input: ProductInput): Promise<void>;
+  updateProductSku(request: UpdateSkuRequest): Promise<void>;
 }
 
 export interface ModifyBatchRequest {
@@ -27,6 +28,11 @@ export interface ModifyBatchRequest {
   quantity: number;
   reason: string;
   comment?: string;
+}
+
+export interface UpdateSkuRequest {
+  oldSku: string;
+  newSku: string;
 }
 
 export const ProductRepo: IProductRepo = {
@@ -117,6 +123,14 @@ export const ProductRepo: IProductRepo = {
 
   createProduct: async (input: ProductInput): Promise<void> => {
     const response = await apiClient.post<void>("/products", input);
+    return response.data;
+  },
+
+  updateProductSku: async (request: UpdateSkuRequest): Promise<void> => {
+    const response = await apiClient.put<void>(
+      "/products/product-variants/sku",
+      request
+    );
     return response.data;
   },
 };

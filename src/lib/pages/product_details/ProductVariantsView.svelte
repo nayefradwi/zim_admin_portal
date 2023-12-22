@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { ProductVariant } from "../../../data";
+  import type { Product, ProductVariant } from "../../../data";
   import ProductVariantsTable from "./ProductVariantsTable.svelte";
-
+  export let product: Product;
   export let productVariants: ProductVariant[];
 </script>
 
@@ -15,6 +15,6 @@
     <button class="btn btn-xs mx-1">Add Option Value</button>
   </div>
   <div class="flex flex-col my-4 h-full">
-    <ProductVariantsTable {productVariants} />
+    <ProductVariantsTable {productVariants} bind:product />
   </div>
 </div>

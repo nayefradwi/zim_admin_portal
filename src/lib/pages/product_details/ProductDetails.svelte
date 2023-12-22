@@ -39,7 +39,10 @@
         productImage={product.image}
       />
 
-      <ProductVariantsView productVariants={product.productVariants} />
+      <ProductVariantsView
+        bind:product
+        productVariants={product.productVariants}
+      />
     {:else}
       <span class="loading loading-spinner loading-lg text-primary m-auto" />
     {/if}
