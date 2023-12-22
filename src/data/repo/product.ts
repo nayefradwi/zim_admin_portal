@@ -5,6 +5,7 @@ import {
   type PaginationQuery,
   type Product,
   type ProductInput,
+  type ProductVariant,
 } from "..";
 
 export interface IProductRepo {
@@ -22,6 +23,7 @@ export interface IProductRepo {
   updateProductVariantDetails(
     request: UpdateProductVariantDetailsRequest
   ): Promise<void>;
+  getProductVariantById(id: string): Promise<ProductVariant>;
 }
 
 export interface ModifyBatchRequest {
@@ -152,6 +154,13 @@ export const ProductRepo: IProductRepo = {
     const response = await apiClient.put<void>(
       "/products/product-variants/",
       request
+    );
+    return response.data;
+  },
+
+  getProductVariantById: async (id: string): Promise<ProductVariant> => {
+    const response = await apiClient.get<ProductVariant>(
+      `/products/product-variants/${id}`
     );
     return response.data;
   },

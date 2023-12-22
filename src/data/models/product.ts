@@ -1,4 +1,5 @@
 import type { Unit } from ".";
+import type { Recipe } from "./recipe";
 
 export interface Product {
   id: number;
@@ -25,6 +26,8 @@ export interface ProductVariant {
   isArchived?: boolean;
   isDefault?: boolean;
   expiresInDays?: number;
+  totalCost?: number;
+  recipe?: Recipe[];
 }
 
 export interface ProductOption {
