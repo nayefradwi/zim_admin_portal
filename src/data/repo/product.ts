@@ -19,6 +19,9 @@ export interface IProductRepo {
   getBatchById(id: string): Promise<Batch>;
   createProduct(input: ProductInput): Promise<void>;
   updateProductSku(request: UpdateSkuRequest): Promise<void>;
+  updateProductVariantDetails(
+    request: UpdateProductVariantDetailsRequest
+  ): Promise<void>;
 }
 
 export interface ModifyBatchRequest {
@@ -33,6 +36,15 @@ export interface ModifyBatchRequest {
 export interface UpdateSkuRequest {
   oldSku: string;
   newSku: string;
+}
+
+export interface UpdateProductVariantDetailsRequest {
+  id: number;
+  price: number;
+  widthInCm?: number;
+  heightInCm?: number;
+  depthInCm?: number;
+  weightInG?: number;
 }
 
 export const ProductRepo: IProductRepo = {
@@ -129,6 +141,16 @@ export const ProductRepo: IProductRepo = {
   updateProductSku: async (request: UpdateSkuRequest): Promise<void> => {
     const response = await apiClient.put<void>(
       "/products/product-variants/sku",
+      request
+    );
+    return response.data;
+  },
+
+  updateProductVariantDetails: async (
+    request: UpdateProductVariantDetailsRequest
+  ): Promise<void> => {
+    const response = await apiClient.put<void>(
+      "/products/product-variants/",
       request
     );
     return response.data;

@@ -11,6 +11,7 @@
     getResponse,
   } from "../../../../data";
   import { ingredientStore, productStore } from "../../../stores/pagination";
+  import { enforceNumber } from "../../../utils/functions";
   export let showModal: boolean;
 
   $: if (dialog && showModal) dialog.showModal();
@@ -34,11 +35,6 @@
     toast.success("Product added!");
     if (isIngredient) productStore.refresh($productStore);
     else ingredientStore.refresh($ingredientStore);
-  }
-
-  function enforceInteger(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    input.value = input.value ? String(Math.floor(Number(input.value))) : "";
   }
 
   function onOptionAdded(e: KeyboardEvent): void {
@@ -165,7 +161,7 @@
         placeholder="Price"
         class="input input-bordered input-sm w-full"
         min="1"
-        on:input={enforceInteger}
+        on:input={(e) => enforceNumber(e, true)}
         bind:value={price}
       />
 
@@ -174,7 +170,7 @@
         placeholder="Expires in days"
         class="input input-bordered input-sm w-full"
         min="1"
-        on:input={enforceInteger}
+        on:input={enforceNumber}
         bind:value={expiresInDays}
       />
 
@@ -218,14 +214,4 @@
 </dialog>
 
 <style>
-  /* CSS to hide the number input stepper */
-  input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  input[type="number"] {
-    -moz-appearance: textfield; /* For Firefox */
-    appearance: textfield; /* For compatibility */
-  }
 </style>
