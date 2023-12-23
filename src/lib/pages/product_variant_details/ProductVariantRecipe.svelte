@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { PlusIcon, TrashIcon } from "svelte-feather-icons";
   import type { ProductVariant } from "../../../data";
-  import { unitStore } from "../../stores/unit";
   import RecipeListItem from "./RecipeListItem.svelte";
   import RecipeTitle from "./RecipeTitle.svelte";
   export let productVariant: ProductVariant;
@@ -20,13 +18,13 @@
     </div>
   {:else}
     <div class="text-gray-500">No recipe</div>
-    <div class="my-2" />
+    <div class="my-2 flex-grow" />
     <button class="btn btn-primary">Create recipe</button>
   {/if}
 </div>
 
 <style>
   .card {
-    max-height: 20%;
+    height: 65vh;
   }
 </style>
