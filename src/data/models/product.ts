@@ -28,6 +28,7 @@ export interface ProductVariant {
   isDefault?: boolean;
   expiresInDays?: number;
   totalCost?: number;
+  isIngredient?: boolean;
   recipes?: Recipe[];
 }
 

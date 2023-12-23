@@ -23,11 +23,6 @@
       },
     },
     {
-      name: "Produce Today's Batch",
-      icon: PlusIcon,
-      onClick: () => {},
-    },
-    {
       name: "Edit Details",
       icon: EditIcon,
       onClick: () => onUpdateVariantClicked(variant),

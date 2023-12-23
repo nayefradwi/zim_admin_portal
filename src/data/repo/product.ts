@@ -24,10 +24,20 @@ export interface IProductRepo {
     request: UpdateProductVariantDetailsRequest
   ): Promise<void>;
   getProductVariantById(id: string): Promise<ProductVariant>;
+  createBatch(request: CreateBatchRequest): Promise<void>;
+  createBatchWithRecipe(request: CreateBatchRequest): Promise<void>;
 }
 
 export interface ModifyBatchRequest {
   id?: number;
+  sku: string;
+  unitId: number;
+  quantity: number;
+  reason: string;
+  comment?: string;
+}
+
+export interface CreateBatchRequest {
   sku: string;
   unitId: number;
   quantity: number;
@@ -161,6 +171,22 @@ export const ProductRepo: IProductRepo = {
   getProductVariantById: async (id: string): Promise<ProductVariant> => {
     const response = await apiClient.get<ProductVariant>(
       `/products/product-variants/${id}`
+    );
+    return response.data;
+  },
+
+  createBatch: async (request: CreateBatchRequest): Promise<void> => {
+    const response = await apiClient.post<void>(
+      "/products/product-variants/batches/batch/stock",
+      request
+    );
+    return response.data;
+  },
+
+  createBatchWithRecipe: async (request: CreateBatchRequest): Promise<void> => {
+    const response = await apiClient.post<void>(
+      "/products/product-variants/batches/batch/stock/with-recipe",
+      request
     );
     return response.data;
   },
