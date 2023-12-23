@@ -1,16 +1,14 @@
 <script lang="ts">
   import type { Batch } from "../../../data";
   import { ArrowLeftIcon } from "svelte-feather-icons";
-  import { HOME_ROUTE } from "../../routes";
-  import { navigate } from "svelte-routing";
   export let batch: Batch;
-  function goToHome() {
-    navigate(HOME_ROUTE);
+  function goBack() {
+    window.history.back();
   }
 </script>
 
 <div class="flex flex-row items-end">
-  <button on:click={goToHome}>
+  <button on:click={goBack}>
     <ArrowLeftIcon></ArrowLeftIcon>
   </button>
   <span class="mx-1" />
