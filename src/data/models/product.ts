@@ -28,7 +28,7 @@ export interface ProductVariant {
   isDefault?: boolean;
   expiresInDays?: number;
   totalCost?: number;
-  recipe?: Recipe[];
+  recipes?: Recipe[];
 }
 
 export interface ProductOption {

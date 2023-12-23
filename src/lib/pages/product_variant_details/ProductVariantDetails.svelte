@@ -10,6 +10,7 @@
   import ProductVariantTitle from "./ProductVariantTitle.svelte";
   import ProductVariantDetailsRow from "./ProductVariantDetailsRow.svelte";
   import ProductVariantBatches from "./ProductVariantBatches.svelte";
+  import ProductVariantRecipe from "./ProductVariantRecipe.svelte";
   export let productVariantId: string;
   let isLoading: boolean = false;
   let productVariant: ProductVariant | undefined = undefined;
@@ -33,7 +34,7 @@
   });
 </script>
 
-<div class="flex flex-col h-screen overflow-y-auto items-start p-4">
+<div class="flex flex-col items-start p-4">
   {#if isLoading}
     <div>Loading...</div>
   {:else if !productVariant}
@@ -41,13 +42,16 @@
   {:else}
     <ProductVariantTitle variant={productVariant} />
     <div class="my-2" />
-    <div class="flex flex-row w-full">
+    <div class="flex flex-row w-full space-x-4">
       <div class="flex flex-col w-1/2 items-start space-y-4">
         <ProductVariantDetailsRow {productVariant} />
+        <ProductVariantRecipe {productVariant} />
       </div>
       <div class="flex flex-col w-1/2 items-start space-y-4">
-        <h1 class="text-xl font-medium">Batches closest to expire</h1>
-        <ProductVariantBatches {productVariant} />
+        <div class="card shadow bg-base-100 w-full p-4">
+          <h1 class="text-xl font-medium">Batches closest to expire</h1>
+          <ProductVariantBatches {productVariant} />
+        </div>
       </div>
     </div>
   {/if}
