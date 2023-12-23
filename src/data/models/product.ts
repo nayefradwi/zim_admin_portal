@@ -15,6 +15,7 @@ export interface ProductVariant {
   id: number;
   productId: number;
   name: string;
+  productName?: string;
   sku: string;
   image?: string;
   price: number;

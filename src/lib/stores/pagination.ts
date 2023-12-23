@@ -18,7 +18,7 @@ export interface PaginationState<T> {
 }
 
 const defaultPageSize = 20;
-function createPaginationStore<T>(
+export function createPaginationStore<T>(
   apiCall: (query?: PaginationQuery | undefined) => Promise<PaginatedModel<T>>
 ) {
   const store = writable<PaginationState<T>>({

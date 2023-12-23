@@ -9,6 +9,7 @@
   import { batchStore } from "../../../stores/pagination";
   import { navigate } from "svelte-routing";
   export let item: Batch | undefined;
+  export let onSuccessfulModify: () => void;
   let expiresAt: DateTime;
   let diffInDays: number;
   let totalWorth: number;
@@ -69,17 +70,13 @@
       batch={item}
       bind:showModal={showIncrementModal}
       isIncrement={true}
-      onSuccessfulModify={() => {
-        batchStore.refresh($batchStore);
-      }}
+      {onSuccessfulModify}
     />
     <ModifyBatchModel
       batch={item}
       bind:showModal={showDecrementModal}
       isIncrement={false}
-      onSuccessfulModify={() => {
-        batchStore.refresh($batchStore);
-      }}
+      {onSuccessfulModify}
     />
   {:else}
     <th>-</th>

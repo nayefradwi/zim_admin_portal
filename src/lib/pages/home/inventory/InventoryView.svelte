@@ -46,6 +46,10 @@
   function prev() {
     batchStore.getPrevious($batchStore);
   }
+
+  function onSuccessfulModify() {
+    batchStore.refresh($batchStore);
+  }
 </script>
 
 <div class="overflow-x-auto m-4 flex flex-col">
@@ -73,5 +77,6 @@
     batchPage={$batchStore.page}
     isLoading={$batchStore.isLoading}
     pageNumber={$batchStore.pageNumber}
+    {onSuccessfulModify}
   />
 </div>

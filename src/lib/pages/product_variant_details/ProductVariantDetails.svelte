@@ -7,8 +7,10 @@
     type ResponseHandlerData,
   } from "../../../data";
   import toast from "svelte-french-toast";
+  import ProductVariantTitle from "./ProductVariantTitle.svelte";
+  import ProductVariantDetailsRow from "./ProductVariantDetailsRow.svelte";
+  import ProductVariantBatches from "./ProductVariantBatches.svelte";
   export let productVariantId: string;
-
   let isLoading: boolean = false;
   let productVariant: ProductVariant | undefined = undefined;
   function loadProductVariantDetails() {
@@ -31,12 +33,22 @@
   });
 </script>
 
-<div>
+<div class="flex flex-col h-screen overflow-y-auto items-start p-4">
   {#if isLoading}
     <div>Loading...</div>
   {:else if !productVariant}
     <div>Product variant not found</div>
   {:else}
-    <div>{productVariant.name}</div>
+    <ProductVariantTitle variant={productVariant} />
+    <div class="my-2" />
+    <div class="flex flex-row w-full">
+      <div class="flex flex-col w-1/2 items-start space-y-4">
+        <ProductVariantDetailsRow {productVariant} />
+      </div>
+      <div class="flex flex-col w-1/2 items-start space-y-4">
+        <h1 class="text-xl font-medium">Batches closest to expire</h1>
+        <ProductVariantBatches {productVariant} />
+      </div>
+    </div>
   {/if}
 </div>

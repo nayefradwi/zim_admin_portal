@@ -5,8 +5,10 @@
   export let batchPage: PaginatedModel<Batch> | null;
   export let pageNumber: number;
   export let isLoading: boolean;
+  export let tableSize: number | undefined = undefined;
   export let next: () => void;
   export let prev: () => void;
+  export let onSuccessfulModify: () => void;
 
   function getBatch(index: number): Batch | undefined {
     if (!batchPage) return;
@@ -38,8 +40,8 @@
         </tr>
       </thead>
       <tbody>
-        {#each { length: batchPage.pageSize } as _, i}
-          <BatchTableRow item={getBatch(i)} />
+        {#each { length: tableSize ?? batchPage.pageSize } as _, i}
+          <BatchTableRow item={getBatch(i)} {onSuccessfulModify} />
         {/each}
       </tbody>
     </table>
