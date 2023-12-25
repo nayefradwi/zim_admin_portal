@@ -14,6 +14,9 @@
   export let variant: ProductVariant;
   export let onUpdateSkuClicked: (sku: string) => void;
   export let onUpdateVariantClicked: (variant: ProductVariant) => void;
+  export let onArchiveVariantClicked: (variant: ProductVariant) => void;
+  export let onUnarchiveVariantClicked: (variant: ProductVariant) => void;
+  export let onVariantDeleted: (variant: ProductVariant) => void;
   const variantOptions: MenuOptionItem[] = [
     {
       name: "View Details",
@@ -35,12 +38,17 @@
     {
       name: variant.isArchived ? "Archive" : "Unarchive",
       icon: ArchiveIcon,
-      onClick: () => {},
+      onClick: () => {
+        if (variant.isArchived) onUnarchiveVariantClicked(variant);
+        else onArchiveVariantClicked(variant);
+      },
     },
     {
       name: "Delete",
       icon: Trash2Icon,
-      onClick: () => {},
+      onClick: () => {
+        onVariantDeleted(variant);
+      },
     },
   ];
 </script>

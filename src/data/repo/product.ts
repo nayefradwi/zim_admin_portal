@@ -30,6 +30,7 @@ export interface IProductRepo {
   archiveProductVariant(id: string): Promise<void>;
   unarchiveProduct(id: string): Promise<void>;
   unarchiveProductVariant(id: string): Promise<void>;
+  deleteProductVariant(id: string): Promise<void>;
 }
 
 export interface ModifyBatchRequest {
@@ -211,6 +212,13 @@ export const ProductRepo: IProductRepo = {
   unarchiveProductVariant: async (id: string): Promise<void> => {
     const response = await apiClient.put<void>(
       `/products/product-variants/${id}/unarchive`
+    );
+    return response.data;
+  },
+
+  deleteProductVariant: async (id: string): Promise<void> => {
+    const response = await apiClient.delete<void>(
+      `/products/product-variants/${id}`
     );
     return response.data;
   },

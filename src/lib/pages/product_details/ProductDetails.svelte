@@ -39,7 +39,7 @@
       call: () => ProductRepo.archiveProduct(productId),
       onSuccess: loadProduct,
     };
-    getResponse<void>(details);
+    return getResponse<void>(details);
   }
 
   async function unarchiveProduct(): Promise<void> {
@@ -47,7 +47,7 @@
       call: () => ProductRepo.unarchiveProduct(productId),
       onSuccess: loadProduct,
     };
-    getResponse<void>(details);
+    return getResponse<void>(details);
   }
 </script>
 
