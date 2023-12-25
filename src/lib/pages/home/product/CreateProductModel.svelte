@@ -203,9 +203,13 @@
     </div>
 
     <div class="modal-action mt-6">
-      <button class="btn btn-primary" on:click={createProduct}
-        >Create product</button
-      >
+      <button class="btn btn-primary" on:click={createProduct}>
+        {#if isLoading}
+          <span class="loading loading-spinner" />
+        {:else}
+          Create Product
+        {/if}
+      </button>
       <form method="dialog">
         <button class="btn">Cancel</button>
       </form>

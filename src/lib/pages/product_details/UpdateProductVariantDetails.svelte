@@ -142,7 +142,13 @@
       </div>
 
       <div class="modal-action mt-6">
-        <button class="btn btn-primary" on:click={updateVariant}>Update</button>
+        <button class="btn btn-primary" on:click={updateVariant}>
+          {#if isLoading}
+            <span class="loading loading-spinner" />
+          {:else}
+            Update
+          {/if}
+        </button>
         <form method="dialog">
           <button class="btn">Cancel</button>
         </form>

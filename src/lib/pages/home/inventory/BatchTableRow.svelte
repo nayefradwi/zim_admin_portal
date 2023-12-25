@@ -22,13 +22,16 @@
     diffInDays = getDifferenceInDays(expiresAt);
   }
 
+  function goToBatchDetails() {
+    if (!item) return;
+    navigate(`/batches/${item.id}`);
+  }
   const batchOptions: MenuOptionItem[] = [
     {
       name: "View Details",
       icon: EyeIcon,
       onClick: () => {
-        if (!item) return;
-        navigate(`/batches/${item.id}`);
+        goToBatchDetails();
       },
     },
     {
@@ -48,7 +51,7 @@
   ];
 </script>
 
-<tr class="hover">
+<tr class="hover" on:click={goToBatchDetails}>
   {#if item}
     <th>{item.id}</th>
     <th>{item.sku}</th>
