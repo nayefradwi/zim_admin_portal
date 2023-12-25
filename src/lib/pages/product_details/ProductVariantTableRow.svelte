@@ -33,7 +33,7 @@
       onClick: () => onUpdateSkuClicked(variant.sku),
     },
     {
-      name: "Archive",
+      name: variant.isArchived ? "Archive" : "Unarchive",
       icon: ArchiveIcon,
       onClick: () => {},
     },

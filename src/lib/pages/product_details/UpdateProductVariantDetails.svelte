@@ -62,7 +62,6 @@
   function onClose(): void {
     if (isLoading) return;
     showModal = false;
-    showModal = false;
     dialog.close();
     productVariant = undefined;
     weightInG = undefined;

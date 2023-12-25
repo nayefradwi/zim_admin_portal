@@ -4,6 +4,7 @@
   import { navigate } from "svelte-routing";
   export let name: string;
   export let isArchived: boolean;
+  export let onArchiveClicked: () => void;
 </script>
 
 <div class="flex flex-row items-center my-2 justify-between">
@@ -24,12 +25,14 @@
       >Edit</button
     >
     {#if isArchived}
-      <button class="action btn btn-success btn-xs btn-outline rounded-none"
-        >Activate</button
+      <button
+        class="action btn btn-success btn-xs btn-outline rounded-none"
+        on:click={onArchiveClicked}>Activate</button
       >
     {:else}
-      <button class="action btn btn-error btn-xs btn-outline rounded-none"
-        >Archive</button
+      <button
+        class="action btn btn-error btn-xs btn-outline rounded-none"
+        on:click={onArchiveClicked}>Archive</button
       >
     {/if}
   </div>

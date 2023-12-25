@@ -10,8 +10,10 @@
   import ProductAppBar from "./ProductAppBar.svelte";
   import ProductVariantsView from "./ProductVariantsView.svelte";
   import { onMount } from "svelte";
+  import ApiConfirmationDialog from "../../components/ApiConfirmationDialog.svelte";
   export let productId: string;
   let product: Product | undefined;
+  let showArchiveDialog: boolean = false;
   const details: ResponseHandlerData<Product> = {
     call: () => ProductRepo.getProduct(productId),
     onSuccess(data) {
@@ -21,8 +23,18 @@
   onMount(() => {
     getResponse<Product>(details);
   });
+
+  function onArchiveClicked(): void {
+    showArchiveDialog = true;
+  }
 </script>
 
+<ApiConfirmationDialog
+  title="Archive Product?"
+  onConfirm={async () => {}}
+  onCancel={() => {}}
+  bind:showModal={showArchiveDialog}
+></ApiConfirmationDialog>
 <main
   class="flex flex-col justify-start p-4 items-start h-screen overflow-y-auto
     bg-base-100"
@@ -32,6 +44,7 @@
       <ProductAppBar
         name={product.name}
         isArchived={product.isArchived || false}
+        {onArchiveClicked}
       />
       <ProductOptions productOptions={product.options} />
       <ProductDescription
