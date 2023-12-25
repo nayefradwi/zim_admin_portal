@@ -26,6 +26,10 @@ export interface IProductRepo {
   getProductVariantById(id: string): Promise<ProductVariant>;
   createBatch(request: CreateBatchRequest): Promise<void>;
   createBatchWithRecipe(request: CreateBatchRequest): Promise<void>;
+  archiveProduct(id: string): Promise<void>;
+  archiveProductVariant(id: string): Promise<void>;
+  unarchiveProduct(id: string): Promise<void>;
+  unarchiveProductVariant(id: string): Promise<void>;
 }
 
 export interface ModifyBatchRequest {
@@ -187,6 +191,26 @@ export const ProductRepo: IProductRepo = {
     const response = await apiClient.post<void>(
       "/products/product-variants/batches/batch/stock/with-recipe",
       request
+    );
+    return response.data;
+  },
+  archiveProduct: async (id: string): Promise<void> => {
+    const response = await apiClient.put<void>(`/products/${id}/archive`);
+    return response.data;
+  },
+  archiveProductVariant: async (id: string): Promise<void> => {
+    const response = await apiClient.put<void>(
+      `/products/product-variants/${id}/archive`
+    );
+    return response.data;
+  },
+  unarchiveProduct: async (id: string): Promise<void> => {
+    const response = await apiClient.put<void>(`/products/${id}/unarchive`);
+    return response.data;
+  },
+  unarchiveProductVariant: async (id: string): Promise<void> => {
+    const response = await apiClient.put<void>(
+      `/products/product-variants/${id}/unarchive`
     );
     return response.data;
   },

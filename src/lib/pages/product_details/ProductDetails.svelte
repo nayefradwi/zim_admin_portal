@@ -14,27 +14,57 @@
   export let productId: string;
   let product: Product | undefined;
   let showArchiveDialog: boolean = false;
-  const details: ResponseHandlerData<Product> = {
-    call: () => ProductRepo.getProduct(productId),
-    onSuccess(data) {
-      product = data;
-    },
-  };
-  onMount(() => {
+  let showUnarchiveDialog: boolean = false;
+
+  function loadProduct(): void {
+    const details: ResponseHandlerData<Product> = {
+      call: () => ProductRepo.getProduct(productId),
+      onSuccess(data) {
+        product = data;
+      },
+    };
     getResponse<Product>(details);
-  });
+  }
+
+  onMount(loadProduct);
 
   function onArchiveClicked(): void {
-    showArchiveDialog = true;
+    if (!product) return;
+    if (product.isArchived) showUnarchiveDialog = true;
+    else showArchiveDialog = true;
+  }
+
+  async function archiveProduct(): Promise<void> {
+    const details: ResponseHandlerData<void> = {
+      call: () => ProductRepo.archiveProduct(productId),
+      onSuccess: loadProduct,
+    };
+    getResponse<void>(details);
+  }
+
+  async function unarchiveProduct(): Promise<void> {
+    const details: ResponseHandlerData<void> = {
+      call: () => ProductRepo.unarchiveProduct(productId),
+      onSuccess: loadProduct,
+    };
+    getResponse<void>(details);
   }
 </script>
 
 <ApiConfirmationDialog
   title="Archive Product?"
-  onConfirm={async () => {}}
+  onConfirm={archiveProduct}
   onCancel={() => {}}
   bind:showModal={showArchiveDialog}
-></ApiConfirmationDialog>
+  message="Archiving this product will make it not visible in main product listing"
+/>
+<ApiConfirmationDialog
+  title="Unarchive Product?"
+  message="Unarchiving this product will make it visible in main product listing"
+  onConfirm={unarchiveProduct}
+  onCancel={() => {}}
+  bind:showModal={showUnarchiveDialog}
+/>
 <main
   class="flex flex-col justify-start p-4 items-start h-screen overflow-y-auto
     bg-base-100"
