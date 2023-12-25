@@ -16,12 +16,16 @@
   export let onArchiveVariantClicked: (variant: ProductVariant) => void;
   export let onUnarchiveVariantClicked: (variant: ProductVariant) => void;
   export let onVariantDeleted: (variant: ProductVariant) => void;
+
+  function goToVariant() {
+    navigate(`/products/variants/${variant.id}`);
+  }
   const variantOptions: MenuOptionItem[] = [
     {
       name: "View Details",
       icon: EyeIcon,
       onClick: () => {
-        navigate(`/products/variants/${variant.id}`);
+        goToVariant();
       },
     },
     {
@@ -52,7 +56,7 @@
   ];
 </script>
 
-<tr class="hover">
+<tr class="hover" on:click={goToVariant}>
   <td>{variant.id}</td>
   <td>{variant.sku}</td>
   <td>{variant.name}</td>
