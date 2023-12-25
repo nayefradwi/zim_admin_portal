@@ -33,7 +33,7 @@
     showModal = false;
     dialog.close();
     toast.success("Product added!");
-    if (isIngredient) productStore.refresh($productStore);
+    if (!isIngredient) productStore.refresh($productStore);
     else ingredientStore.refresh($ingredientStore);
   }
 

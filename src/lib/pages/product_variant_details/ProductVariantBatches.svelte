@@ -1,7 +1,7 @@
 <script lang="ts">
   import { type Batch, ProductRepo, type ProductVariant } from "../../../data";
   import BatchTable from "../../components/BatchTable.svelte";
-  import { createPaginationStore } from "../../stores/pagination";
+  import { batchStore, createPaginationStore } from "../../stores/pagination";
 
   export let productVariant: ProductVariant;
 
@@ -12,6 +12,7 @@
 
   function onSuccessfulModify() {
     variantBatches.refresh($variantBatches);
+    batchStore.refresh($batchStore);
   }
 </script>
 

@@ -7,6 +7,7 @@
     getResponse,
   } from "../../../data";
   import ApiConfirmationDialog from "../../components/ApiConfirmationDialog.svelte";
+  import { batchStore, productStore } from "../../stores/pagination";
   import ProductVariantTableRow from "./ProductVariantTableRow.svelte";
   import UpdateProductVariantDetails from "./UpdateProductVariantDetails.svelte";
   import UpdateProductVariantSkuModel from "./UpdateProductVariantSkuModel.svelte";
@@ -79,14 +80,13 @@
   async function deleteVariant(variant: ProductVariant): Promise<void> {
     const details: ResponseHandlerData<void> = {
       call: () => ProductRepo.deleteProductVariant(variant.id.toString()),
-      onSuccess: refreshProduct,
+      onSuccess: () => {
+        refreshProduct();
+        productStore.refresh($productStore);
+        batchStore.refresh($batchStore);
+      },
     };
     return getResponse<void>(details);
-  }
-
-  function onActionSuccess() {
-    showConfirmationDialog = false;
-    refreshProduct();
   }
 
   function refreshProduct() {

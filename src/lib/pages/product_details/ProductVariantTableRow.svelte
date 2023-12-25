@@ -5,7 +5,6 @@
     EditIcon,
     Trash2Icon,
     ArchiveIcon,
-    PlusIcon,
     HashIcon,
   } from "svelte-feather-icons";
   import type { MenuOptionItem } from "../../view_models/menuOptionItem";
