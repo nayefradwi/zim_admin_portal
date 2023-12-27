@@ -1,5 +1,4 @@
 import {
-  GridIcon,
   PackageIcon,
   TruckIcon,
   ShoppingBagIcon,
@@ -14,6 +13,7 @@ import {
   ORDERS_ROUTE,
   PRODUCTS_ROUTE,
   REPORTS_ROUTE,
+  RETAILERS_ROUTE,
   SETTINGS_ROUTE,
   TASKS_ROUTE,
 } from "../routes";
@@ -35,6 +35,12 @@ export const HOME_NAVIGATION: AppNavItemModel[] = [
     path: PRODUCTS_ROUTE,
     name: "Products",
     icon: PackageIcon,
+  },
+  {
+    path: RETAILERS_ROUTE,
+    name: "Retail Partners",
+    icon: TruckIcon,
+    isLocked: true,
   },
   {
     path: ORDERS_ROUTE,
