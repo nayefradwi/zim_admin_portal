@@ -38,19 +38,37 @@
     {
       name: "Increment Batch",
       icon: PlusIcon,
-      onClick: () => {
+      onClick: (e: Event) => {
+        e.stopPropagation();
+        e.preventDefault();
         showIncrementModal = true;
       },
     },
     {
       name: "Decrement Batch",
       icon: MinusIcon,
-      onClick: () => {
+      onClick: (e) => {
+        e.stopPropagation();
+        e.preventDefault();
         showDecrementModal = true;
       },
     },
   ];
 </script>
+
+{#if item}
+  <ModifyBatchModel
+    batch={item}
+    bind:showModal={showIncrementModal}
+    isIncrement={true}
+    {onSuccessfulModify}
+  />
+  <ModifyBatchModel
+    batch={item}
+    bind:showModal={showDecrementModal}
+    isIncrement={false}
+    {onSuccessfulModify}
+  />{/if}
 
 <tr class="hover" on:click={goToBatchDetails}>
   {#if item}
@@ -70,18 +88,6 @@
     <td>
       <VerticalViewMore position="dropdown-left" items={batchOptions} />
     </td>
-    <ModifyBatchModel
-      batch={item}
-      bind:showModal={showIncrementModal}
-      isIncrement={true}
-      {onSuccessfulModify}
-    />
-    <ModifyBatchModel
-      batch={item}
-      bind:showModal={showDecrementModal}
-      isIncrement={false}
-      {onSuccessfulModify}
-    />
   {:else}
     <th>-</th>
     <th />

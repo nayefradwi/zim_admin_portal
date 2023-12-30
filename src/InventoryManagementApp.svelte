@@ -90,9 +90,8 @@
       <Route path={BATCH_DETAILS_ROUTE} let:params>
         <BatchDetails batchId={params.id} />
       </Route>
-      <!-- TODO: this should be by sku -->
       <Route path={PRODUCT_VARIANT_DETAILS_ROUTE} let:params>
-        <ProductVariantDetails productVariantId={params.id} />
+        <ProductVariantDetails productVariantId={params.sku} />
       </Route>
       <Route path={CREATE_RECIPES_ROUTE} let:params>
         <CreateRecipe resultVariantSku={params.sku} />

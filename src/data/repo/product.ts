@@ -35,7 +35,10 @@ export interface IProductRepo {
     names: string,
     query?: PaginationQuery
   ): Promise<PaginatedModel<ProductVariant>>;
-  getProductVariantBySku(sku: string): Promise<ProductVariant>;
+  getProductVariantBySku(
+    sku: string,
+    withRecipe?: boolean
+  ): Promise<ProductVariant>;
 }
 
 export interface ModifyBatchRequest {
@@ -245,9 +248,17 @@ export const ProductRepo: IProductRepo = {
     return response.data;
   },
 
-  getProductVariantBySku: async (sku: string): Promise<ProductVariant> => {
+  getProductVariantBySku: async (
+    sku: string,
+    withRecipe?: boolean
+  ): Promise<ProductVariant> => {
     const response = await apiClient.get<ProductVariant>(
-      `/products/product-variants/sku/${sku}`
+      `/products/product-variants/sku/${sku}`,
+      {
+        params: {
+          withRecipe: withRecipe,
+        },
+      }
     );
     return response.data;
   },

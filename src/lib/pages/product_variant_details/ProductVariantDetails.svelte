@@ -20,7 +20,7 @@
   function loadProductVariantDetails() {
     isLoading = true;
     const details: ResponseHandlerData<ProductVariant> = {
-      call: () => ProductRepo.getProductVariantById(productVariantId),
+      call: () => ProductRepo.getProductVariantBySku(productVariantId, true),
       onSuccess: (data) => {
         isLoading = false;
         productVariant = data;
@@ -54,7 +54,9 @@
     <div class="flex flex-row w-full space-x-4">
       <div class="flex flex-col w-1/2 items-start space-y-4">
         <ProductVariantDetailsRow {productVariant} />
-        <ProductVariantRecipe {productVariant} />
+        {#if !productVariant.isIngredient}
+          <ProductVariantRecipe {productVariant} />
+        {/if}
       </div>
       <div class="flex flex-col w-1/2 items-start space-y-4">
         <div class="card shadow bg-base-100 w-full p-4">

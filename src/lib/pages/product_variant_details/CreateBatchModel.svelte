@@ -25,14 +25,13 @@
     selectedReason = reasons[0];
   });
   const modifiedQty = writable(0);
-  let newStock: number = 0;
   let isLoading: boolean = false;
   let dialog: HTMLDialogElement;
   let comment: string = "";
   let affectRecipe: boolean = !variant.isIngredient;
   const unsubscribe = modifiedQty.subscribe((val) => {
     if (val < 0) return modifiedQty.set(0);
-    newStock += val;
+    modifiedQty.set(val);
   });
 
   function onSuccessCallback() {
@@ -44,7 +43,7 @@
   }
 
   function increment(data: CreateBatchRequest) {
-    if (newStock < 0) return modifiedQty.set(0);
+    if ($modifiedQty < 0) return modifiedQty.set(0);
     getResponse<void>({
       call: () => {
         if (!affectRecipe) return ProductRepo.createBatch(data);
@@ -77,7 +76,6 @@
   function handleClose() {
     if (isLoading) return;
     $modifiedQty = 0;
-    newStock = 0;
     showModal = false;
     dialog.close();
   }
@@ -93,7 +91,7 @@
   class="modal modal-bottom sm:modal-middle"
 >
   <div class="modal-box space-y-2">
-    <CreateBatchTitle {variant} bind:newStock />
+    <CreateBatchTitle {variant} bind:newStock={$modifiedQty} />
 
     {#if selectedReason}
       <select class="select select-bordered w-full" bind:value={selectedReason}>

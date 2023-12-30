@@ -19,7 +19,7 @@
   export let onVariantDeleted: (variant: ProductVariant) => void;
 
   function goToVariant() {
-    navigate(getProductVariantDetailsRoute(variant.id.toString()));
+    navigate(getProductVariantDetailsRoute(variant.sku.toString()));
   }
   const variantOptions: MenuOptionItem[] = [
     {
@@ -32,17 +32,27 @@
     {
       name: "Edit Details",
       icon: EditIcon,
-      onClick: () => onUpdateVariantClicked(variant),
+      onClick: (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        onUpdateVariantClicked(variant);
+      },
     },
     {
       name: "Update Sku",
       icon: HashIcon,
-      onClick: () => onUpdateSkuClicked(variant.sku),
+      onClick: (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        onUpdateSkuClicked(variant.sku);
+      },
     },
     {
       name: variant.isArchived ? "Archive" : "Unarchive",
       icon: ArchiveIcon,
-      onClick: () => {
+      onClick: (e) => {
+        e.stopPropagation();
+        e.preventDefault();
         if (variant.isArchived) onUnarchiveVariantClicked(variant);
         else onArchiveVariantClicked(variant);
       },
@@ -50,7 +60,9 @@
     {
       name: "Delete",
       icon: Trash2Icon,
-      onClick: () => {
+      onClick: (e) => {
+        e.stopPropagation();
+        e.preventDefault();
         onVariantDeleted(variant);
       },
     },
