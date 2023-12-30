@@ -65,7 +65,9 @@
         isLoading = false;
         toast.success("Recipe created successfully");
         recipes = [];
-        navigate(getProductVariantDetailsRoute(resultVariantSku));
+        navigate(getProductVariantDetailsRoute(resultVariantSku), {
+          replace: true,
+        });
       },
     };
     return getResponse<void>(details);
