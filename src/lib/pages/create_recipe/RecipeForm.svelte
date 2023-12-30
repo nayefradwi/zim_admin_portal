@@ -8,8 +8,9 @@
 </script>
 
 <div class="w-1/2 flex flex-col">
-  <div class="flex flex-row justify-between">
+  <div class="flex flex-row justify-between items-start">
     <h2 class="font-medium">Recipe ({totalCost} QR)</h2>
+    <button class="btn btn-outline btn-primary btn-xs">Create Recipe</button>
   </div>
   <div class="divider"></div>
   {#each recipes as recipe}
