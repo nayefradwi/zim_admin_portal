@@ -12,6 +12,8 @@
   import toast from "svelte-french-toast";
   import SearchProductResultListing from "./SearchProductResultListing.svelte";
   import AddRecipeModel from "./AddRecipeModel.svelte";
+  export let onAddToRecipe: (variant: ProductVariant, quantity: number) => void;
+
   let productVariantsPage: PaginatedModel<ProductVariant> | undefined =
     undefined;
   let isLoading: boolean = false;
@@ -70,7 +72,11 @@
   }
 </script>
 
-<AddRecipeModel showModal={productVariant !== undefined} bind:productVariant />
+<AddRecipeModel
+  showModal={productVariant !== undefined}
+  bind:productVariant
+  {onAddToRecipe}
+/>
 <div class="w-1/2 flex flex-col space-y-2">
   <h2 class="font-medium">Products</h2>
   <div class="flex flex-row space-x-2">

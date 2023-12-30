@@ -7,7 +7,6 @@
 
 <div class="space-y-2 mt-2">
   {#each productVariants as variant}
-    <!-- product name -->
     <div class="card bg-base-100 shadow">
       <div class="card-body p-4 items-start">
         <div class="card-title">{variant.productName} / {variant.name}</div>
@@ -23,8 +22,5 @@
         </div>
       </div>
     </div>
-    <!-- variant name -->
-    <!-- unit -->
-    <!-- cost -->
   {/each}
 </div>

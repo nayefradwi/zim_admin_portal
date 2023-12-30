@@ -40,7 +40,7 @@
   </h1>
   <div class="my-2 h-2"></div>
   <div class="flex flex-row w-full justify-between">
-    <ProductsForm />
+    <ProductsForm onAddToRecipe={addProductVariantToRecipe} />
     <div class="divider divider-horizontal space-y-2"></div>
     <RecipeForm {recipes} />
   </div>
