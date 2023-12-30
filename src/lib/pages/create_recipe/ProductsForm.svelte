@@ -11,11 +11,13 @@
   } from "../../../data";
   import toast from "svelte-french-toast";
   import SearchProductResultListing from "./SearchProductResultListing.svelte";
+  import AddRecipeModel from "./AddRecipeModel.svelte";
   let productVariantsPage: PaginatedModel<ProductVariant> | undefined =
     undefined;
   let isLoading: boolean = false;
   let sku = "";
   let name = "";
+  let productVariant: ProductVariant | undefined = undefined;
 
   function clearProducts(): void {
     if (isLoading) return;
@@ -62,8 +64,13 @@
     };
     return getResponse<PaginatedModel<ProductVariant>>(details);
   }
+
+  function onProductVariantSelected(variant: ProductVariant) {
+    productVariant = variant;
+  }
 </script>
 
+<AddRecipeModel showModal={productVariant !== undefined} bind:productVariant />
 <div class="w-1/2 flex flex-col space-y-2">
   <h2 class="font-medium">Products</h2>
   <div class="flex flex-row space-x-2">
@@ -94,7 +101,10 @@
     {:else if !productVariantsPage || !productVariantsPage.items}
       <p class="text-base-300 font-light">no products found</p>
     {:else}
-      <SearchProductResultListing productVariants={productVariantsPage.items} />
+      <SearchProductResultListing
+        productVariants={productVariantsPage.items}
+        {onProductVariantSelected}
+      />
     {/if}
   </div>
 </div>

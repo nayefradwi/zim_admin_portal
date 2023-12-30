@@ -38,7 +38,6 @@
   <h1 class="text-xl font-semibold underline">
     Create Recipe for {resultVariantSku}
   </h1>
-  <div class="divider"></div>
   <div class="my-2 h-2"></div>
   <div class="flex flex-row w-full justify-between">
     <ProductsForm />
