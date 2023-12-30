@@ -3,7 +3,6 @@ import {
   type TransactionReason,
   type ResponseHandlerData,
   TransactionRepo,
-  ClientError,
   getResponse,
 } from "../../data";
 

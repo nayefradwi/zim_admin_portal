@@ -1,17 +1,11 @@
 import axios from "axios";
 import { ClientError } from "./models/error";
-import { getTokensFromSession, getWarehouseSelected } from ".";
 
 export const apiClient = axios.create({
   baseURL: "http://localhost:3000",
   headers: {},
 });
 
-setWarehouseHeader(getWarehouseSelected());
-const token = getTokensFromSession();
-if (token) {
-  setAuthHeader(token.accessToken);
-}
 export function setAuthHeader(accessToken: string | null) {
   apiClient.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 }
