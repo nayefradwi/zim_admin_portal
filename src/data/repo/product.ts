@@ -31,6 +31,11 @@ export interface IProductRepo {
   unarchiveProduct(id: string): Promise<void>;
   unarchiveProductVariant(id: string): Promise<void>;
   deleteProductVariant(id: string): Promise<void>;
+  searchProductVariantByName(
+    names: string,
+    query?: PaginationQuery
+  ): Promise<PaginatedModel<ProductVariant>>;
+  getProductVariantBySku(sku: string): Promise<ProductVariant>;
 }
 
 export interface ModifyBatchRequest {
@@ -219,6 +224,29 @@ export const ProductRepo: IProductRepo = {
   deleteProductVariant: async (id: string): Promise<void> => {
     const response = await apiClient.delete<void>(
       `/products/product-variants/${id}`
+    );
+    return response.data;
+  },
+
+  searchProductVariantByName: async (
+    name: string,
+    query?: PaginationQuery
+  ): Promise<PaginatedModel<ProductVariant>> => {
+    const response = await apiClient.post<PaginatedModel<ProductVariant>>(
+      "/products/product-variants/search",
+      {
+        params: {
+          name,
+          ...query,
+        },
+      }
+    );
+    return response.data;
+  },
+
+  getProductVariantBySku: async (sku: string): Promise<ProductVariant> => {
+    const response = await apiClient.get<ProductVariant>(
+      `/products/product-variants/sku/${sku}`
     );
     return response.data;
   },

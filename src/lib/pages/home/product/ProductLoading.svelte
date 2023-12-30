@@ -13,3 +13,9 @@
     {/each}
   {/each}
 </div>
+
+<style>
+  .grid {
+    width: 80vw;
+  }
+</style>
