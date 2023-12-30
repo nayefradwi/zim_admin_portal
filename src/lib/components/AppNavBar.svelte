@@ -5,6 +5,7 @@
   import { warehouseStore } from "../stores/warehouse";
   import { XIcon, AlignJustifyIcon } from "svelte-feather-icons";
   import { drawerToggle } from "../stores/drawer";
+  export let showDrawerBtn: boolean = false;
   function changeWarehouse() {
     setWarehouseHeader(null);
     navigate(WAREHOUSE_SELECT_ROUTE);
@@ -15,11 +16,18 @@
 </script>
 
 <div class="navbar bg-base-100 shadow">
-  <label class="swap mx-2">
-    <input type="checkbox" class="drawer-toggle" bind:checked={$drawerToggle} />
-    <XIcon class="swap-on" />
-    <AlignJustifyIcon class="swap-off" />
-  </label>
+  {#if showDrawerBtn}
+    <label class="swap mx-2">
+      <input
+        type="checkbox"
+        class="drawer-toggle"
+        bind:checked={$drawerToggle}
+      />
+      <XIcon class="swap-on" />
+      <AlignJustifyIcon class="swap-off" />
+    </label>
+  {/if}
+
   <div class="flex-1">
     <button
       class="btn btn-ghost normal-case text-xl no-animation"

@@ -15,7 +15,7 @@
   import TransactionsTable from "../../components/TransactionsTable.svelte";
   import { MinusIcon, PlusIcon } from "svelte-feather-icons";
   import ModifyBatchModel from "../home/inventory/ModifyBatchModel.svelte";
-  import toast from "svelte-french-toast";
+  import AppNavBar from "../../components/AppNavBar.svelte";
 
   export let batchId: string;
   let transactions: Transaction[] = [];
@@ -59,6 +59,8 @@
     showDecrementModal = true;
   }
 </script>
+
+<AppNavBar />
 
 <div class="flex flex-col h-screen overflow-y-auto items-start p-4">
   {#if batch && transactionStats}

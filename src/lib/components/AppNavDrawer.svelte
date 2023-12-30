@@ -53,7 +53,7 @@
     </ul>
   </div>
   <div class="drawer-content">
-    <AppNavBar />
+    <AppNavBar showDrawerBtn={true} />
     <Router url={selectedPath}>
       <Route path={HOME_ROUTE} component={InventoryView} />
       <Route path={PRODUCTS_ROUTE} component={ProductView} />

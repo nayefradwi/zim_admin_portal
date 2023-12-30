@@ -9,8 +9,8 @@ export interface IRecipeRepo {
 export interface CreateRecipeInput {
   resultVariantSku: string;
   quantity: number;
-  recipeVariantSkus: string;
-  unitId: string;
+  recipeVariantSku: string;
+  unitId: number;
 }
 
 export const RecipeRepo: IRecipeRepo = {

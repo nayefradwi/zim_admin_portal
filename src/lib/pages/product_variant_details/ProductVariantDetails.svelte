@@ -12,6 +12,7 @@
   import ProductVariantBatches from "./ProductVariantBatches.svelte";
   import ProductVariantRecipe from "./ProductVariantRecipe.svelte";
   import CreateBatchModel from "./CreateBatchModel.svelte";
+  import AppNavBar from "../../components/AppNavBar.svelte";
   export let productVariantId: string;
   let isLoading: boolean = false;
   let showCreateBatchModal: boolean = false;
@@ -36,6 +37,7 @@
   });
 </script>
 
+<AppNavBar />
 <div class="flex flex-col items-start p-4">
   {#if isLoading}
     <div>Loading...</div>
