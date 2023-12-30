@@ -35,6 +35,7 @@
       toast.error("Sku is required");
       return;
     }
+    name = "";
     const details: ResponseHandlerData<ProductVariant> = {
       call: () => {
         isLoading = true;
@@ -54,6 +55,7 @@
       toast.error("Name is required");
       return;
     }
+    sku = "";
     const details: ResponseHandlerData<PaginatedModel<ProductVariant>> = {
       call: () => {
         isLoading = true;
@@ -70,6 +72,18 @@
   function onProductVariantSelected(variant: ProductVariant) {
     productVariant = variant;
   }
+
+  function _onEnterClickedForSku(event: KeyboardEvent) {
+    if (event.key === "Enter") {
+      getProductBySku();
+    }
+  }
+
+  function _onEnterClickedForName(event: KeyboardEvent) {
+    if (event.key === "Enter") {
+      searchProductsByName();
+    }
+  }
 </script>
 
 <AddRecipeModel
@@ -81,6 +95,7 @@
   <h2 class="font-medium">Products</h2>
   <div class="flex flex-row space-x-2">
     <input
+      on:keydown={_onEnterClickedForName}
       bind:value={name}
       class="input input-bordered input-sm flex-grow"
       placeholder="Search by name"
@@ -92,6 +107,7 @@
   </div>
   <div class="flex flex-row space-x-2">
     <input
+      on:keydown={_onEnterClickedForSku}
       bind:value={sku}
       class="input input-bordered input-sm flex-grow"
       placeholder="Get by sku / barcode"

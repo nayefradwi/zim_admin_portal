@@ -3,7 +3,6 @@
   import {
     getResponse,
     ProductRepo,
-    type ModifyBatchRequest,
     type TransactionReason,
     type ProductVariant,
     type CreateBatchRequest,
@@ -62,6 +61,7 @@
   function modify() {
     if (isLoading) return;
     if (!selectedReason) return;
+    if ($modifiedQty < 1) return;
     isLoading = true;
     let data: CreateBatchRequest = {
       quantity: $modifiedQty,
