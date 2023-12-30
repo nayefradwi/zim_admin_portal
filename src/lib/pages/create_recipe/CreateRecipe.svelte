@@ -31,6 +31,12 @@
     if (!addVm) return;
     recipes = [...recipes, addVm];
   }
+
+  function removeRecipe(recipe: AddRecipeVM) {
+    recipes = recipes.filter(
+      (r, _) => recipe.recipeVariantSku !== r.recipeVariantSku
+    );
+  }
 </script>
 
 <AppNavBar />
@@ -42,6 +48,6 @@
   <div class="flex flex-row w-full justify-between">
     <ProductsForm onAddToRecipe={addProductVariantToRecipe} />
     <div class="divider divider-horizontal space-y-2"></div>
-    <RecipeForm {recipes} />
+    <RecipeForm {recipes} onRecipeRemove={removeRecipe} />
   </div>
 </main>

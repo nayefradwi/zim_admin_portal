@@ -3,10 +3,15 @@
   import type { AddRecipeVM } from "../../view_models/addRecipeVM";
 
   export let recipes: AddRecipeVM[];
+  export let onRecipeRemove: (recipe: AddRecipeVM) => void;
+  $: totalCost = recipes.reduce((acc, curr) => acc + curr.totalCost, 0);
 </script>
 
 <div class="w-1/2 flex flex-col">
-  <h2 class="font-medium">Recipe</h2>
+  <div class="flex flex-row justify-between">
+    <h2 class="font-medium">Recipe ({totalCost} QR)</h2>
+  </div>
+  <div class="divider"></div>
   {#each recipes as recipe}
     <div class="flex flex-row space-x-2">
       <div class="font-semibold">{recipe.productName}</div>
@@ -15,8 +20,9 @@
       <div class="text-gray-500">{recipe.unitSymbol}</div>
       <div class="flex-grow" />
       <div class="font-semibold">total cost: {recipe.totalCost} QR</div>
-      <button class="btn btn-xs btn-ghost p-0 text-error"
-        ><TrashIcon size="14" /></button
+      <button
+        class="btn btn-xs btn-ghost p-0 text-error"
+        on:click={() => onRecipeRemove(recipe)}><TrashIcon size="14" /></button
       >
     </div>
   {/each}
