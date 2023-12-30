@@ -10,6 +10,7 @@
   import type { MenuOptionItem } from "../../view_models/menuOptionItem";
   import VerticalViewMore from "../../components/VerticalViewMore.svelte";
   import { navigate } from "svelte-routing";
+  import { getProductVariantDetailsRoute } from "../../routes";
   export let variant: ProductVariant;
   export let onUpdateSkuClicked: (sku: string) => void;
   export let onUpdateVariantClicked: (variant: ProductVariant) => void;
@@ -18,7 +19,7 @@
   export let onVariantDeleted: (variant: ProductVariant) => void;
 
   function goToVariant() {
-    navigate(`/products/variants/${variant.id}`);
+    navigate(getProductVariantDetailsRoute(variant.id.toString()));
   }
   const variantOptions: MenuOptionItem[] = [
     {

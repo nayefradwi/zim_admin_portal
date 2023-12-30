@@ -1,10 +1,11 @@
 <script lang="ts">
   import { navigate } from "svelte-routing";
   import { type Product } from "../../../../data";
+  import { getProductDetailsRoute } from "../../../routes";
 
   export let product: Product;
   const goToProductDetails = () => {
-    navigate(`/products/${product.id}`);
+    navigate(getProductDetailsRoute(product.id.toString()));
   };
 </script>
 

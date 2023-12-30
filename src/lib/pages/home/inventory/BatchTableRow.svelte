@@ -8,6 +8,7 @@
   import ModifyBatchModel from "./ModifyBatchModel.svelte";
   import { batchStore } from "../../../stores/pagination";
   import { navigate } from "svelte-routing";
+  import { getBatchDetailsRoute } from "../../../routes";
   export let item: Batch | undefined;
   export let onSuccessfulModify: () => void;
   let expiresAt: DateTime;
@@ -24,7 +25,7 @@
 
   function goToBatchDetails() {
     if (!item) return;
-    navigate(`/batches/${item.id}`);
+    navigate(getBatchDetailsRoute(item.id.toString()));
   }
   const batchOptions: MenuOptionItem[] = [
     {

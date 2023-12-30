@@ -13,3 +13,15 @@ export interface PaginationQuery {
   pageSize?: number;
   direction?: number;
 }
+
+export function createSingleItemPage<T>(item: T): PaginatedModel<T> {
+  return {
+    pageSize: 1,
+    endCursor: "",
+    previousCursor: "",
+    hasNext: false,
+    hasPrevious: false,
+    itemsLength: 1,
+    items: [item],
+  };
+}

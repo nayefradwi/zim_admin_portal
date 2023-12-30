@@ -11,3 +11,20 @@ export const SETTINGS_ROUTE = "/settings";
 export const PRODUCT_DETAILS_ROUTE = "/products/:id";
 export const BATCH_DETAILS_ROUTE = "/batches/:id";
 export const PRODUCT_VARIANT_DETAILS_ROUTE = "/products/variants/:id";
+export const CREATE_RECIPES_ROUTE = "/products/variants/:sku/recipes/create";
+
+export function getCreateRecipeRoute(sku: string) {
+  return CREATE_RECIPES_ROUTE.replace(":sku", sku);
+}
+
+export function getProductDetailsRoute(id: string) {
+  return PRODUCT_DETAILS_ROUTE.replace(":id", id);
+}
+
+export function getBatchDetailsRoute(id: string) {
+  return BATCH_DETAILS_ROUTE.replace(":id", id);
+}
+
+export function getProductVariantDetailsRoute(id: string) {
+  return PRODUCT_VARIANT_DETAILS_ROUTE.replace(":id", id);
+}

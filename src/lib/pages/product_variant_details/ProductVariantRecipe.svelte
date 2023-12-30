@@ -1,8 +1,14 @@
 <script lang="ts">
+  import { navigate } from "svelte-routing";
   import type { ProductVariant } from "../../../data";
   import RecipeListItem from "./RecipeListItem.svelte";
   import RecipeTitle from "./RecipeTitle.svelte";
+  import { getCreateRecipeRoute } from "../../routes";
   export let productVariant: ProductVariant;
+
+  function goToCreateRecipe() {
+    navigate(getCreateRecipeRoute(productVariant.sku));
+  }
 </script>
 
 <div class="card shadow bg-base-100 w-full p-4 overflow-y-auto">
@@ -19,7 +25,9 @@
   {:else}
     <div class="text-gray-500">No recipe</div>
     <div class="my-2 flex-grow" />
-    <button class="btn btn-primary">Create recipe</button>
+    <button class="btn btn-primary" on:click={goToCreateRecipe}
+      >Create recipe</button
+    >
   {/if}
 </div>
 

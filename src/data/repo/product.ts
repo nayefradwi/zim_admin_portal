@@ -234,9 +234,10 @@ export const ProductRepo: IProductRepo = {
   ): Promise<PaginatedModel<ProductVariant>> => {
     const response = await apiClient.post<PaginatedModel<ProductVariant>>(
       "/products/product-variants/search",
+      {},
       {
         params: {
-          name,
+          name: name,
           ...query,
         },
       }

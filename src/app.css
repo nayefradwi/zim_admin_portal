@@ -50,3 +50,11 @@ input[type="number"] {
   appearance: textfield;
   /* For compatibility */
 }
+
+.icon-btn {
+  @apply btn;
+  @apply btn-ghost;
+  @apply btn-xs;
+  @apply p-0;
+  @apply no-animation;
+}

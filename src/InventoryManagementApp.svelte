@@ -14,6 +14,7 @@
   import { userStore } from "./lib/stores/user";
   import {
     BATCH_DETAILS_ROUTE,
+    CREATE_RECIPES_ROUTE,
     HOME_ROUTE,
     LOGIN_ROUTE,
     PRODUCT_DETAILS_ROUTE,
@@ -34,6 +35,7 @@
   import { Toaster } from "svelte-french-toast";
   import { unitStore } from "./lib/stores/unit";
   import ProductVariantDetails from "./lib/pages/product_variant_details/ProductVariantDetails.svelte";
+  import CreateRecipe from "./lib/pages/create_recipe/CreateRecipe.svelte";
 
   onMount(async () => {
     const token = getTokensFromSession();
@@ -88,8 +90,12 @@
       <Route path={BATCH_DETAILS_ROUTE} let:params>
         <BatchDetails batchId={params.id} />
       </Route>
+      <!-- TODO: this should be by sku -->
       <Route path={PRODUCT_VARIANT_DETAILS_ROUTE} let:params>
         <ProductVariantDetails productVariantId={params.id} />
+      </Route>
+      <Route path={CREATE_RECIPES_ROUTE} let:params>
+        <CreateRecipe resultVariantSku={params.sku} />
       </Route>
       <Route path="*" component={Home} />
     </div>
