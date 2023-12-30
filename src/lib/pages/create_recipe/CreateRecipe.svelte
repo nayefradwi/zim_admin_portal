@@ -15,6 +15,8 @@
   } from "../../view_models/addRecipeVM";
   import ProductsForm from "./ProductsForm.svelte";
   import RecipeForm from "./RecipeForm.svelte";
+  import { navigate } from "svelte-routing";
+  import { getProductVariantDetailsRoute } from "../../routes";
 
   export let resultVariantSku: string;
   let recipes: AddRecipeVM[] = [];
@@ -63,6 +65,7 @@
         isLoading = false;
         toast.success("Recipe created successfully");
         recipes = [];
+        navigate(getProductVariantDetailsRoute(resultVariantSku));
       },
     };
     return getResponse<void>(details);
