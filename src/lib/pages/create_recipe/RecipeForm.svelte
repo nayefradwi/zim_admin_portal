@@ -1,8 +1,8 @@
 <script lang="ts">
   import { TrashIcon } from "svelte-feather-icons";
   import type { AddRecipeVM } from "../../view_models/addRecipeVM";
-
   export let recipes: AddRecipeVM[];
+  export let onCreateRecipe: () => void;
   export let onRecipeRemove: (recipe: AddRecipeVM) => void;
   $: totalCost = recipes.reduce((acc, curr) => acc + curr.totalCost, 0);
 </script>
@@ -10,7 +10,9 @@
 <div class="w-1/2 flex flex-col">
   <div class="flex flex-row justify-between items-start">
     <h2 class="font-medium">Recipe ({totalCost} QR)</h2>
-    <button class="btn btn-outline btn-primary btn-xs">Create Recipe</button>
+    <button class="btn btn-outline btn-primary btn-xs" on:click={onCreateRecipe}
+      >Create Recipe</button
+    >
   </div>
   <div class="divider"></div>
   {#each recipes as recipe}
