@@ -1,6 +1,5 @@
 import axios from "axios";
 import { ClientError } from "./models/error";
-import { config } from "dotenv";
 
 export const apiClient = axios.create({
   baseURL: "http://localhost:3000",
@@ -31,8 +30,3 @@ apiClient.interceptors.response.use(
     }
   }
 );
-
-apiClient.interceptors.request.use((config) => {
-  console.log("Request: ", config);
-  return config;
-});
