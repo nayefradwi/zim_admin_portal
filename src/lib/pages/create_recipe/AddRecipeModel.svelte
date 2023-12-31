@@ -24,7 +24,6 @@
   function isValid(): boolean {
     const isValid: boolean =
       quantity !== undefined && quantity > 0 && productVariant != undefined;
-    console.log(quantity, productVariant, isValid);
     if (!isValid) toast.error("Please fill all fields");
     return isValid;
   }

@@ -39,7 +39,8 @@ export async function setup(): Promise<string> {
     return LOGIN_ROUTE;
   }
 }
-function loadData() {
+
+export function loadData() {
   unitStore.getUnits();
   transactionReasonsStore.getReasons();
   let emptyBatchState: PaginationState<Batch> = {

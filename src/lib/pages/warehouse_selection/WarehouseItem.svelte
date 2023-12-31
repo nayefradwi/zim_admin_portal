@@ -7,11 +7,13 @@
   } from "../../../data";
   import { warehouseStore } from "../../stores/warehouse";
   import { HOME_ROUTE } from "../../routes";
+  import { loadData } from "../../../setup";
 
   function select() {
     setWarehouseSelected(warehouse.id);
     setWarehouseHeader(warehouse.id);
     $warehouseStore = warehouse;
+    loadData();
     navigate(HOME_ROUTE, { replace: true });
   }
   function viewMap() {

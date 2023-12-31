@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ClientError } from "./models/error";
+import { config } from "dotenv";
 
 export const apiClient = axios.create({
   baseURL: "http://localhost:3000",
@@ -14,6 +15,7 @@ export function setWarehouseHeader(warehouseId: number | null) {
   apiClient.defaults.headers.common["X-Warehouse-Id"] =
     warehouseId != null ? warehouseId.toString() : null;
 }
+
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -29,3 +31,8 @@ apiClient.interceptors.response.use(
     }
   }
 );
+
+apiClient.interceptors.request.use((config) => {
+  console.log("Request: ", config);
+  return config;
+});

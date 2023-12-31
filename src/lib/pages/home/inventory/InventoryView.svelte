@@ -27,7 +27,6 @@
     const details: ResponseHandlerData<PaginatedModel<Batch>> = {
       call: () => ProductRepo.getBatchesBySku(searchVal),
       onSuccess: (data) => {
-        console.log(search, data);
         let newState: PaginationState<Batch> = {
           page: data,
           pageNumber: 1,
