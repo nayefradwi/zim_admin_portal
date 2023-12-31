@@ -35,9 +35,9 @@
 
   function _onClose(): void {
     if (isLoading) return;
+    dialog.close();
     showModal = false;
     onClose();
-    dialog.close();
   }
 </script>
 

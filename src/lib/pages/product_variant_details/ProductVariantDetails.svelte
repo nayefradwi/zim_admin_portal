@@ -13,6 +13,7 @@
   import ProductVariantRecipe from "./ProductVariantRecipe.svelte";
   import CreateBatchModel from "./CreateBatchModel.svelte";
   import AppNavBar from "../../components/AppNavBar.svelte";
+  import type { Recipe } from "../../../data/models/recipe";
   export let productVariantId: string;
   let isLoading: boolean = false;
   let showCreateBatchModal: boolean = false;
@@ -35,6 +36,10 @@
   onMount(() => {
     loadProductVariantDetails();
   });
+
+  function onRemoveRecipe(_: Recipe) {
+    loadProductVariantDetails();
+  }
 </script>
 
 <AppNavBar />
@@ -55,7 +60,7 @@
       <div class="flex flex-col w-1/2 items-start space-y-4">
         <ProductVariantDetailsRow {productVariant} />
         {#if !productVariant.isIngredient}
-          <ProductVariantRecipe {productVariant} />
+          <ProductVariantRecipe {productVariant} onRemove={onRemoveRecipe} />
         {/if}
       </div>
       <div class="flex flex-col w-1/2 items-start space-y-4">

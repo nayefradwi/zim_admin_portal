@@ -3,6 +3,7 @@
   import type { Recipe } from "../../../data/models/recipe";
 
   export let recipe: Recipe;
+  export let onRemove: (recipe: Recipe) => void;
 </script>
 
 <div class="flex flex-row space-x-2">
@@ -18,7 +19,8 @@
 
   <div class="flex-grow" />
   <div class="font-semibold">unit cost: {recipe.ingredientCost} QR</div>
-  <button class="btn btn-xs btn-ghost p-0 text-error"
-    ><TrashIcon size="14" /></button
+  <button
+    class="btn btn-xs btn-ghost p-0 text-error"
+    on:click={() => onRemove(recipe)}><TrashIcon size="14" /></button
   >
 </div>
