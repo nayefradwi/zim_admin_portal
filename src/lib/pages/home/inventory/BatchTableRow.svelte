@@ -70,7 +70,7 @@
     {onSuccessfulModify}
   />{/if}
 
-<tr class="hover" on:click={goToBatchDetails}>
+<tr class="hover" on:dblclick={goToBatchDetails}>
   {#if item}
     <th>{item.id}</th>
     <th>{item.sku}</th>

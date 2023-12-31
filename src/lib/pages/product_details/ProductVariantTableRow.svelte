@@ -69,7 +69,7 @@
   ];
 </script>
 
-<tr class="hover" on:click={goToVariant}>
+<tr class="hover" on:dblclick={goToVariant}>
   <td>{variant.id}</td>
   <td>{variant.sku}</td>
   <td>{variant.name}</td>
