@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { Router, Route, navigate } from "svelte-routing";
+  import { Router, Route } from "svelte-routing";
   import Home from "./lib/pages/home/Home.svelte";
   import WarehouseSelection from "./lib/pages/warehouse_selection/WarehouseSelection.svelte";
   import Login from "./lib/pages/login/Login.svelte";

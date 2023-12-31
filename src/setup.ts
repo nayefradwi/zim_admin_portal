@@ -7,7 +7,7 @@ import {
   type Product,
   type Batch,
 } from "./data";
-import { LOGIN_ROUTE, WAREHOUSE_SELECT_ROUTE } from "./lib/routes";
+import { HOME_ROUTE, LOGIN_ROUTE, WAREHOUSE_SELECT_ROUTE } from "./lib/routes";
 import { userStore } from "./lib/stores/user";
 import { warehouseStore } from "./lib/stores/warehouse";
 import { unitStore } from "./lib/stores/unit";
@@ -19,22 +19,24 @@ import {
 } from "./lib/stores/pagination";
 import { transactionReasonsStore } from "./lib/stores/transaction";
 
-export async function setup() {
+export async function setup(): Promise<string> {
   try {
     const token = getTokensFromSession();
-    if (!token) return navigate(LOGIN_ROUTE);
+    if (!token) return LOGIN_ROUTE;
     setAuthHeader(token.accessToken);
     await userStore.getUser();
-    if (!userStore) return navigate(LOGIN_ROUTE);
+    if (!userStore) return LOGIN_ROUTE;
     const warehouseId = getWarehouseSelected();
-    if (!warehouseId) navigate(WAREHOUSE_SELECT_ROUTE);
+    if (!warehouseId) return WAREHOUSE_SELECT_ROUTE;
     setWarehouseHeader(warehouseId);
     await warehouseStore.getCurrentWarehouse();
-    if (!warehouseStore) navigate(WAREHOUSE_SELECT_ROUTE);
+    if (!warehouseStore) return WAREHOUSE_SELECT_ROUTE;
     loadData();
+    return HOME_ROUTE;
   } catch (e) {
     console.log("Error in setup");
     console.error(e);
+    return LOGIN_ROUTE;
   }
 }
 function loadData() {

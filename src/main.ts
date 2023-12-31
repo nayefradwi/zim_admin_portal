@@ -5,9 +5,13 @@ import { setup } from "./setup";
 const target = document.getElementById("app");
 if (!target) throw new Error("Failed to find target element");
 
-await setup();
+const url = await setup();
+window.history.replaceState({}, "", url);
 const app = new App({
   target,
+  props: {
+    url,
+  },
 });
 
 export default app;

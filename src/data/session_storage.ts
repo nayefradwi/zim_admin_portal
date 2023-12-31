@@ -19,6 +19,7 @@ export function getTokensFromSession(): Token | null {
   try {
     const accessToken = sessionStorage.getItem(accessTokenKey);
     const refreshToken = sessionStorage.getItem(refreshTokenKey);
+    if (!accessToken || !refreshToken) return null;
     return {
       accessToken: accessToken as string,
       refreshToken: refreshToken as string,

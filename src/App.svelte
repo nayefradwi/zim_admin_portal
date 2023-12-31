@@ -1,5 +1,6 @@
 <script lang="ts">
   import InventoryManagementApp from "./InventoryManagementApp.svelte";
+  export let url = "";
 </script>
 
-<InventoryManagementApp></InventoryManagementApp>
+<InventoryManagementApp {url}></InventoryManagementApp>
