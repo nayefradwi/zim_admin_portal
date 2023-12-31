@@ -35,7 +35,7 @@
 
   function _onClose(): void {
     if (isLoading) return;
-    dialog.close();
+    dialog?.close();
     showModal = false;
     onClose();
   }
