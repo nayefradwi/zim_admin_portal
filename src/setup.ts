@@ -32,7 +32,7 @@ export async function setup(): Promise<string> {
     await warehouseStore.getCurrentWarehouse();
     if (!warehouseStore) return WAREHOUSE_SELECT_ROUTE;
     loadData();
-    return HOME_ROUTE;
+    return window.location.pathname;
   } catch (e) {
     console.log("Error in setup");
     console.error(e);
