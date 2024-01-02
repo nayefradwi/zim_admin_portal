@@ -13,18 +13,16 @@ function createWarehouseStore() {
   return {
     subscribe,
     set,
-    getCurrentWarehouse: () => GetCurrentWarehouse(WarehouseRepo),
+    getCurrentWarehouse: () => {
+      const details: ResponseHandlerData<Warehouse> = {
+        call: () => WarehouseRepo.getCurrentWarehouse(),
+        onSuccess: (data: Warehouse) => {
+          set(data);
+        },
+      };
+      return getResponse<Warehouse>(details);
+    },
   };
 }
 
 export const warehouseStore = createWarehouseStore();
-
-function GetCurrentWarehouse(warehouseRepo: IWarehouseRepo) {
-  const details: ResponseHandlerData<Warehouse> = {
-    call: () => warehouseRepo.getCurrentWarehouse(),
-    onSuccess: (data: Warehouse) => {
-      warehouseStore.set(data);
-    },
-  };
-  return getResponse<Warehouse>(details);
-}

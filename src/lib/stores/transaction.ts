@@ -12,17 +12,15 @@ function createTransactionReasonsStore() {
   return {
     subscribe,
     set,
-    getReasons: () => GetReasons(),
+    getReasons: () => {
+      const details: ResponseHandlerData<TransactionReason[]> = {
+        call: () => TransactionRepo.getReasons(),
+        onSuccess: (data: TransactionReason[]) => {
+          set(data);
+        },
+      };
+      return getResponse<TransactionReason[]>(details);
+    },
   };
 }
 export const transactionReasonsStore = createTransactionReasonsStore();
-
-function GetReasons() {
-  const details: ResponseHandlerData<TransactionReason[]> = {
-    call: () => TransactionRepo.getReasons(),
-    onSuccess: (data: TransactionReason[]) => {
-      transactionReasonsStore.set(data);
-    },
-  };
-  return getResponse<TransactionReason[]>(details);
-}

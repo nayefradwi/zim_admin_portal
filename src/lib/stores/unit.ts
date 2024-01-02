@@ -17,7 +17,7 @@ function createUnitStore() {
       const details: ResponseHandlerData<Unit[]> = {
         call: () => UnitRepo.getUnits(),
         onSuccess: (data: Unit[]) => {
-          store.set(data);
+          set(data);
         },
       };
       getResponse<Unit[]>(details);
