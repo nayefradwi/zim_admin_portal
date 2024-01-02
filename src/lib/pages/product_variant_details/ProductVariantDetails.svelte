@@ -36,10 +36,6 @@
   onMount(() => {
     loadProductVariantDetails();
   });
-
-  function onRemoveRecipe(_: Recipe) {
-    loadProductVariantDetails();
-  }
 </script>
 
 <AppNavBar />
@@ -60,7 +56,10 @@
       <div class="flex flex-col w-1/2 items-start space-y-4">
         <ProductVariantDetailsRow {productVariant} />
         {#if !productVariant.isIngredient}
-          <ProductVariantRecipe {productVariant} onRemove={onRemoveRecipe} />
+          <ProductVariantRecipe
+            {productVariant}
+            refreshVariantCB={loadProductVariantDetails}
+          />
         {/if}
       </div>
       <div class="flex flex-col w-1/2 items-start space-y-4">

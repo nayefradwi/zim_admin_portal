@@ -12,10 +12,12 @@
   import ApiConfirmationDialog from "../../components/ApiConfirmationDialog.svelte";
   import type { Recipe } from "../../../data/models/recipe";
   import toast from "svelte-french-toast";
+  import AddRecipeModel from "./AddRecipeModel.svelte";
   export let productVariant: ProductVariant;
-  export let onRemove: (recipe: Recipe) => void;
+  export let refreshVariantCB: () => void;
   let showDeleteDialog: boolean = false;
   let recipeToDelete: Recipe | undefined = undefined;
+  let showAddRecipeDialog: boolean = false;
 
   function goToCreateRecipe() {
     navigate(getCreateRecipeRoute(productVariant.sku));
@@ -31,7 +33,7 @@
     const details: ResponseHandlerData<void> = {
       call: () => RecipeRepo.deleteRecipe(recipeToDelete!.id.toString()),
       onSuccess: () => {
-        onRemove(recipeToDelete!);
+        refreshVariantCB();
         toast.success("Recipe removed successfully");
         recipeToDelete = undefined;
       },
@@ -46,6 +48,10 @@
   $: recipeToDeleteLabel = recipeToDelete
     ? `${recipeToDelete.productName} ${recipeToDelete.recipeVariantName}`
     : "";
+
+  function onAddClicked() {
+    showAddRecipeDialog = true;
+  }
 </script>
 
 <ApiConfirmationDialog
@@ -55,9 +61,14 @@
   onConfirm={confirmRecipeToDelete}
   onCancel={onCancelRecipeDelete}
 />
+<AddRecipeModel
+  bind:showModal={showAddRecipeDialog}
+  resultVariantSku={productVariant.sku}
+  onSuccessfulModify={refreshVariantCB}
+/>
 <div class="card shadow bg-base-100 w-full p-4 overflow-y-auto">
   <div class="flex flex-row justify-between">
-    <RecipeTitle {productVariant} />
+    <RecipeTitle {productVariant} {onAddClicked} />
   </div>
   <div class="my-2" />
   {#if productVariant.recipes && productVariant.recipes.length > 0}
