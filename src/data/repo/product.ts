@@ -39,6 +39,7 @@ export interface IProductRepo {
     sku: string,
     withRecipe?: boolean
   ): Promise<ProductVariant>;
+  deleteProduct(id: string): Promise<void>;
 }
 
 export interface ModifyBatchRequest {
@@ -260,6 +261,10 @@ export const ProductRepo: IProductRepo = {
         },
       }
     );
+    return response.data;
+  },
+  deleteProduct: async (id: string): Promise<void> => {
+    const response = await apiClient.delete<void>(`/products/${id}`);
     return response.data;
   },
 };

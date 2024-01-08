@@ -11,10 +11,12 @@
   import ProductVariantsView from "./ProductVariantsView.svelte";
   import { onMount } from "svelte";
   import ApiConfirmationDialog from "../../components/ApiConfirmationDialog.svelte";
+  import { navigate } from "svelte-routing";
+  import { PRODUCTS_ROUTE } from "../../routes";
+  import { ingredientStore, productStore } from "../../stores/pagination";
   export let productId: string;
   let product: Product | undefined;
-  let showArchiveDialog: boolean = false;
-  let showUnarchiveDialog: boolean = false;
+  let showDeleteProduct: boolean = false;
 
   function loadProduct(): void {
     const details: ResponseHandlerData<Product> = {
@@ -28,42 +30,31 @@
 
   onMount(loadProduct);
 
-  function onArchiveClicked(): void {
+  function onDeleteClicked(): void {
     if (!product) return;
-    if (product.isArchived) showUnarchiveDialog = true;
-    else showArchiveDialog = true;
+    showDeleteProduct = true;
   }
 
-  async function archiveProduct(): Promise<void> {
+  async function deleteProduct(): Promise<void> {
+    if (!product) return;
     const details: ResponseHandlerData<void> = {
-      call: () => ProductRepo.archiveProduct(productId),
-      onSuccess: loadProduct,
-    };
-    return getResponse<void>(details);
-  }
-
-  async function unarchiveProduct(): Promise<void> {
-    const details: ResponseHandlerData<void> = {
-      call: () => ProductRepo.unarchiveProduct(productId),
-      onSuccess: loadProduct,
+      call: () => ProductRepo.deleteProduct(productId),
+      onSuccess: (_) => {
+        productStore.refresh($productStore);
+        ingredientStore.refresh($ingredientStore);
+        navigate(PRODUCTS_ROUTE);
+      },
     };
     return getResponse<void>(details);
   }
 </script>
 
 <ApiConfirmationDialog
-  title="Archive Product?"
-  onConfirm={archiveProduct}
+  title="Delete Product?"
+  message="Deleting this product will delete all its variants, options, and batches. This action cannot be undone."
+  onConfirm={deleteProduct}
   onCancel={() => {}}
-  bind:showModal={showArchiveDialog}
-  message="Archiving this product will make it not visible in main product listing"
-/>
-<ApiConfirmationDialog
-  title="Unarchive Product?"
-  message="Unarchiving this product will make it visible in main product listing"
-  onConfirm={unarchiveProduct}
-  onCancel={() => {}}
-  bind:showModal={showUnarchiveDialog}
+  bind:showModal={showDeleteProduct}
 />
 <main
   class="flex flex-col justify-start p-4 items-start h-screen overflow-y-auto
@@ -71,11 +62,7 @@
 >
   <div class="card w-full shadow rounded p-2 h-full bg-base-100">
     {#if product}
-      <ProductAppBar
-        name={product.name}
-        isArchived={product.isArchived || false}
-        {onArchiveClicked}
-      />
+      <ProductAppBar name={product.name} {onDeleteClicked} />
       <ProductOptions productOptions={product.options} />
       <ProductDescription
         productDescription={product.description}

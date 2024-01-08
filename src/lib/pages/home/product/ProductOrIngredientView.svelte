@@ -15,8 +15,10 @@
       {#each state.page.items as product (product.id)}
         <ProductListItem {product} />
       {/each}
-    {:else}
+    {:else if state.isLoading}
       <ProductLoading />
+    {:else}
+      <div class="text-gray-500 text-xl">No products found</div>
     {/if}
   </div>
   <TablePaginationButtons {prev} {next} pageNumber={state.pageNumber} />

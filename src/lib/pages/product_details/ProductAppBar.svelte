@@ -3,8 +3,7 @@
   import { PRODUCTS_ROUTE } from "../../routes";
   import { navigate } from "svelte-routing";
   export let name: string;
-  export let isArchived: boolean;
-  export let onArchiveClicked: () => void;
+  export let onDeleteClicked: () => void;
 </script>
 
 <div class="flex flex-row items-center my-2 justify-between">
@@ -24,17 +23,11 @@
     <button class="action btn btn-primary btn-xs btn-outline rounded-none"
       >Edit</button
     >
-    {#if isArchived}
-      <button
-        class="action btn btn-success btn-xs btn-outline rounded-none"
-        on:click={onArchiveClicked}>Activate</button
-      >
-    {:else}
-      <button
-        class="action btn btn-error btn-xs btn-outline rounded-none"
-        on:click={onArchiveClicked}>Archive</button
-      >
-    {/if}
+
+    <button
+      class="action btn btn-error btn-xs btn-outline rounded-none"
+      on:click={onDeleteClicked}>Delete</button
+    >
   </div>
 </div>
 
