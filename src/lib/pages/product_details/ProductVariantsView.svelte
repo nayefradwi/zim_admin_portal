@@ -32,7 +32,7 @@
 <AddProductVariantModel
   onSuccessCallback={onAddVariantSuccessfully}
   bind:showModal={showAddVariantModal}
-  bind:productId={product.id}
+  {product}
 />
 <div class="h-full">
   <div class="divider flex flex-row my-1">

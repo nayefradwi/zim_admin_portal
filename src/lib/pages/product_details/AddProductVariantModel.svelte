@@ -2,15 +2,25 @@
   import toast from "svelte-french-toast";
 
   import { enforceNumber } from "../../utils/functions";
+  import { unitStore } from "../../stores/unit";
+  import {
+    getResponse,
+    ProductRepo,
+    type Product,
+    type ProductOptionValue,
+    type ResponseHandlerData,
+  } from "../../../data";
 
   export let showModal: boolean;
-  export let productId: number;
+  export let product: Product;
   export let onSuccessCallback: () => void;
   let dialog: HTMLDialogElement;
+  let selectOptions: Record<string, HTMLSelectElement> = {};
   $: if (dialog && showModal) dialog.showModal();
+  $: options = Object.keys(product.options ?? {});
   let isLoading: boolean = false;
 
-  let sku: String | undefined;
+  let sku: string | undefined;
   let price: number | undefined;
   let widthInCm: number | undefined;
   let heightInCm: number | undefined;
@@ -19,6 +29,22 @@
   let standardUnitId: number | undefined;
   let expiresInDays: number | undefined;
 
+  function getProductOptionValues(key: string): ProductOptionValue[] {
+    if (!product.options) return [];
+    return product.options[key].values;
+  }
+
+  function getSelectOptionsValues(): number[] {
+    return Object.values(selectOptions)
+      .map((select) => {
+        try {
+          return parseInt(select.value);
+        } catch (e) {
+          return 0;
+        }
+      })
+      .filter((value) => value > 0);
+  }
   function isValid(): boolean {
     if (!price) {
       toast.error("Price is required");
@@ -36,7 +62,46 @@
       toast.error("Standard Unit is required");
       return false;
     }
+    if (getSelectOptionsValues().length !== options.length) {
+      toast.error("All options are required");
+      return false;
+    }
     return true;
+  }
+
+  function addProductVariant() {
+    if (!isValid()) return;
+    const details: ResponseHandlerData<void> = {
+      call: () => {
+        isLoading = true;
+        return ProductRepo.addProductVariant({
+          productVariant: {
+            id: 0,
+            name: "",
+            productId: product.id,
+            sku: sku!,
+            price: price!,
+            width: widthInCm,
+            height: heightInCm,
+            depth: depthInCm,
+            weight: weightInG,
+            standardUnitId: standardUnitId!,
+            expiresInDays: expiresInDays!,
+          },
+          optionsValueIds: getSelectOptionsValues(),
+        });
+      },
+      onSuccess(_) {
+        isLoading = false;
+        onClose();
+        onSuccessCallback();
+      },
+      onError(e) {
+        isLoading = false;
+        toast.error(e.message);
+      },
+    };
+    return getResponse<void>(details);
   }
 
   function onClose(): void {
@@ -62,13 +127,29 @@
   <div class="modal-box p-4 bg-white rounded-lg shadow-xl">
     <h1 class="text-2xl font-bold text-gray-800 mb-6">Add Product Variant</h1>
     <div class="space-y-4 w-full">
-      <div class="input-group">
-        <input
-          placeholder="Sku"
-          class="input input-bordered input-sm"
-          bind:value={sku}
-        />
-      </div>
+      <input
+        placeholder="Sku"
+        class="input input-bordered input-sm flex flex-row w-full"
+        bind:value={sku}
+      />
+
+      <input
+        placeholder="Expires in days"
+        class="input input-bordered input-sm flex flex-row w-full"
+        min="1"
+        type="number"
+        bind:value={expiresInDays}
+        on:input={(e) => enforceNumber(e)}
+      />
+
+      <select
+        bind:value={standardUnitId}
+        class="select select-bordered w-full select-sm"
+      >
+        {#each $unitStore as unit}
+          <option value={unit.id}>{unit.name}</option>
+        {/each}
+      </select>
 
       <div class="input-group">
         <input
@@ -81,7 +162,6 @@
         />
         <span class="input-label">QR</span>
       </div>
-
       <div class="input-group">
         <input
           placeholder="Width"
@@ -127,10 +207,24 @@
         />
         <span class="input-label">g</span>
       </div>
+      {#each options as option}
+        <div class="input-group">
+          <span class="input-label">{option}</span>
+          <select
+            bind:this={selectOptions[option]}
+            class="select select-bordered w-full select-sm"
+            value={undefined}
+          >
+            {#each getProductOptionValues(option) as value}
+              <option value={value.id}>{value.value}</option>
+            {/each}
+          </select>
+        </div>
+      {/each}
     </div>
 
     <div class="modal-action mt-6">
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" on:click={addProductVariant}>
         {#if isLoading}
           <span class="loading loading-spinner" />
         {:else}
@@ -152,6 +246,11 @@
 
   .input-group .input {
     width: 90%;
+  }
+
+  .input-group .select {
+    width: 90%;
+    margin-left: 4px;
   }
 
   .input-group span {
