@@ -70,6 +70,7 @@
     };
     return getResponse<void>(details);
   }
+
   async function unarchiveVariant(variant: ProductVariant): Promise<void> {
     const details: ResponseHandlerData<void> = {
       call: () => ProductRepo.unarchiveProductVariant(variant.id.toString()),

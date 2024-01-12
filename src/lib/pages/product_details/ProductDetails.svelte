@@ -56,6 +56,7 @@
   onCancel={() => {}}
   bind:showModal={showDeleteProduct}
 />
+
 <main
   class="flex flex-col justify-start p-4 items-start h-screen overflow-y-auto
     bg-base-100"
@@ -68,7 +69,6 @@
         productDescription={product.description}
         productImage={product.image}
       />
-
       <ProductVariantsView
         bind:product
         productVariants={product.productVariants}
