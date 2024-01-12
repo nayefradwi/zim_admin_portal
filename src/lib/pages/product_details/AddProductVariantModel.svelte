@@ -93,8 +93,8 @@
       },
       onSuccess(_) {
         isLoading = false;
-        onClose();
         onSuccessCallback();
+        onClose();
       },
       onError(e) {
         isLoading = false;
