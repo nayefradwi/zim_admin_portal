@@ -13,11 +13,13 @@
   import type { Recipe } from "../../../data/models/recipe";
   import toast from "svelte-french-toast";
   import AddRecipeModel from "./AddRecipeModel.svelte";
+  import PrintRecipeModel from "./PrintRecipeModel.svelte";
   export let productVariant: ProductVariant;
   export let refreshVariantCB: () => void;
   let showDeleteDialog: boolean = false;
   let recipeToDelete: Recipe | undefined = undefined;
   let showAddRecipeDialog: boolean = false;
+  let showPrintRecipeDialog: boolean = false;
 
   function goToCreateRecipe() {
     navigate(getCreateRecipeRoute(productVariant.sku));
@@ -52,6 +54,10 @@
   function onAddClicked() {
     showAddRecipeDialog = true;
   }
+
+  function onPrintClicked() {
+    showPrintRecipeDialog = true;
+  }
 </script>
 
 <ApiConfirmationDialog
@@ -66,9 +72,10 @@
   resultVariantSku={productVariant.sku}
   onSuccessfulModify={refreshVariantCB}
 />
+<PrintRecipeModel {productVariant} bind:showModal={showPrintRecipeDialog} />
 <div class="card shadow bg-base-100 w-full p-4 overflow-y-auto">
   <div class="flex flex-row justify-between">
-    <RecipeTitle {productVariant} {onAddClicked} />
+    <RecipeTitle {productVariant} {onAddClicked} {onPrintClicked} />
   </div>
   <div class="my-2" />
   {#if productVariant.recipes && productVariant.recipes.length > 0}
