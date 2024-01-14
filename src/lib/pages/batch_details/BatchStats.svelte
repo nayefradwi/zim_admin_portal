@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { Batch, TransactionStats } from "../../../data";
-  import AppNavDrawer from "../../components/AppNavDrawer.svelte";
   import { transactionReasonsStore } from "../../stores/transaction";
   import { parseDate } from "../../utils/functions";
   import BatchStat from "./BatchStat.svelte";

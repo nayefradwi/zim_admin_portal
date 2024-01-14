@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { ProductVariant } from "../../../data";
   import { enforceNumber } from "../../utils/functions";
+  import { printProductVariantRecipe } from "../../utils/print";
 
   export let showModal: boolean;
   export let productVariant: ProductVariant;
@@ -12,10 +13,12 @@
   function print() {
     if (!productVariant) return;
     if (quantity < 1) return;
+    printProductVariantRecipe(productVariant, quantity);
   }
 
   function onClose() {
     quantity = 1;
+    showModal = false;
     dialog.close();
   }
 </script>

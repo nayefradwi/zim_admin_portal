@@ -8,3 +8,4 @@ export * from "./unit";
 export * from "./batch";
 export * from "./transaction";
 export * from "./retailer";
+export * from "./recipe";

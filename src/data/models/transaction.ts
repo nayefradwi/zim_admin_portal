@@ -42,10 +42,10 @@ export function getTransactionStats(
     NumberOfNegativeTransactions: 0,
   };
   transactions.forEach((transaction) => {
-    const { reason, amount } = transaction;
+    const { reason, amount, quantity } = transaction;
     const { name, isPositive } = reason;
     const currentValue = stats.ReasonStatsLookup[name] || 0;
-    stats.ReasonStatsLookup[name] = currentValue + amount;
+    stats.ReasonStatsLookup[name] = currentValue + quantity;
     stats.NumberOfTransactions += 1;
     if (isPositive) {
       stats.TotalPositiveSum += amount;
