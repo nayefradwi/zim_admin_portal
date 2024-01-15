@@ -42,6 +42,7 @@ export interface IProductRepo {
   deleteProduct(id: string): Promise<void>;
   addProductVariant(request: AddProductVariantRequest): Promise<void>;
   addProductOptionValue(request: AddProductOptionValueRequest): Promise<void>;
+  addProductOption(request: AddProductOptionRequest): Promise<void>;
 }
 
 export interface ModifyBatchRequest {
@@ -85,6 +86,15 @@ export interface AddProductVariantRequest {
 export interface AddProductOptionValueRequest {
   productOptionId: number;
   value: string;
+}
+
+export interface AddProductOptionRequest {
+  productId: number;
+  optionName: string;
+  values: {
+    value: string;
+    isDefault: boolean;
+  }[];
 }
 
 export const ProductRepo: IProductRepo = {
@@ -298,6 +308,11 @@ export const ProductRepo: IProductRepo = {
       "/products/product-variants/options/values",
       request
     );
+    return response.data;
+  },
+
+  addProductOption: async (request: AddProductOptionRequest): Promise<void> => {
+    const response = await apiClient.post<void>("/products/options", request);
     return response.data;
   },
 };

@@ -9,11 +9,13 @@
   import ProductVariantsTable from "./ProductVariantsTable.svelte";
   import AddProductVariantModel from "./AddProductVariantModel.svelte";
   import AddProductOptionValue from "./AddProductOptionValue.svelte";
+  import AddProductOptionModel from "./AddProductOptionModel.svelte";
 
   export let product: Product;
   export let productVariants: ProductVariant[];
   let showAddVariantModal: boolean = false;
   let showAddOptionValueModal: boolean = false;
+  let showAddOptionModal: boolean = false;
 
   function onAddVariantSuccessfully() {
     showAddVariantModal = false;
@@ -22,6 +24,11 @@
 
   function onAddOptionValueSuccessfully() {
     showAddOptionValueModal = false;
+    refreshProduct();
+  }
+
+  function onAddOptionSuccessfully() {
+    showAddOptionModal = false;
     refreshProduct();
   }
 
@@ -46,6 +53,11 @@
   bind:showModal={showAddOptionValueModal}
   {product}
 />
+<AddProductOptionModel
+  {product}
+  bind:showModal={showAddOptionModal}
+  onSuccessCallback={onAddOptionSuccessfully}
+/>
 <div class="h-full">
   <div class="divider flex flex-row my-1">
     <button
@@ -54,8 +66,15 @@
         showAddVariantModal = true;
       }}>Add Variant</button
     >
-    <!-- TODO add product option -->
-    <button class="btn btn-xs mx-1">Add Product Option</button>
+
+    <button
+      class="btn btn-xs mx-1"
+      on:click={() => {
+        showAddOptionModal = true;
+      }}
+    >
+      Add Option
+    </button>
     <button
       class="btn btn-xs mx-1"
       on:click={() => {

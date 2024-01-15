@@ -5,9 +5,7 @@
     getResponse,
     ProductRepo,
     type Product,
-    type ProductOptionValue,
     type ResponseHandlerData,
-    type ProductOption,
   } from "../../../data";
 
   export let showModal: boolean;
