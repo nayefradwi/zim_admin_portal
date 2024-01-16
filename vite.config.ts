@@ -7,4 +7,8 @@ export default defineConfig({
   build: {
     target: "esnext",
   },
+  preview: {
+    port: process.env.PORT || 5173,
+    host: process.env.HOST || "localhost",
+  },
 });
