@@ -2,7 +2,7 @@ import axios from "axios";
 import { ClientError } from "./models/error";
 
 export const apiClient = axios.create({
-  baseURL: process.env.API_URL || "http://localhost:3000",
+  baseURL: "https://zanobiainventorymanager-staging.up.railway.app",
   headers: {},
 });
 
