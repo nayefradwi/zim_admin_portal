@@ -1,21 +1,38 @@
 <script lang="ts">
-  import { XIcon } from "svelte-feather-icons";
+  import { PlusIcon, XIcon } from "svelte-feather-icons";
 
   export let optionEntries: [string, string[]][];
-  export let onOptionValueAdded: (e: KeyboardEvent, option: string) => void;
+  export let onOptionValueAdded: (option: string, value: string) => void;
   export let onOptionValueRemoved: (option: string, value: string) => void;
   export let onOptionRemoved: (option: string) => void;
+
+  function _onOptionValueAdded(e: Event, optionKey: string): void {
+    if (e instanceof KeyboardEvent && e.key !== "Enter") return;
+    const input = window.document.getElementById(optionKey) as HTMLInputElement;
+    if (!input) return;
+    const inputValue = input.value;
+    if (!inputValue) return;
+    onOptionValueAdded(optionKey, inputValue);
+    input.value = "";
+  }
 </script>
 
 {#each optionEntries as [optionKey, optionValues]}
-  <div class="flex flex-row my-2 w-full">
-    <span class="text-gray-700 mr-2">{optionKey}:</span>
+  <div class="flex flex-row w-full space-x-2">
+    <span class="text-gray-700">{optionKey}:</span>
     <input
+      id={optionKey}
       type="text"
       class="input input-bordered input-sm w-full"
-      on:keypress={(e) => onOptionValueAdded(e, optionKey)}
+      on:keypress={(e) => _onOptionValueAdded(e, optionKey)}
     />
-    <button on:click={() => onOptionRemoved(optionKey)}>
+    <button
+      class="btn btn-sm"
+      on:click={(e) => _onOptionValueAdded(e, optionKey)}
+    >
+      <PlusIcon size="16" />
+    </button>
+    <button class="btn btn-sm" on:click={() => onOptionRemoved(optionKey)}>
       <XIcon size="16" class="text-error" />
     </button>
   </div>

@@ -38,8 +38,12 @@
   }
 
   function onOptionAdded(e: KeyboardEvent): void {
-    if (!option) return;
     if (e.key !== "Enter") return;
+    addOption();
+  }
+
+  function addOption(): void {
+    if (!option) return;
     const optionValue = option.trim();
     if (!optionValue) return;
     optionsStore.update((options) => {
@@ -50,17 +54,12 @@
     option = "";
   }
 
-  function onOptionValueAdded(e: KeyboardEvent, option: string): void {
-    if (e.key !== "Enter") return;
-    const target = e.target as HTMLInputElement;
-    const inputValue = target.value;
-    if (!inputValue) return;
+  function onOptionValueAdded(option: string, value: string): void {
     optionsStore.update((options) => {
       const newOptions = { ...options };
-      newOptions[option].push(inputValue);
+      newOptions[option].push(value);
       return newOptions;
     });
-    target.value = "";
   }
 
   function onOptionRemoved(option: string): void {
@@ -180,18 +179,23 @@
         {/each}
       </select>
 
-      <input
-        bind:value={option}
-        on:keydown={onOptionAdded}
-        placeholder="Options"
-        class="input input-bordered input-sm w-full"
-      />
+      <div class="space-x-2 flex">
+        <input
+          bind:value={option}
+          on:keydown={onOptionAdded}
+          placeholder="Options"
+          class="input input-bordered input-sm w-full"
+        />
+        <button class="btn btn-sm" on:click={addOption}> Add Option </button>
+      </div>
+
       <CreateProductOptionList
         {optionEntries}
         {onOptionValueAdded}
         {onOptionRemoved}
         {onOptionValueRemoved}
       />
+
       <label class="flex items-center space-x-3">
         <input
           bind:checked={isIngredient}
