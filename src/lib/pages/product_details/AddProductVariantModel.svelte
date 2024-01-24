@@ -126,7 +126,7 @@
 >
   <div class="modal-box p-4 bg-white rounded-lg shadow-xl">
     <h1 class="text-2xl font-bold text-gray-800 mb-6">Add Product Variant</h1>
-    <div class="space-y-4 w-full">
+    <div class="space-y-4 w-full flex flex-col">
       <input
         placeholder="Sku"
         class="input input-bordered input-sm flex flex-row w-full"
@@ -151,28 +151,31 @@
         {/each}
       </select>
 
-      <div class="input-group">
-        <input
-          placeholder="Price"
-          class="input input-bordered input-sm"
-          min="1"
-          type="number"
-          bind:value={price}
-          on:input={(e) => enforceNumber(e, true)}
-        />
-        <span class="input-label">QR</span>
-      </div>
-      <div class="input-group">
-        <input
-          placeholder="Width"
-          class="input input-bordered input-sm w-max"
-          min="1"
-          type="number"
-          bind:value={widthInCm}
-          on:input={(e) => enforceNumber(e, true)}
-        />
-        <span class="input-label">cm</span>
-      </div>
+      <input
+        placeholder="Price"
+        class="input input-bordered input-sm"
+        min="1"
+        type="number"
+        bind:value={price}
+        on:input={(e) => enforceNumber(e, true)}
+      />
+
+      {#each options as option}
+        <div class="input-group">
+          <span class="input-label">{option}</span>
+          <select
+            bind:this={selectOptions[option]}
+            class="select select-bordered w-full select-sm"
+            value={undefined}
+          >
+            {#each getProductOptionValues(option) as value}
+              <option value={value.id}>{value.value}</option>
+            {/each}
+          </select>
+        </div>
+      {/each}
+
+      <h1 class="text-xl text-gray-400 mb-6">Optional fields</h1>
 
       <div class="input-group">
         <input
@@ -207,20 +210,17 @@
         />
         <span class="input-label">g</span>
       </div>
-      {#each options as option}
-        <div class="input-group">
-          <span class="input-label">{option}</span>
-          <select
-            bind:this={selectOptions[option]}
-            class="select select-bordered w-full select-sm"
-            value={undefined}
-          >
-            {#each getProductOptionValues(option) as value}
-              <option value={value.id}>{value.value}</option>
-            {/each}
-          </select>
-        </div>
-      {/each}
+      <div class="input-group">
+        <input
+          placeholder="Width"
+          class="input input-bordered input-sm w-max"
+          min="1"
+          type="number"
+          bind:value={widthInCm}
+          on:input={(e) => enforceNumber(e, true)}
+        />
+        <span class="input-label">cm</span>
+      </div>
     </div>
 
     <div class="modal-action mt-6">
