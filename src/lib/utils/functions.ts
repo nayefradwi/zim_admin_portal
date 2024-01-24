@@ -41,15 +41,33 @@ export function enforceNumber(
   const input = event.target as HTMLInputElement;
   const cursorPosition = input.selectionStart;
 
-  const numericValue = allowDecimals
+  let numericValue = allowDecimals
     ? parseFloat(input.value)
-    : Math.floor(Number(input.value));
-  const cleanedValue = isNaN(numericValue) ? "" : numericValue.toString();
+    : parseInt(input.value, 10);
 
-  // Update the input only if the value has changed to avoid cursor reset
-  if (input.value !== cleanedValue) {
-    input.value = cleanedValue;
-    // Restore the cursor position
-    input.selectionStart = input.selectionEnd = cursorPosition;
-  }
+  if (Number.isNaN(numericValue)) return clearInput(input, cursorPosition);
+
+  setNumberValue(input, numericValue, allowDecimals, cursorPosition);
+}
+
+function clearInput(input: HTMLInputElement, cursorPosition: number | null) {
+  input.value = "";
+  input.selectionStart = input.selectionEnd = cursorPosition;
+}
+
+function setNumberValue(
+  input: HTMLInputElement,
+  numericValue: number,
+  allowDecimals: boolean,
+  cursorPosition: number | null
+) {
+  const formatter = new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: allowDecimals ? 5 : 0,
+  });
+
+  const value = formatter.format(numericValue);
+  if (input.value == value) return;
+  input.value = value;
+  input.selectionStart = input.selectionEnd = cursorPosition;
 }
