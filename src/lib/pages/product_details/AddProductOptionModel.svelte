@@ -102,12 +102,18 @@
         class="input input-bordered input-sm flex flex-row w-full"
         bind:value={optionName}
       />
-      <input
-        class="input input-bordered input-sm flex flex-row w-full"
-        placeholder="Option value"
-        on:keydown={onEnterClicked}
-        bind:value={optionValue}
-      />
+      <div class="space-x-2 flex flex-row">
+        <input
+          class="input input-bordered input-sm w-full"
+          placeholder="Option value"
+          on:keydown={onEnterClicked}
+          bind:value={optionValue}
+        />
+        <button class="btn btn-sm" on:click={addOptionValue}>
+          Add Value
+        </button>
+      </div>
+
       {#each optionValues as optionValue}
         <div class="flex flex-row space-x-1 items-center">
           <p>{optionValue}</p>
