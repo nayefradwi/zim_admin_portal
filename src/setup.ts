@@ -7,10 +7,10 @@ import {
   type Product,
   type Batch,
 } from "./data";
-import { HOME_ROUTE, LOGIN_ROUTE, WAREHOUSE_SELECT_ROUTE } from "./lib/routes";
+import { LOGIN_ROUTE, WAREHOUSE_SELECT_ROUTE } from "./lib/routes";
 import { userStore } from "./lib/stores/user";
 import { warehouseStore } from "./lib/stores/warehouse";
-import { unitStore } from "./lib/stores/unit";
+import { unitConversionStore, unitStore } from "./lib/stores/unit";
 import {
   batchStore,
   productStore,
@@ -42,6 +42,7 @@ export async function setup(): Promise<string> {
 
 export function loadData() {
   unitStore.getUnits();
+  unitConversionStore.getAllUnitConversions();
   transactionReasonsStore.getReasons();
   let emptyBatchState: PaginationState<Batch> = {
     pageNumber: 1,

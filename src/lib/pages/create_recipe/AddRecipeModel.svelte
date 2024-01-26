@@ -55,12 +55,11 @@
         bind:value={quantity}
       />
 
-      <!-- TODO: keep for later -->
-      <!-- <select bind:value={unitId} class="select select-bordered w-full">
+      <select bind:value={unitId} class="select select-bordered w-full">
         {#each $unitStore as unit}
           <option value={unit.id}>{unit.name}</option>
         {/each}
-      </select> -->
+      </select>
     </div>
 
     <div class="modal-action mt-6">
